@@ -37,7 +37,7 @@ abstract class Model{
                 if ($rule_name == self::RULE_MIN && strlen($value) < $rule['min']){
                     $this->addError($attribute, self::RULE_MIN, $rule);
                 }
-                if ($rule_name == self::RULE_MAX && strlen($value) < $rule['max']){
+                if ($rule_name == self::RULE_MAX && strlen($value) > $rule['max']){
                     $this->addError($attribute, self::RULE_MAX, $rule);
                 }
                 if ($rule_name == self::RULE_MATCH && $value !== $this->{$rule['match']}){
@@ -65,5 +65,13 @@ abstract class Model{
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}'
         ];
+    }
+
+    public function hasError($attribute){
+        return $this->errors[$attribute] ?? false;
+    }
+
+    public function getFirstError($attribute){
+        return $this->errors[$attribute][0] ?? false;
     }
 }
