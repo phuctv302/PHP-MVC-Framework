@@ -1,9 +1,10 @@
 <?php
 namespace controllers;
 
+use core\Application;
 use core\Controller;
 use core\Request;
-use models\Registermodel;
+use models\User;
 
 class AuthController extends Controller {
     public function login(){
@@ -12,21 +13,22 @@ class AuthController extends Controller {
     }
 
     public function register(Request $request){
-        $registerModel = new Registermodel();
+        $user = new User();
         if ($request->isPost()){
-            $registerModel->loadData($request->getBody());
+            $user->loadData($request->getBody());
 
-            if ($registerModel->validate() && $registerModel->register()){
-                return 'Success';
+            if ($user->validate() && $user->save()){
+
+                Application::$app->response->redirect('/');
             }
 
             return $this->render('register', [
-                'model' => $registerModel
+                'model' => $user
             ]);
         }
         $this->setLayout('auth');
         return $this->render('register', [
-            'model' => $registerModel
+            'model' => $user
         ]);
     }
 }

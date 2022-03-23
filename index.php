@@ -1,11 +1,23 @@
 <?php
 // autoload
 include 'includes/autoloader.inc.php';
-use controllers\Sitecontroller;
 use core\Application;
+use core\Dotenv;
+use controllers\Sitecontroller;
 use controllers\AuthController;
 
-$app = new Application(__DIR__);
+// config environment variables
+$dotenv = new Dotenv(__DIR__.'/.env');
+$dotenv->load();
+$config = [
+    'db' => [
+        'dsn' => $_ENV['DB_DSN'],
+        'user' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD']
+    ]
+];
+
+$app = new Application(__DIR__, $config);
 
 $app->router->get('/', [Sitecontroller::class, 'home']);
 $app->router->get('/contact', [Sitecontroller::class, 'contact']);
