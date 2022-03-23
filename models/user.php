@@ -3,8 +3,9 @@ namespace models;
 
 use core\Dbmodel;
 use core\Model;
+use core\Usermodel;
 
-class User extends Dbmodel {
+class User extends Usermodel {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
@@ -55,5 +56,9 @@ class User extends Dbmodel {
             'password' => 'Password',
             'confirmPassword' => 'Confirm password'
         ];
+    }
+
+    public function getDisplayName(): string{
+        return $this->firstname . ' ' . $this->lastname;
     }
 }
