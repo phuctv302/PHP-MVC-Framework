@@ -1,18 +1,8 @@
-<h1>Contact</h1>
+<h1>Login</h1>
+<?php $form = \core\form\Form::begin("", "post") ?>
 
-<form action="" method="post">
-    <div class="mb-3">
-        <label >Subject</label>
-        <input type="email" name="subject" class="form-control" >
-    </div>
-    <div class="mb-3">
-        <label >Email</label>
-        <input type="email" name="subject" class="form-control" >
-    </div>
-    <div class="mb-3">
-        <label >Body</label>
-        <textarea type="email" name="subject" class="form-control" ></textarea>
-    </div>
+    <?php echo $form->field($model, 'email') ?>
+    <?php echo $form->field($model, 'password')->passwordField() ?>
 
     <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<?php \core\form\Form::end() ?>
