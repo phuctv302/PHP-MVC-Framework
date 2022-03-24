@@ -4,9 +4,9 @@ namespace models;
 
 use core\Dbmodel;
 use core\Model;
-use core\Usermodel;
+use core\UserModel;
 
-class User extends Usermodel{
+class User extends UserModel{
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;

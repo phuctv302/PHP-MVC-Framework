@@ -6,9 +6,9 @@ use core\Application;
 use core\Controller;
 use core\Request;
 use core\Response;
-use models\Contactform;
+use models\ContactForm;
 
-class Sitecontroller extends Controller{
+class SiteController extends Controller{
     public function home(){
         $params = [
             'name' => "TheCodeholic"
@@ -18,7 +18,7 @@ class Sitecontroller extends Controller{
 
 
     public function contact(Request $request, Response $response){
-        $contact = new Contactform();
+        $contact = new ContactForm();
         if ($request->isPost()){
             $contact->loadData($request->getBody());
             if ($contact->validate() && $contact->send()){

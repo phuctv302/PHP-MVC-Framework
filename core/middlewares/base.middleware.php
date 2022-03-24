@@ -2,6 +2,6 @@
 
 namespace core\middlewares;
 
-abstract class Basemiddleware{
+abstract class BaseMiddleware{
     abstract public function execute();
 }

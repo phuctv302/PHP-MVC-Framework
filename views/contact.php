@@ -1,7 +1,7 @@
 <?php
 /** @var $this \core\View */
 
-/** @var $model \models\Contactform */
+/** @var $model \models\ContactForm */
 
 use core\form\TextareaField;
 

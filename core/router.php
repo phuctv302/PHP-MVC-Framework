@@ -2,7 +2,7 @@
 
 namespace core;
 
-use core\exception\Notfoundexception;
+use core\exception\NotFoundException;
 
 class Router{
     public Request $request;
@@ -34,7 +34,7 @@ class Router{
 
         if ($callback === false){
             $this->response->setStatusCode(404);
-            throw new Notfoundexception();
+            throw new NotFoundException();
         }
 
         if (is_string($callback)){

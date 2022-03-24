@@ -3,9 +3,9 @@
 namespace core\form;
 
 use core\Model;
-use core\form\Basefield;
+use core\form\BaseField;
 
-class Inputfield extends Basefield{
+class InputField extends BaseField{
     public const TYPE_TEXT = 'text';
     public const TYPE_PASSWORD = 'password';
     public const TYPE_NUMBER = 'number';

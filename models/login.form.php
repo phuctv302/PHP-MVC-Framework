@@ -5,7 +5,7 @@ namespace models;
 use core\Application;
 use core\Model;
 
-class Loginform extends Model{
+class LoginForm extends Model{
 
     public string $email = '';
     public string $password = '';

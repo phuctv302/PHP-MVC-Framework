@@ -2,7 +2,7 @@
 
 namespace core;
 
-use core\middlewares\Basemiddleware;
+use core\middlewares\BaseMiddleware;
 
 class Controller{
     public string $layout = 'main';
@@ -18,7 +18,7 @@ class Controller{
         return Application::$app->view->renderView($view, $params);
     }
 
-    public function registerMiddleware(Basemiddleware $middleware){
+    public function registerMiddleware(BaseMiddleware $middleware){
         $this->middlewares[] = $middleware;
     }
 

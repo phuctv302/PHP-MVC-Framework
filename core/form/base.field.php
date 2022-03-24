@@ -4,7 +4,7 @@ namespace core\form;
 
 use core\Model;
 
-abstract class Basefield{
+abstract class BaseField{
     public Model $model;
     public string $attribute;
 

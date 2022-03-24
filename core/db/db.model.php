@@ -5,7 +5,7 @@ namespace core\db;
 use core\Application;
 use core\Model;
 
-abstract class Dbmodel extends Model{
+abstract class DbModel extends Model{
     abstract public static function tableName(): string;
 
     abstract public function attributes(): array; // return all database columns name

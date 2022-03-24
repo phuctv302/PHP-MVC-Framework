@@ -4,7 +4,7 @@ namespace models;
 
 use core\Model;
 
-class Contactform extends Model{
+class ContactForm extends Model{
     public string $subject = '';
     public string $email = '';
     public string $body = '';

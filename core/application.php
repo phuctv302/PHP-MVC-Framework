@@ -21,7 +21,7 @@ class Application{
     public Session $session;
     public static Application $app;
     public ?Controller $controller = null;
-    public ?Usermodel $user;
+    public ?UserModel $user;
     public View $view;
 
     /**
@@ -75,7 +75,7 @@ class Application{
         }
     }
 
-    public function login(Usermodel $user){
+    public function login(UserModel $user){
         // save user into session
         $this->user = $user;
 

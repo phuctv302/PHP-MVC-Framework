@@ -3,9 +3,9 @@
 namespace core\middlewares;
 
 use core\Application;
-use core\exception\Forbiddenexception;
+use core\exception\ForbiddenException;
 
-class Authmiddleware extends Basemiddleware{
+class AuthMiddleware extends BaseMiddleware{
     public array $actions = [];
 
     public function __construct(array $actions = []){
@@ -13,12 +13,12 @@ class Authmiddleware extends Basemiddleware{
     }
 
     /**
-     * @throws Forbiddenexception
+     * @throws ForbiddenException
      */
     public function execute(){
         if (Application::isGuest()){
             if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)){
-                throw new Forbiddenexception();
+                throw new ForbiddenException();
             }
         }
     }

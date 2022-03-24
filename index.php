@@ -4,7 +4,7 @@ include 'includes/autoloader.inc.php';
 
 use core\Application;
 use core\Dotenv;
-use controllers\Sitecontroller;
+use controllers\SiteController;
 use controllers\AuthController;
 
 // config environment variables
@@ -20,16 +20,18 @@ $config = [
 ];
 
 $app = new Application(__DIR__, $config);
-$app->on(Application::EVENT_BEFORE_REQUEST, function (){
-    echo 'Before request';
-});
-$app->on(Application::EVENT_BEFORE_REQUEST, function (){
-    echo 'Before request 2';
-});
 
-$app->router->get('/', [Sitecontroller::class, 'home']);
-$app->router->get('/contact', [Sitecontroller::class, 'contact']);
-$app->router->post('/contact', [Sitecontroller::class, 'contact']);
+// Event
+//$app->on(Application::EVENT_BEFORE_REQUEST, function (){
+//    echo 'Before request';
+//});
+//$app->on(Application::EVENT_BEFORE_REQUEST, function (){
+//    echo 'Before request 2';
+//});
+
+$app->router->get('/', [SiteController::class, 'home']);
+$app->router->get('/contact', [SiteController::class, 'contact']);
+$app->router->post('/contact', [SiteController::class, 'contact']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
