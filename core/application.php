@@ -5,6 +5,7 @@ namespace core;
 class Application {
     public static string $ROOT_DIR;
 
+    public string $layout = 'main';
     public string $userClass;
     public Database $db;
     public Router $router;
@@ -12,7 +13,7 @@ class Application {
     public Response $response;
     public Session $session;
     public static Application $app;
-    public Controller $controller;
+    public ?Controller $controller = null;
     public ?Dbmodel $user;
 
     /**
@@ -56,7 +57,14 @@ class Application {
     }
 
     public function run(){
-        echo $this->router->resolve();
+        try{
+            echo $this->router->resolve();
+        } catch(\Exception $e){
+            $this->response->setStatusCode($e->getCode());
+            echo $this->router->renderView('_error', [
+                'exception' => $e
+            ]);
+        }
     }
 
     public function login(Dbmodel $user){
