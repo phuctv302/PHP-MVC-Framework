@@ -1,7 +1,11 @@
 <?php
-namespace core;
 
-abstract class Dbmodel extends Model {
+namespace core\db;
+
+use core\Application;
+use core\Model;
+
+abstract class Dbmodel extends Model{
     abstract public static function tableName(): string;
 
     abstract public function attributes(): array; // return all database columns name
@@ -12,10 +16,10 @@ abstract class Dbmodel extends Model {
         $table_name = $this->tableName();
         $attributes = $this->attributes();
         $params = array_map(fn($attr) => ":$attr", $attributes);
-        $statement = self::prepare("INSERT INTO $table_name (".implode(',', $attributes).")
-            VALUES(".implode(',', $params).")");
+        $statement = self::prepare("INSERT INTO $table_name (" . implode(',', $attributes) . ")
+            VALUES(" . implode(',', $params) . ")");
 
-        foreach ($attributes as $attribute){
+        foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
 
@@ -32,7 +36,7 @@ abstract class Dbmodel extends Model {
         // SELECT * FROM $table_name WHERE email = :email AND firstname = :firstname
 
         $statement = self::prepare("SELECT *FROM $table_name WHERE $sql");
-        foreach ($where as $key => $item){
+        foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);
         }
 

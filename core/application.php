@@ -2,7 +2,14 @@
 
 namespace core;
 
-class Application {
+use core\db\Database;
+
+class Application{
+    // for event
+    const EVENT_BEFORE_REQUEST = 'beforeRequest';
+    const EVENT_AFTER_REQUEST = 'afterRequest';
+    protected array $event_listeners = [];
+
     public static string $ROOT_DIR;
 
     public string $layout = 'main';
@@ -14,22 +21,20 @@ class Application {
     public Session $session;
     public static Application $app;
     public ?Controller $controller = null;
-    public ?Dbmodel $user;
+    public ?Usermodel $user;
     public View $view;
 
     /**
      * @return Controller
      */
-    public function getController(): Controller
-    {
+    public function getController(): Controller{
         return $this->controller;
     }
 
     /**
      * @param Controller $controller
      */
-    public function setController(Controller $controller): void
-    {
+    public function setController(Controller $controller): void{
         $this->controller = $controller;
     }
 
@@ -46,7 +51,7 @@ class Application {
         $this->db = new Database($config['db']);
 
         $primaryValue = $this->session->get('user');
-        if ($primaryValue){
+        if ($primaryValue) {
             $primaryKey = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
         } else {
@@ -59,9 +64,10 @@ class Application {
     }
 
     public function run(){
-        try{
+        $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
+        try {
             echo $this->router->resolve();
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
             echo $this->view->renderView('_error', [
                 'exception' => $e
@@ -69,7 +75,7 @@ class Application {
         }
     }
 
-    public function login(Dbmodel $user){
+    public function login(Usermodel $user){
         // save user into session
         $this->user = $user;
 
@@ -84,5 +90,14 @@ class Application {
         $this->session->remove('user');
     }
 
+    public function triggerEvent($event_name){
+        $callbacks = $this->event_listeners[$event_name] ?? [];
+        foreach ($callbacks as $callback){
+            call_user_func($callback);
+        }
+    }
 
+    public function on($event_name, $callback){
+        $this->event_listeners[$event_name][] = $callback;
+    }
 }

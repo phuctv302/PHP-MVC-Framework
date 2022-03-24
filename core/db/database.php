@@ -1,5 +1,8 @@
 <?php
-namespace core;
+
+namespace core\db;
+
+use core\Application;
 
 class Database{
     public \PDO $pdo;
@@ -16,16 +19,15 @@ class Database{
         $this->createMigrationTable();
         $appliedMigrations = $this->getAppliedMigration();
 
-        // get all the migrations
         $newMigrations = [];
-        $files = scandir(Application::$ROOT_DIR.'/migrations');
+        $files = scandir(Application::$ROOT_DIR . '/migrations');
         $toApplyMigrations = array_diff($files, $appliedMigrations);
-        foreach ($toApplyMigrations as $migration){
-            if ($migration === '.' || $migration === '..'){
+        foreach ($toApplyMigrations as $migration) {
+            if ($migration === '.' || $migration === '..') {
                 continue;
             }
 
-            require_once Application::$ROOT_DIR.'/migrations/'.$migration;
+            require_once Application::$ROOT_DIR . '/migrations/' . $migration;
             $class_name = pathinfo($migration, PATHINFO_FILENAME);
             $instance = new $class_name();
             $this->log("Applying migration $migration");
@@ -34,10 +36,10 @@ class Database{
             $newMigrations[] = $migration;
         }
 
-        if (!empty($newMigrations)){
+        if (!empty($newMigrations)) {
             $this->saveMigrations($newMigrations);
         } else {
-           $this->log("All migrations are applied");
+            $this->log("All migrations are applied");
         }
     }
 
@@ -69,6 +71,6 @@ class Database{
     }
 
     protected function log($message){
-        echo '['.date('Y-m-d H:i:s').'] - '.$message.PHP_EOL;
+        echo '[' . date('Y-m-d H:i:s') . '] - ' . $message . PHP_EOL;
     }
 }
