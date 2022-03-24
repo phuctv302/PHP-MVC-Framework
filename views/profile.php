@@ -1,3 +1,8 @@
+<?php
+/** @var $this \core\View */
+$this->title = 'Profile'; // this ~ view instance
+?>
+
 <h1>Profile</h1>
 
 <form action="" method="post">
