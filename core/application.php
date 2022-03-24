@@ -51,10 +51,10 @@ class Application{
         $this->db = new Database($config['db']);
 
         $primaryValue = $this->session->get('user');
-        if ($primaryValue) {
+        if ($primaryValue){
             $primaryKey = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
-        } else {
+        } else{
             $this->user = null;
         }
     }
@@ -65,9 +65,9 @@ class Application{
 
     public function run(){
         $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
-        try {
+        try{
             echo $this->router->resolve();
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
             $this->response->setStatusCode($e->getCode());
             echo $this->view->renderView('_error', [
                 'exception' => $e

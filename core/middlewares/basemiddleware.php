@@ -1,4 +1,5 @@
 <?php
+
 namespace core\middlewares;
 
 abstract class Basemiddleware{

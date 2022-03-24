@@ -1,4 +1,5 @@
 <?php
+
 namespace core;
 
 abstract class Model{
@@ -40,7 +41,7 @@ abstract class Model{
                 if ($rule_name === self::RULE_REQUIRED && !$value){
                     $this->addErrorForRule($attribute, self::RULE_REQUIRED);
                 }
-                if ($rule_name === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                if ($rule_name === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)){
                     $this->addErrorForRule($attribute, self::RULE_EMAIL);
                 }
                 if ($rule_name === self::RULE_MIN && strlen($value) < $rule['min']){
@@ -74,7 +75,7 @@ abstract class Model{
 
     private function addErrorForRule(string $attribute, string $rule, $params = []){
         $message = $this->errorMessages()[$rule] ?? '';
-        foreach($params as $key => $value){
+        foreach ($params as $key => $value){
             $message = str_replace("{{$key}}", $value, $message);
         }
         $this->errors[$attribute][] = $message;

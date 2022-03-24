@@ -1,10 +1,11 @@
 <?php
+
 namespace core\middlewares;
 
 use core\Application;
 use core\exception\Forbiddenexception;
 
-class Authmiddleware extends Basemiddleware {
+class Authmiddleware extends Basemiddleware{
     public array $actions = [];
 
     public function __construct(array $actions = []){

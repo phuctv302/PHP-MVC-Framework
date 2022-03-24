@@ -19,7 +19,7 @@ abstract class Dbmodel extends Model{
         $statement = self::prepare("INSERT INTO $table_name (" . implode(',', $attributes) . ")
             VALUES(" . implode(',', $params) . ")");
 
-        foreach ($attributes as $attribute) {
+        foreach ($attributes as $attribute){
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
 
@@ -36,7 +36,7 @@ abstract class Dbmodel extends Model{
         // SELECT * FROM $table_name WHERE email = :email AND firstname = :firstname
 
         $statement = self::prepare("SELECT *FROM $table_name WHERE $sql");
-        foreach ($where as $key => $item) {
+        foreach ($where as $key => $item){
             $statement->bindValue(":$key", $item);
         }
 

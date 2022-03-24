@@ -1,4 +1,5 @@
 <?php
+
 namespace models;
 
 use core\Application;

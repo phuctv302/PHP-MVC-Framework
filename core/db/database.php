@@ -22,8 +22,8 @@ class Database{
         $newMigrations = [];
         $files = scandir(Application::$ROOT_DIR . '/migrations');
         $toApplyMigrations = array_diff($files, $appliedMigrations);
-        foreach ($toApplyMigrations as $migration) {
-            if ($migration === '.' || $migration === '..') {
+        foreach ($toApplyMigrations as $migration){
+            if ($migration === '.' || $migration === '..'){
                 continue;
             }
 
@@ -36,9 +36,9 @@ class Database{
             $newMigrations[] = $migration;
         }
 
-        if (!empty($newMigrations)) {
+        if (!empty($newMigrations)){
             $this->saveMigrations($newMigrations);
-        } else {
+        } else{
             $this->log("All migrations are applied");
         }
     }

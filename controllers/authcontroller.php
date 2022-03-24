@@ -1,4 +1,5 @@
 <?php
+
 namespace controllers;
 
 use core\Application;
@@ -9,7 +10,7 @@ use core\Response;
 use models\Loginform;
 use models\User;
 
-class AuthController extends Controller {
+class AuthController extends Controller{
     public function __construct(){
         $this->registerMiddleware(new Authmiddleware(['profile']));
     }
@@ -50,7 +51,7 @@ class AuthController extends Controller {
         ]);
     }
 
-    public function logout(Request $request, Response  $response){
+    public function logout(Request $request, Response $response){
         Application::$app->logout();
         $response->redirect('/');
     }

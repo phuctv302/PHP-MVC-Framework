@@ -4,7 +4,7 @@ namespace core;
 
 use core\middlewares\Basemiddleware;
 
-class Controller {
+class Controller{
     public string $layout = 'main';
     public string $action = '';
 
@@ -14,7 +14,7 @@ class Controller {
         $this->layout = $layout;
     }
 
-    public function render($view, $params = []) {
+    public function render($view, $params = []){
         return Application::$app->view->renderView($view, $params);
     }
 
@@ -25,8 +25,7 @@ class Controller {
     /**
      * @return array
      */
-    public function getMiddlewares(): array
-    {
+    public function getMiddlewares(): array{
         return $this->middlewares;
     }
 

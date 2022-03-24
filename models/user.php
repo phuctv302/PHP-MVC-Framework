@@ -1,16 +1,17 @@
 <?php
+
 namespace models;
 
 use core\Dbmodel;
 use core\Model;
 use core\Usermodel;
 
-class User extends Usermodel {
+class User extends Usermodel{
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
-    public string $firstname  = '';
+    public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
     public int $status = self::STATUS_INACTIVE;

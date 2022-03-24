@@ -1,4 +1,5 @@
 <?php
+
 namespace core;
 
 class View{
@@ -21,7 +22,7 @@ class View{
             $layout = Application::$app->controller->layout;
         }
         ob_start(); // caching the output
-        include_once Application::$ROOT_DIR."/views/layouts/$layout.php";
+        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
         return ob_get_clean(); // return output & clear the buffer
     }
 
@@ -31,7 +32,7 @@ class View{
         }
 
         ob_start();
-        include_once Application::$ROOT_DIR."/views/$view.php";
+        include_once Application::$ROOT_DIR . "/views/$view.php";
         return ob_get_clean();
     }
 }

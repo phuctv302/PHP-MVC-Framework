@@ -1,9 +1,10 @@
 <?php
+
 namespace models;
 
 use core\Model;
 
-class Contactform extends Model {
+class Contactform extends Model{
     public string $subject = '';
     public string $email = '';
     public string $body = '';

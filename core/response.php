@@ -1,4 +1,5 @@
 <?php
+
 namespace core;
 
 class Response{
@@ -7,6 +8,6 @@ class Response{
     }
 
     public function redirect(string $url){
-        header('Location: '.$url);
+        header('Location: ' . $url);
     }
 }

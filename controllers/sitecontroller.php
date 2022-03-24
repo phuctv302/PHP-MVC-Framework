@@ -9,7 +9,7 @@ use core\Response;
 use models\Contactform;
 
 class Sitecontroller extends Controller{
-    public function home() {
+    public function home(){
         $params = [
             'name' => "TheCodeholic"
         ];
@@ -17,7 +17,7 @@ class Sitecontroller extends Controller{
     }
 
 
-    public function contact(Request $request, Response $response) {
+    public function contact(Request $request, Response $response){
         $contact = new Contactform();
         if ($request->isPost()){
             $contact->loadData($request->getBody());
@@ -26,7 +26,7 @@ class Sitecontroller extends Controller{
                 return $response->redirect('/contact');
             }
         }
-        return $this->render('contact',[
+        return $this->render('contact', [
             'model' => $contact
         ]);
     }
