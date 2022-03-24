@@ -1,5 +1,5 @@
 <?php
-namespace form;
+namespace core\form;
 
 use core\Model;
 

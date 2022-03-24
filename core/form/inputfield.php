@@ -3,7 +3,7 @@
 namespace core\form;
 
 use core\Model;
-use form\Basefield;
+use core\form\Basefield;
 
 class Inputfield extends Basefield{
     public const TYPE_TEXT = 'text';
@@ -13,24 +13,8 @@ class Inputfield extends Basefield{
     public string $type;
 
     public function __construct(Model $model, string $attribute){
-        $this->type = self::TYPE_TEXT;
         parent::__construct($model, $attribute);
-    }
-
-    public function __toString(){
-        return sprintf('
-        <div class="mb-3">
-            <label>%s</label>
-            %s
-            <div class="invalid-feedback">
-                %s
-            </div>
-        </div>
-        ',
-            $this->model->getLabel($this->attribute),
-            $this->renderInput(),
-            $this->model->getFirstError($this->attribute)
-        );
+        $this->type = self::TYPE_TEXT;
     }
 
     public function passwordField(){

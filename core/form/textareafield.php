@@ -1,8 +1,6 @@
 <?php
 namespace core\form;
 
-use form\Basefield;
-
 class TextareaField extends Basefield {
 
     public function renderInput(): string{

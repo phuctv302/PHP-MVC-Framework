@@ -12,7 +12,6 @@ $this->title = 'Contact';
 <?php $form = \core\form\Form::begin('', 'post') ?>
     <?php echo $form->field($model, 'subject') ?>
     <?php echo $form->field($model, 'email') ?>
-    <?php echo $form->field($model, 'body') ?>
     <?php echo new TextareaField($model, 'body') ?>
 
     <button type="submit" class="btn btn-primary">Submit</button>
