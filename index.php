@@ -22,7 +22,7 @@ $app = new Application(__DIR__, $config);
 
 $app->router->get('/', [Sitecontroller::class, 'home']);
 $app->router->get('/contact', [Sitecontroller::class, 'contact']);
-$app->router->post('/contact', [Sitecontroller::class, 'handleContact']);
+$app->router->post('/contact', [Sitecontroller::class, 'contact']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
