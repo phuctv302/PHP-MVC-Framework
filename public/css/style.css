@@ -43,6 +43,8 @@ a {
     padding: 20px;
     margin: 0 25px;
     width: 750px;
+    height: 910px;
+    overflow-y: scroll;
 }
 
 .auth__container {
