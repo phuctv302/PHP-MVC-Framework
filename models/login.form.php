@@ -19,7 +19,7 @@ class LoginForm extends Model{
 
     public function labels(): array{
         return [
-            'email' => 'Your email',
+            'email' => 'Email',
             'password' => 'Password'
         ];
     }
@@ -30,7 +30,7 @@ class LoginForm extends Model{
             $this->addError('email', 'User does not exist with this email');
             return false;
         }
-        if (password_verify($this->password, $user->password)){
+        if (!password_verify($this->password, $user->password)){
             $this->addError('password', 'Password is incorrect');
             return false;
         }

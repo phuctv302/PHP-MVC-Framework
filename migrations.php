@@ -9,6 +9,7 @@ use core\Dotenv;
 $dotenv = new Dotenv(__DIR__ . '/.env');
 $dotenv->load();
 $config = [
+    'userClass' => \models\User::class,
     'db' => [
         'dsn' => $_ENV['DB_DSN'],
         'user' => $_ENV['DB_USER'],

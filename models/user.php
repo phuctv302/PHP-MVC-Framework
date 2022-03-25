@@ -2,8 +2,6 @@
 
 namespace models;
 
-use core\Dbmodel;
-use core\Model;
 use core\UserModel;
 
 class User extends UserModel{
@@ -14,6 +12,7 @@ class User extends UserModel{
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
+    public string $username = '';
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
     public string $confirmPassword = '';
@@ -39,6 +38,9 @@ class User extends UserModel{
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
                 self::RULE_UNIQUE, 'class' => self::class
             ]],
+            'username' => [self::RULE_REQUIRED, [
+                self::RULE_UNIQUE, 'class' => self::class
+            ]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 24]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']]
         ];
@@ -46,13 +48,14 @@ class User extends UserModel{
 
     public function attributes(): array{
         // return all database column name
-        return ['firstname', 'lastname', 'email', 'password', 'status'];
+        return ['firstname', 'lastname', 'email', 'username', 'password', 'status'];
     }
 
     public function labels(): array{
         return [
             'firstname' => 'First name',
             'lastname' => 'Last name',
+            'username' => 'User name',
             'email' => 'Email',
             'password' => 'Password',
             'confirmPassword' => 'Confirm password'

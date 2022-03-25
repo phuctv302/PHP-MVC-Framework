@@ -38,7 +38,7 @@ class Application{
         $this->controller = $controller;
     }
 
-    public function __construct($rootPath, $config){
+    public function __construct($rootPath, array $config){
         $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;

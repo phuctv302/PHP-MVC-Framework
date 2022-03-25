@@ -4,9 +4,10 @@ namespace core\form;
 
 use core\Model;
 
-class Form{
-    public static function begin($action, $method){
-        echo sprintf('<form action="%s" method="%s">', $action, $method);
+class Form {
+    public static function begin($action, $method, $class){
+        echo sprintf('<form action="%s" method="%s" class="%s">',
+            $action, $method, $class);
         return new form();
     }
 

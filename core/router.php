@@ -9,6 +9,14 @@ class Router{
     public Response $response;
     protected array $routes = [];
 
+    /**
+     * e.g: @var $routes = [
+     *      'get' => [
+     *          '/' => callback,
+     *          '/contact' => callback
+     *       ],
+     *       'post' => ...
+     * */
     public function get($path, $callback){
         $this->routes['get'][$path] = $callback;
     }

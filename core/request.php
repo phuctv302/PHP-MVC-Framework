@@ -4,13 +4,16 @@ namespace core;
 
 class Request{
     public function getPath(){
+        // $_SERVER['REQUEST_URI'] returns path include query string: /path?id=1
         $path = $_SERVER['REQUEST_URI'] ?? '/';
+
+        // Get the position of '?'
         $position = strpos($path, '?');
         if ($position === false){
-            return $path;
+            return $path; // if no '?' return path (/path)
         }
 
-        return substr($path, 0, $position);
+        return substr($path, 0, $position); // remove query string
     }
 
     public function method(){

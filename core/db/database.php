@@ -4,7 +4,7 @@ namespace core\db;
 
 use core\Application;
 
-class Database{
+class Database {
     public \PDO $pdo;
 
     public function __construct(array $config){
@@ -38,7 +38,7 @@ class Database{
 
         if (!empty($newMigrations)){
             $this->saveMigrations($newMigrations);
-        } else{
+        } else {
             $this->log("All migrations are applied");
         }
     }

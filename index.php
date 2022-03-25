@@ -29,6 +29,9 @@ $app = new Application(__DIR__, $config);
 //    echo 'Before request 2';
 //});
 
+/*
+ * SiteController::class return "SiteController"
+ * */
 $app->router->get('/', [SiteController::class, 'home']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'contact']);
