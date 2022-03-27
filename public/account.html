@@ -4,13 +4,216 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Tran Van Phuc - Account</title>
 
         <link
             rel="shortcut icon"
             href="https://share-gcdn.basecdn.net/apps/account.png"
             type="image/x-icon"
         />
+
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.css"
+            rel="stylesheet"
+            media="all"
+        />
+
+        <link rel="stylesheet" href="/css/style.css" />
     </head>
-    <body></body>
+    <body>
+        <div class="user-view">
+            <!-- Left navbar -->
+            <nav class="user-view__left-menu">
+                <ul class="left-nav">
+                    <li class="left-nav__user-image">
+                        <img src="/img/users/default.jpg" alt="User image" />
+                    </li>
+                    <li class="left-nav__el left-nav__el--active">
+                        <i class="fas fa-user-circle"></i>
+                        <p class="el__label">Account</p>
+                    </li>
+                    <li class="left-nav__el left-nav__el">
+                        <i class="fas fa-user-friends"></i>
+                        <p class="el__label">Members</p>
+                    </li>
+                    <li class="left-nav__el left-nav__el">
+                        <i class="fas fa-code-branch"></i>
+                        <p class="el__label">Groups</p>
+                    </li>
+                    <li class="left-nav__el left-nav__el">
+                        <i class="far fa-square"></i>
+                        <p class="el__label">Guests</p>
+                    </li>
+                    <li class="left-nav__el left-nav__el">
+                        <i class="far fa-bookmark"></i>
+                        <p class="el__label">Application</p>
+                    </li>
+                </ul>
+
+                <div class="logout-btn">Logout</div>
+            </nav>
+
+            <!-- Info of user -->
+            <div class="user-view__content">
+                <div class="content__header">
+                    <div class="header__account">
+                        <i class="fas fa-arrow-left text--gray"></i>
+                        <div class="account__info">
+                            <p class="info__label text--gray">Account</p>
+                            <p class="info__content">
+                                Trần Văn Phúc · Software Engineer (Fresher)
+                            </p>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn btn-edit"
+                        ><span><i class="fas fa-arrow-up"></i></span> Edit my
+                        account</a
+                    >
+                </div>
+
+                <div class="content__detail">
+                    <div class="user-detail">
+                        <img
+                            class="user-detail__image"
+                            src="/img/users/default.jpg"
+                            alt="User"
+                        />
+                        <div class="user-detail__info">
+                            <p class="info__name">Tran Van Phuc</p>
+                            <p class="info__job text--gray">
+                                Software Engineer (Fresher)
+                            </p>
+                            <p class="info__email">
+                                <b>Email address:</b> phuc.tran@platform.inc
+                            </p>
+                            <p class="info__phone">
+                                <b>Phone number:</b> 0984801847
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="user-contact other-info">
+                        <p class="info__title text--gray">Contact info</p>
+                        <div class="info__content">
+                            <p class="label text--gray"><b>Address</b></p>
+                            <p class="value">
+                                Ngo 362, Giai Phong, Thinh Liet, Hoang Mai, Ha
+                                Noi
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="user-groups other-info">
+                        <p class="info__title text--gray">User groups (0)</p>
+                    </div>
+
+                    <div class="user-reports other-info">
+                        <p class="info__title text--gray">Direct reports (0)</p>
+                    </div>
+
+                    <div class="user-education other-info">
+                        <p class="info__title text--gray">Contact info</p>
+                        <div class="other-info__list">No information</div>
+                    </div>
+
+                    <div class="user-experiences other-info">
+                        <p class="info__title text--gray">Work experiences</p>
+                        <div class="other-info__list">No information</div>
+                    </div>
+
+                    <div class="user-awards other-info">
+                        <p class="info__title text--gray">Honors and awards</p>
+                        <div class="other-info__list">No information</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right navbar -->
+            <div class="user-view__right-menu">
+                <div class="menu__header">
+                    <p class="header__title">Tran Van Phuc</p>
+                    <p class="header__content">
+                        @phuctran · phuc.tran@platform.inc
+                    </p>
+                </div>
+
+                <div class="menu__main">
+                    <div class="menu__el menu__account-info">
+                        <p class="title text--gray">Account information</p>
+                        <nav class="right-nav__container">
+                            <ul class="right-nav">
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-cog"></i>
+                                    <p class="el__label">Account overview</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-pen"></i>
+                                    <p class="el__label">Edit account</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-globe"></i>
+                                    <p class="el__label">Edit language</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <p class="el__label">Edit password</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-palette"></i>
+                                    <p class="el__label">Edit theme color</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="far fa-clock"></i>
+                                    <p class="el__label">Set timesheet</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <p class="el__label">
+                                        2-factor authentication
+                                    </p>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="menu__el">
+                        <p class="title text--gray">Application & Security</p>
+                    </div>
+
+                    <div class="menu__el">
+                        <p class="title text--gray">Advance setting</p>
+                        <nav class="right-nav__container">
+                            <ul class="right-nav">
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="far fa-clock"></i>
+                                    <p class="el__label">Login histories</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-tv"></i>
+                                    <p class="el__label">
+                                        Manage linked devices
+                                    </p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-envelope"></i>
+                                    <p class="el__label">
+                                        Edit email notification
+                                    </p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="far fa-clock"></i>
+                                    <p class="el__label">Edit timezone</p>
+                                </li>
+                                <li class="right-nav__el right-nav__el--active">
+                                    <i class="fas fa-code-branch"></i>
+                                    <p class="el__label">On-leave delegation</p>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

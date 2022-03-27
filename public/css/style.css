@@ -11,6 +11,10 @@ a {
     text-decoration: none;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .btn {
     text-align: center;
     border: none;
@@ -180,4 +184,175 @@ a {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+/* ACCOUNT PAGE
+***************************************************************************/
+.user-view {
+    display: flex;
+}
+
+/* Left nav */
+.user-view__left-menu {
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2d2520;
+    color: gray;
+}
+
+.left-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.left-nav__user-image {
+    height: 51px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left-nav__user-image img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.left-nav__el {
+    display: flex;
+    padding: 4px 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    cursor: pointer;
+    width: 100%;
+}
+.left-nav__el:hover,
+.left-nav__el--active {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: bold;
+}
+
+.left-nav__el i {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.left-nav__el .el__label {
+    font-size: 12px;
+}
+
+/* User information */
+.user-view__content {
+    min-height: 1300px;
+    width: 70%;
+    padding: 0 20px;
+}
+
+.content__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 74px;
+    border-bottom: 2px solid #eee;
+}
+
+.header__account {
+    display: flex;
+    align-items: center;
+}
+
+.header__account .info__content {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.account__info .info__label {
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.header__account i {
+    margin-right: 20px;
+    font-size: 25px;
+}
+
+.btn-edit {
+    color: white;
+    background-color: #e66419;
+    padding: 9px 15px;
+    font-size: 15px;
+}
+
+.content__detail {
+    width: 650px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.user-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.user-detail img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.info__name {
+    font-size: 26px;
+}
+
+.info__job {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.info__email,
+.info__phone {
+    font-size: 14px;
+    padding: 3px 0;
+}
+
+.other-info {
+    padding: 40px 0 20px;
+}
+
+.info__title {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.other-info .info__content {
+    padding: 10px 80px 10px 0;
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px #ddd dotted;
+}
+
+.other-info__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    background-color: #f8f8f8;
+    margin-top: 25px;
+    padding: 20px;
+    font-weight: 300;
+    font-size: 14px;
 }
