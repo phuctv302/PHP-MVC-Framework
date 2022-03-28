@@ -1,23 +1,297 @@
 <?php
 /** @var $this \core\View */
-$this->title = 'Profile'; // this ~ view instance
+$this->title = $user->getDisplayName(); // this ~ view instance
 ?>
 
-<h1>Profile</h1>
+<div class="user-view">
+    <!-- Left navbar -->
+    <nav class="user-view__left-menu">
+        <ul class="left-nav">
+            <li class="left-nav__user-image">
+                <img src="/public/img/users/default.jpg" alt="User image" />
+            </li>
+            <li class="left-nav__el left-nav__el--active">
+                <i class="fas fa-user-circle"></i>
+                <p class="el__label">Account</p>
+            </li>
+            <li class="left-nav__el left-nav__el">
+                <i class="fas fa-user-friends"></i>
+                <p class="el__label">Members</p>
+            </li>
+            <li class="left-nav__el left-nav__el">
+                <i class="fas fa-code-branch"></i>
+                <p class="el__label">Groups</p>
+            </li>
+            <li class="left-nav__el left-nav__el">
+                <i class="far fa-square"></i>
+                <p class="el__label">Guests</p>
+            </li>
+            <li class="left-nav__el left-nav__el">
+                <i class="far fa-bookmark"></i>
+                <p class="el__label">Application</p>
+            </li>
+        </ul>
 
-<form action="" method="post">
-    <div class="mb-3">
-        <label>Subject</label>
-        <input type="email" name="subject" class="form-control">
-    </div>
-    <div class="mb-3">
-        <label>Email</label>
-        <input type="email" name="subject" class="form-control">
-    </div>
-    <div class="mb-3">
-        <label>Body</label>
-        <textarea type="email" name="subject" class="form-control"></textarea>
+        <div class="logout-btn">Logout</div>
+    </nav>
+
+    <!-- Info of user -->
+    <div class="user-view__content">
+        <div class="content__header">
+            <div class="header__account">
+                <i class="fas fa-arrow-left text--gray"></i>
+                <div class="account__info">
+                    <p class="info__label text--gray">Account</p>
+                    <p class="info__content">
+                        Trần Văn Phúc · Software Engineer (Fresher)
+                    </p>
+                </div>
+            </div>
+
+            <div class="btn btn-edit show-form"
+            ><span><i class="fas fa-arrow-up"></i></span> Edit my
+                account</div
+            >
+        </div>
+
+        <div class="content__detail">
+            <div class="user-detail">
+                <img
+                        class="user-detail__image"
+                        src="/public/img/users/default.jpg"
+                        alt="User"
+                />
+                <div class="user-detail__info">
+                    <p class="info__name"><?php echo $user->getDisplayName() ?></p>
+                    <p class="info__job text--gray">
+                        Software Engineer (Fresher)
+                    </p>
+                    <p class="info__email">
+                        <b>Email address:</b> <?php echo $user->email ?>
+                    </p>
+                    <p class="info__phone">
+                        <b>Phone number:</b> 0984801847
+                    </p>
+                </div>
+            </div>
+
+            <div class="user-contact other-info">
+                <p class="info__title text--gray">Contact info</p>
+                <div class="info__content">
+                    <p class="label text--gray"><b>Address</b></p>
+                    <p class="value">
+                        Ngo 362, Giai Phong, Thinh Liet, Hoang Mai, Ha
+                        Noi
+                    </p>
+                </div>
+            </div>
+
+            <div class="user-groups other-info">
+                <p class="info__title text--gray">User groups (0)</p>
+            </div>
+
+            <div class="user-reports other-info">
+                <p class="info__title text--gray">Direct reports (0)</p>
+            </div>
+
+            <div class="user-education other-info">
+                <p class="info__title text--gray">Contact info</p>
+                <div class="other-info__list">No information</div>
+            </div>
+
+            <div class="user-experiences other-info">
+                <p class="info__title text--gray">Work experiences</p>
+                <div class="other-info__list">No information</div>
+            </div>
+
+            <div class="user-awards other-info">
+                <p class="info__title text--gray">Honors and awards</p>
+                <div class="other-info__list">No information</div>
+            </div>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <!-- Right navbar -->
+    <div class="user-view__right-menu">
+        <div class="menu__header">
+            <p class="header__title">Tran Van Phuc</p>
+            <p class="header__content text--gray">
+                @phuctran · phuc.tran@platform.inc
+            </p>
+        </div>
+
+        <div class="menu__main">
+            <div class="menu__el menu__account-info">
+                <p class="title text--gray">Account information</p>
+                <nav class="right-nav__container">
+                    <ul class="right-nav">
+                        <li class="right-nav__el right-nav__el--active">
+                            <i class="fas fa-cog"></i>
+                            <p class="el__label">Account overview</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-pen"></i>
+                            <p class="el__label nav__edit show-form">Edit account</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-globe"></i>
+                            <p class="el__label">Edit language</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p class="el__label">Edit password</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-palette"></i>
+                            <p class="el__label">Edit theme color</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="far fa-clock"></i>
+                            <p class="el__label">Set timesheet</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-shield-alt"></i>
+                            <p class="el__label">
+                                2-factor authentication
+                            </p>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="menu__el">
+                <p class="title text--gray">Application & Security</p>
+                <nav class="right-nav__container">
+                    <ul class="right-nav"></ul>
+                </nav>
+            </div>
+
+            <div class="menu__el">
+                <p class="title text--gray">Advance setting</p>
+                <nav class="right-nav__container">
+                    <ul class="right-nav">
+                        <li class="right-nav__el">
+                            <i class="far fa-clock"></i>
+                            <p class="el__label">Login histories</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-tv"></i>
+                            <p class="el__label">
+                                Manage linked devices
+                            </p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-envelope"></i>
+                            <p class="el__label">
+                                Edit email notification
+                            </p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="far fa-clock"></i>
+                            <p class="el__label">Edit timezone</p>
+                        </li>
+                        <li class="right-nav__el">
+                            <i class="fas fa-code-branch"></i>
+                            <p class="el__label">On-leave delegation</p>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layout hidden"></div>
+
+<form class="form form-edit hidden" action="" method="post">
+    <div class="form__header">
+        <p class="form__title">Edit personal account</p>
+        <div class="form__close-container close-form">
+            <i class="fas fa-times form__close"></i>
+        </div>
+    </div>
+
+    <div class="form__content">
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Your first name</p>
+                <p class="form__sub-label">Your first name</p>
+            </div>
+            <input value="<?php echo $user->firstname ?>" type="text" name="firstname" />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Your last name</p>
+                <p class="form__sub-label">Your last name</p>
+            </div>
+            <input value="<?php echo $user->lastname ?>" type="text" name="lastname" />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Your email address</p>
+                <p class="form__sub-label">Your email address</p>
+            </div>
+            <input
+                    value="<?php echo $user->email ?>"
+                    type="email"
+                    name="email"
+                    disabled
+            />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Username</p>
+                <p class="form__sub-label">Your username</p>
+            </div>
+            <input value="@<?php echo $user->username ?>" type="text" name="username" disabled/>
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Job title</p>
+                <p class="form__sub-label">Job title</p>
+            </div>
+            <input
+                    value="Software Engineer (Fresher)"
+                    type="text"
+                    name="job-title"
+            />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Profile image</p>
+                <p class="form__sub-label">Profile image</p>
+            </div>
+            <input type="file" name="photo" />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Date of birth</p>
+                <p class="form__sub-label">Date of birth</p>
+            </div>
+            <input value="<?php echo date('Y-m-d', 981158400) ?>" type="date" name="birthday" />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Your phone number</p>
+                <p class="form__sub-label">Your phone number</p>
+            </div>
+            <input value="0984801847" type="number" name="phone" />
+        </div>
+        <div class="form__group">
+            <div class="form__label-container">
+                <p class="form__label">Current address</p>
+                <p class="form__sub-label">Current address</p>
+            </div>
+            <input
+                    value="Ngo 362, Giai Phong, Thinh Liet, Hoang Mai, Ha Noi"
+                    type="text"
+                    name="address"
+            />
+        </div>
+    </div>
+
+    <div class="form__button">
+        <button type="button" class="btn btn-cancel close-form">Cancel</button>
+        <button class="btn btn-update">Update</button>
+    </div>
 </form>

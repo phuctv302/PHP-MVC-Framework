@@ -7,10 +7,11 @@ use core\Controller;
 use core\middlewares\AuthMiddleware;
 use core\Request;
 use core\Response;
+use models\EditForm;
 use models\LoginForm;
 use models\User;
 
-class AuthController extends Controller{
+class AuthController extends Controller {
     public function __construct(){
         $this->registerMiddleware(new AuthMiddleware(['profile']));
     }
@@ -36,7 +37,7 @@ class AuthController extends Controller{
             $user->loadData($request->getBody());
 
             if ($user->validate() && $user->save()){
-                Application::$app->session->setFlash('success', 'Thanks for registering');
+                // Application::$app->session->setFlash('success', 'Thanks for registering');
                 Application::$app->response->redirect('/login');
                 exit;
             }
@@ -56,7 +57,25 @@ class AuthController extends Controller{
         $response->redirect('/');
     }
 
+    public function updateUser(Request $request, Response $response){
+        $edit_form = new EditForm();
+        if ($request->isPost()){
+            $edit_form->loadData($request->getBody());
+
+            if ($edit_form->validate() && $edit_form->updateUser($request->getBody())){
+                $response->redirect('/profile');
+                return;
+            }
+        }
+        $this->setLayout('auth');
+        return $this->render('register', [
+            'model' => $edit_form
+        ]);
+    }
+
     public function profile(){
-        return $this->render('profile');
+        return $this->render('profile', [
+            'user' => Application::$app->user
+        ]);
     }
 }

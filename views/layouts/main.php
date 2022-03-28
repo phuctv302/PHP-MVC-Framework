@@ -12,11 +12,18 @@ use core\Application;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo $this->title; ?> - Base Account</title>
 
-    <link rel="stylesheet" href="public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+
     <link
             rel="shortcut icon"
             href="https://share-gcdn.basecdn.net/apps/account.png"
             type="image/x-icon"
+    />
+
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.css"
+            rel="stylesheet"
+            media="all"
     />
 </head>
     <body>
@@ -72,9 +79,7 @@ use core\Application;
         {{content}}
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+    <script src="/public/js/script.js"></script>
 
     </body>
     </html>

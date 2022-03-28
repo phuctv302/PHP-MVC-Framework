@@ -90,6 +90,16 @@ class Application{
         $this->session->remove('user');
     }
 
+    public function updateUser(UserModel $user){
+        $this->user = $user;
+
+        $primaryKey = $user->primaryKey();
+        $primaryValue = $user->{$primaryKey};
+        $this->session->set('user', $primaryValue);
+
+        return true;
+    }
+
     public function triggerEvent($event_name){
         $callbacks = $this->event_listeners[$event_name] ?? [];
         foreach ($callbacks as $callback){

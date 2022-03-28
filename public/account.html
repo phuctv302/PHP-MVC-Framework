@@ -133,7 +133,7 @@
             <div class="user-view__right-menu">
                 <div class="menu__header">
                     <p class="header__title">Tran Van Phuc</p>
-                    <p class="header__content">
+                    <p class="header__content text--gray">
                         @phuctran · phuc.tran@platform.inc
                     </p>
                 </div>
@@ -147,27 +147,27 @@
                                     <i class="fas fa-cog"></i>
                                     <p class="el__label">Account overview</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-pen"></i>
                                     <p class="el__label">Edit account</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-globe"></i>
                                     <p class="el__label">Edit language</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-exclamation-circle"></i>
                                     <p class="el__label">Edit password</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-palette"></i>
                                     <p class="el__label">Edit theme color</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="far fa-clock"></i>
                                     <p class="el__label">Set timesheet</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-shield-alt"></i>
                                     <p class="el__label">
                                         2-factor authentication
@@ -179,33 +179,36 @@
 
                     <div class="menu__el">
                         <p class="title text--gray">Application & Security</p>
+                        <nav class="right-nav__container">
+                            <ul class="right-nav"></ul>
+                        </nav>
                     </div>
 
                     <div class="menu__el">
                         <p class="title text--gray">Advance setting</p>
                         <nav class="right-nav__container">
                             <ul class="right-nav">
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="far fa-clock"></i>
                                     <p class="el__label">Login histories</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-tv"></i>
                                     <p class="el__label">
                                         Manage linked devices
                                     </p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-envelope"></i>
                                     <p class="el__label">
                                         Edit email notification
                                     </p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="far fa-clock"></i>
                                     <p class="el__label">Edit timezone</p>
                                 </li>
-                                <li class="right-nav__el right-nav__el--active">
+                                <li class="right-nav__el">
                                     <i class="fas fa-code-branch"></i>
                                     <p class="el__label">On-leave delegation</p>
                                 </li>
@@ -215,5 +218,99 @@
                 </div>
             </div>
         </div>
+
+        <div class="layout hidden"></div>
+
+        <form class="form form-edit hidden" action="" method="post">
+            <div class="form__header">
+                <p class="form__title">Edit personal account</p>
+                <div class="form__close-container">
+                    <i class="fas fa-times form__close"></i>
+                </div>
+            </div>
+
+            <div class="form__content">
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Your first name</p>
+                        <p class="form__sub-label">Your first name</p>
+                    </div>
+                    <input value="Phuc" type="text" name="firstname" />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Your last name</p>
+                        <p class="form__sub-label">Your last name</p>
+                    </div>
+                    <input value="Tran Van" type="text" name="lastname" />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Your email address</p>
+                        <p class="form__sub-label">Your email address</p>
+                    </div>
+                    <input
+                        value="phuc.tran@platform.inc"
+                        type="email"
+                        name="email"
+                    />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Username</p>
+                        <p class="form__sub-label">Your username</p>
+                    </div>
+                    <input value="@phuctran" type="text" name="username" />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Job title</p>
+                        <p class="form__sub-label">Job title</p>
+                    </div>
+                    <input
+                        value="Software Engineer (Fresher)"
+                        type="text"
+                        name="job-title"
+                    />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Profile image</p>
+                        <p class="form__sub-label">Profile image</p>
+                    </div>
+                    <input type="file" name="photo" />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Date of birth</p>
+                        <p class="form__sub-label">Date of birth</p>
+                    </div>
+                    <input type="date" name="birthday" />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Your phone number</p>
+                        <p class="form__sub-label">Your phone number</p>
+                    </div>
+                    <input value="0984801847" type="number" name="phone" />
+                </div>
+                <div class="form__group">
+                    <div class="form__label-container">
+                        <p class="form__label">Current address</p>
+                        <p class="form__sub-label">Current address</p>
+                    </div>
+                    <input
+                        value="Ngo 362, Giai Phong, Thinh Liet, Hoang Mai, Ha Noi"
+                        type="text"
+                        name="address"
+                    />
+                </div>
+            </div>
+
+            <div class="form__button">
+                <button class="btn btn-cancel">Cancel</button>
+                <button class="btn btn-update">Update</button>
+            </div>
+        </form>
     </body>
 </html>
