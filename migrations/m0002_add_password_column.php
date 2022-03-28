@@ -11,7 +11,7 @@ class m0002_add_password_column{
     public function down(){
         $db = \core\Application::$app->db;
         $SQL = "ALTER TABLE users
-                ADD COLUMN password VARCHAR(512) NOT NULL";
+                DROP COLUMN password";
         $db->pdo->exec($SQL);
     }
 }

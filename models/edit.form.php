@@ -10,19 +10,27 @@ class EditForm extends Model {
     public string $firstname = '';
     public string $lastname = '';
     public string $job_title = '';
-    public string $email = '';
+
+    public function updateUser($data){
+        $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title']);
+        User::updateOne([User::primaryKey() => $_SESSION['user']], $filterData);
+        return true;
+    }
 
     public function rules(): array{
         return [
-            'firstname' => [self::RULE_REQUIRED],
-            'lastname' => [self::RULE_REQUIRED],
-            'job_title' => [self::RULE_REQUIRED],
+            'firstname' => [self::RULE_REQUIRED]
         ];
     }
 
-    public function updateUser($data){
-        $user = User::updateOne(['email' => $this->email], $data);
+    public function filterFields($data, $allowedFields= []){
+        $filterData = [];
+        foreach ($allowedFields as $allowedField){
+            if (in_array($allowedField, array_keys($data))){
+                $filterData[$allowedField] = $data[$allowedField];
+            }
+        }
 
-        return Application::$app->updateUser($user);
+        return $filterData;
     }
 }

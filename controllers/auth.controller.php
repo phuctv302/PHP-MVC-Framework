@@ -33,7 +33,10 @@ class AuthController extends Controller {
 
     public function register(Request $request){
         $user = new User();
+
+        // post method
         if ($request->isPost()){
+            // save data to user model
             $user->loadData($request->getBody());
 
             if ($user->validate() && $user->save()){
@@ -57,19 +60,21 @@ class AuthController extends Controller {
         $response->redirect('/');
     }
 
-    public function updateUser(Request $request, Response $response){
+    public function updateUser(Request $request){
         $edit_form = new EditForm();
         if ($request->isPost()){
             $edit_form->loadData($request->getBody());
-
             if ($edit_form->validate() && $edit_form->updateUser($request->getBody())){
-                $response->redirect('/profile');
+                Application::$app->response->redirect('/profile');
                 return;
             }
+            return $this->render('profile', [
+                'model' => Application::$app->user
+            ]);
         }
-        $this->setLayout('auth');
-        return $this->render('register', [
-            'model' => $edit_form
+        $this->setLayout('main');
+        return $this->render('profile', [
+            'model' => Application::$app->user
         ]);
     }
 

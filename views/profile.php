@@ -43,7 +43,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <div class="account__info">
                     <p class="info__label text--gray">Account</p>
                     <p class="info__content">
-                        Trần Văn Phúc · Software Engineer (Fresher)
+                        <?php echo $user->getDisplayName() ?> · <?php echo $user->job_title ?>
                     </p>
                 </div>
             </div>
@@ -64,7 +64,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <div class="user-detail__info">
                     <p class="info__name"><?php echo $user->getDisplayName() ?></p>
                     <p class="info__job text--gray">
-                        Software Engineer (Fresher)
+                        <?php echo $user->job_title ?>
                     </p>
                     <p class="info__email">
                         <b>Email address:</b> <?php echo $user->email ?>
@@ -114,7 +114,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
     <!-- Right navbar -->
     <div class="user-view__right-menu">
         <div class="menu__header">
-            <p class="header__title">Tran Van Phuc</p>
+            <p class="header__title"><?php echo $user->getDisplayName() ?></p>
             <p class="header__content text--gray">
                 @phuctran · phuc.tran@platform.inc
             </p>
@@ -251,9 +251,9 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__sub-label">Job title</p>
             </div>
             <input
-                    value="Software Engineer (Fresher)"
+                    value="<?php echo $user->job_title ?>"
                     type="text"
-                    name="job-title"
+                    name="job_title"
             />
         </div>
         <div class="form__group">

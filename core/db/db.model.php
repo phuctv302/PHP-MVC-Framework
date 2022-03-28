@@ -4,6 +4,7 @@ namespace core\db;
 
 use core\Application;
 use core\Model;
+use models\User;
 
 abstract class DbModel extends Model{
     abstract public static function tableName(): string;
@@ -57,6 +58,8 @@ abstract class DbModel extends Model{
         $updateAttributes = array_keys($updateData);
         $updateSql = implode(",", array_map(fn($attr) => "$attr = :$attr", $updateAttributes));
 
+        var_dump($updateSql);
+
         // UPDATE users SET firstname="Hoang", lastname="Van" WHERE email="phuc@example.com"
         $statement = self::prepare("
             UPDATE $table_name
@@ -64,18 +67,21 @@ abstract class DbModel extends Model{
             WHERE $sql
             ");
 
+
         // Bind value
         foreach ($where as $key => $value){
-            $statement->bindValue(":$key", $value);
+            $statement->bindValue("$key", $value);
         }
 
         foreach ($updateData as $key => $value){
             $statement->bindValue(":$key", $value);
         }
 
+        var_dump($statement);
+
         // execute statement
         $statement->execute();
-        return $statement->fetchObject();
+//        return self::findOne($where);
     }
 
     public static function prepare($sql){
