@@ -1,5 +1,5 @@
 <?php
-    $this->title = 'Signup'
+    $this->title = 'Reset your password';
 ?>
 
 <div class="body__auth">
@@ -11,40 +11,27 @@
                     alt="Base logo"
             />
         </div>
-        <h1 class="auth__title text--center">Signup</h1>
+        <h1 class="auth__title text--center">Reset password</h1>
         <p class="auth__sub-title text--gray text--center">
-            Welcome. Signup to start working
+            Please remember your password!
         </p>
 
-        <?php $form = \core\form\Form::begin("", "post", "base-form auth-form") ?>
-
+        <form action="" method="post" class="form base-form auth-form">
             <div class="form__group">
-                <?php echo $form->field($model, 'firstname') ?>
+                <label>New password</label>
+                <input type="password" name="password" placeholder="New password"
+                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
+            </div>
+            <div class="form__group">
+                <label>Confirm new password</label>
+                <input type="password" name="confirm_password" placeholder="Confirm new password"
+                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
             </div>
 
-            <div class="form__group">
-                <?php echo $form->field($model, 'lastname') ?>
-            </div>
-
-            <div class="form__group">
-                <?php echo $form->field($model, 'email') ?>
-            </div>
-
-            <div class="form__group">
-                <?php echo $form->field($model, 'username') ?>
-            </div>
-
-            <div class="form__group">
-                <?php echo $form->field($model, 'password')->passwordField() ?>
-            </div>
-
-            <div class="form__group">
-                <?php echo $form->field($model, 'confirm_password')->passwordField() ?>
-            </div>
-
-
-            <button type="submit" class="btn btn--green btn--auth">Sign up your new account</button>
-        <?php \core\form\Form::end() ?>
+            <button type="submit" class="btn btn--green btn--auth">Reset password</button>
+        </form>
 
         <div class="other-auth text--center">
             <p class="other-auth__title text--gray">

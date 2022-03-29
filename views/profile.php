@@ -32,7 +32,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
             </li>
         </ul>
 
-        <div class="logout-btn">Logout</div>
+        <a href="/logout" class="logout-btn">Logout</a>
     </nav>
 
     <!-- Info of user -->
@@ -116,7 +116,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
         <div class="menu__header">
             <p class="header__title"><?php echo $user->getDisplayName() ?></p>
             <p class="header__content text--gray">
-                @phuctran · phuc.tran@platform.inc
+                @<?php echo $user->username ?> · <?php echo $user->email ?>
             </p>
         </div>
 

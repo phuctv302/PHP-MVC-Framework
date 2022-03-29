@@ -58,8 +58,6 @@ abstract class DbModel extends Model{
         $updateAttributes = array_keys($updateData);
         $updateSql = implode(",", array_map(fn($attr) => "$attr = :$attr", $updateAttributes));
 
-        var_dump($updateSql);
-
         // UPDATE users SET firstname="Hoang", lastname="Van" WHERE email="phuc@example.com"
         $statement = self::prepare("
             UPDATE $table_name
@@ -76,8 +74,6 @@ abstract class DbModel extends Model{
         foreach ($updateData as $key => $value){
             $statement->bindValue(":$key", $value);
         }
-
-        var_dump($statement);
 
         // execute statement
         $statement->execute();

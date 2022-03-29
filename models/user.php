@@ -15,7 +15,7 @@ class User extends UserModel{
     public string $username = '';
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
-    public string $confirmPassword = '';
+    public string $confirm_password = '';
 
     public static function tableName(): string{
         return 'users';
@@ -42,7 +42,7 @@ class User extends UserModel{
                 self::RULE_UNIQUE, 'class' => self::class
             ]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 24]],
-            'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']]
+            'confirm_password' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']]
         ];
     }
 
@@ -58,7 +58,7 @@ class User extends UserModel{
             'username' => 'User name',
             'email' => 'Email',
             'password' => 'Password',
-            'confirmPassword' => 'Confirm password'
+            'confirm_password' => 'Confirm password'
         ];
     }
 

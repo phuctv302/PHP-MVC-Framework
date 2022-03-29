@@ -33,17 +33,21 @@ $app = new Application(__DIR__, $config);
  * SiteController::class return "SiteController"
  * */
 $app->router->get('/', [SiteController::class, 'home']);
-$app->router->get('/contact', [SiteController::class, 'contact']);
-$app->router->post('/contact', [SiteController::class, 'contact']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
+
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
-$app->router->get('/logout', [AuthController::class, 'logout']);
-$app->router->get('/profile', [AuthController::class, 'profile']);
 
-// FIX BUG
+$app->router->get('/logout', [AuthController::class, 'logout']);
+
+$app->router->get('/forgot', [AuthController::class, 'forgot']);
+$app->router->post('/forgot', [AuthController::class, 'forgot']);
+$app->router->get('/reset', [AuthController::class, 'reset']);
+$app->router->post('/reset', [AuthController::class, 'reset']);
+
+$app->router->get('/profile', [AuthController::class, 'profile']);
 $app->router->post('/profile', [AuthController::class, 'updateUser']);
 
 $app->run();

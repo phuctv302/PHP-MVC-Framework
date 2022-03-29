@@ -50,6 +50,18 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+input:focus {
+    outline: 1px solid #6ad882;
+    box-shadow: #6ad882 1px 0px 1px;
+}
+
+.invalid-feedback {
+    color: red;
+    margin: 5px 3px;
+    font-size: 13px;
+}
+
 /* auth page
 ***************************************************************** */
 .body {
@@ -265,6 +277,7 @@ input::-webkit-inner-spin-button {
 .logout-btn {
     margin-bottom: 10px;
     cursor: pointer;
+    color: gray;
 }
 
 /* User information */
@@ -430,7 +443,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
     padding: 10px 10px 10px 20px;
     font-size: 14px;
-    font-weight: 300px;
+    font-weight: 300;
     color: #555;
 }
 .right-nav__el:hover {
@@ -464,11 +477,6 @@ input::-webkit-inner-spin-button {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-}
-
-.form-edit input:focus {
-    outline: 1px solid #6ad882;
-    box-shadow: #6ad882 1px 0px 1px;
 }
 
 .form-edit .form__group input {
