@@ -23,7 +23,7 @@ class AuthController extends Controller {
         if ($request->isPost()){
             $login_form->loadData($request->getBody());
             if ($login_form->validate() && $login_form->login()){
-                $response->redirect('/');
+                $response->redirect('/profile');
                 return;
             }
         }

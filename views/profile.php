@@ -8,7 +8,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
     <nav class="user-view__left-menu">
         <ul class="left-nav">
             <li class="left-nav__user-image">
-                <img src="/public/img/users/default.jpg" alt="User image" />
+                <img src="/public/img/users/<?php echo $user->photo ?>" alt="User image" />
             </li>
             <li class="left-nav__el left-nav__el--active">
                 <i class="fas fa-user-circle"></i>
@@ -58,7 +58,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
             <div class="user-detail">
                 <img
                         class="user-detail__image"
-                        src="/public/img/users/default.jpg"
+                        src="/public/img/users/<?php echo $user->photo ?>"
                         alt="User"
                 />
                 <div class="user-detail__info">

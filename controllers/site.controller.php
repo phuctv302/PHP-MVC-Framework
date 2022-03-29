@@ -11,25 +11,11 @@ use models\User;
 
 class SiteController extends Controller{
     public function home(){
-        $name = Application::$app->user->getDisplayName();
+        $currentUser = Application::$app->user ?? false;
+
         $params = [
-            'name' => $name
+            'user' => $currentUser
         ];
         return $this->render('home', $params);
-    }
-
-
-    public function contact(Request $request, Response $response){
-        $contact = new ContactForm();
-        if ($request->isPost()){
-            $contact->loadData($request->getBody());
-            if ($contact->validate() && $contact->send()){
-                Application::$app->session->setFlash('success', 'Thanks for contacting us.');
-                return $response->redirect('/contact');
-            }
-        }
-        return $this->render('contact', [
-            'model' => $contact
-        ]);
     }
 }

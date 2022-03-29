@@ -28,7 +28,7 @@ class ResetForm extends Model {
 
         // update
         User::updateOne(['email' => $user->email],
-            ['password' => password_hash($this->password, PASSWORD_DEFAULT), 'reset_token' => '']);
+            ['password' => password_hash($this->password, PASSWORD_DEFAULT), 'reset_token' => NULL]);
         return true;
     }
 }

@@ -15,6 +15,7 @@ class User extends UserModel{
     public string $username = '';
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
+    public string $photo = 'default.jpg';
     public string $confirm_password = '';
 
     public static function tableName(): string{
@@ -48,7 +49,7 @@ class User extends UserModel{
 
     public function attributes(): array{
         // return all database column name
-        return ['firstname', 'lastname', 'email', 'username', 'password', 'status'];
+        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status'];
     }
 
     public function labels(): array{
@@ -63,6 +64,6 @@ class User extends UserModel{
     }
 
     public function getDisplayName(): string{
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->lastname . ' ' . $this->firstname;
     }
 }

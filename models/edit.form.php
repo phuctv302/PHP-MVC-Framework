@@ -10,9 +10,10 @@ class EditForm extends Model {
     public string $firstname = '';
     public string $lastname = '';
     public string $job_title = '';
+    public string $photo = '';
 
     public function updateUser($data){
-        $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title']);
+        $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title', 'photo']);
         User::updateOne([User::primaryKey() => $_COOKIE['user']], $filterData);
         return true;
     }
