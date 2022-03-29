@@ -1,5 +1,11 @@
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <?php
+    use core\MyCaptcha;
+
     $this->title = 'Login';
+
+    $my_captcha = new MyCaptcha()
 ?>
 
 <div class="body__auth">
@@ -26,7 +32,9 @@
             <?php echo $form->field($model, 'password')->passwordField() ?>
         </div>
 
-        <button class="btn btn--green btn--auth" type="submit">Login to start working</button>
+        <div class="g-recaptcha" data-sitekey=<?php echo MyCaptcha::$siteKey ?>></div>
+
+        <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
         <?php \core\form\Form::end() ?>
 
         <div class="other-auth text--center">

@@ -5,6 +5,7 @@ namespace controllers;
 use core\Application;
 use core\Controller;
 use core\middlewares\AuthMiddleware;
+use core\MyCaptcha;
 use core\Request;
 use core\Response;
 use models\EditForm;
@@ -20,9 +21,10 @@ class AuthController extends Controller {
 
     public function login(Request $request, Response $response){
         $login_form = new LoginForm();
+        $myCaptcha = new MyCaptcha();
         if ($request->isPost()){
             $login_form->loadData($request->getBody());
-            if ($login_form->validate() && $login_form->login()){
+            if ($login_form->validate() && $login_form->login() && $myCaptcha->verifyResponse()){
                 $response->redirect('/profile');
                 return;
             }
