@@ -13,7 +13,7 @@ class EditForm extends Model {
 
     public function updateUser($data){
         $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title']);
-        User::updateOne([User::primaryKey() => $_SESSION['user']], $filterData);
+        User::updateOne([User::primaryKey() => $_COOKIE['user']], $filterData);
         return true;
     }
 

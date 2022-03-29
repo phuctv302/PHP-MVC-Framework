@@ -19,6 +19,7 @@ class Application{
     public Request $request;
     public Response $response;
     public Session $session;
+    public Cookie $cookie;
     public static Application $app;
     public ?Controller $controller = null;
     public ?UserModel $user;
@@ -45,12 +46,13 @@ class Application{
         $this->request = new Request();
         $this->response = new Response();
         $this->session = new Session();
+        $this->cookie = new Cookie();
         $this->router = new Router($this->request, $this->response);
         $this->view = new View();
 
         $this->db = new Database($config['db']);
 
-        $primaryValue = $this->session->get('user');
+        $primaryValue = $this->cookie->get('user');
         if ($primaryValue){
             $primaryKey = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
@@ -81,13 +83,13 @@ class Application{
 
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
-        $this->session->set('user', $primaryValue);
+        $this->cookie->set('user', $primaryValue);
         return true;
     }
 
     public function logout(){
         $this->user = null;
-        $this->session->remove('user');
+        $this->cookie->remove('user');
     }
 
     public function triggerEvent($event_name){
