@@ -13,7 +13,6 @@ class MyCaptcha {
             $secret = self::$secretKey;
             $response = $_POST['g-recaptcha-response'];
             $remoteip = $_SERVER['REMOTE_ADDR'];
-            var_dump($remoteip);
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response&remoteip=$remoteip";
             $data = file_get_contents($url);
             $row = json_decode($data, true);

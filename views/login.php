@@ -1,7 +1,9 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <?php
-    use core\MyCaptcha;
+
+use core\Application;
+use core\MyCaptcha;
 
     $this->title = 'Login';
 
@@ -32,7 +34,11 @@
             <?php echo $form->field($model, 'password')->passwordField() ?>
         </div>
 
-        <div class="g-recaptcha" data-sitekey=<?php echo MyCaptcha::$siteKey ?>></div>
+        <?php
+        if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3) {
+            echo "<div class='g-recaptcha' data-sitekey=" . $_ENV['PUBLIC_KEY'] . "></div>";
+        }
+        ?>
 
         <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
         <?php \core\form\Form::end() ?>

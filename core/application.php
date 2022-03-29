@@ -83,7 +83,7 @@ class Application{
 
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
-        $this->cookie->set('user', $primaryValue);
+        $this->cookie->set('user', $primaryValue, $_ENV['COOKIE_EXPIRES']);
         return true;
     }
 

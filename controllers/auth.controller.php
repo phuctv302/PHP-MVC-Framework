@@ -28,6 +28,16 @@ class AuthController extends Controller {
                 $response->redirect('/profile');
                 return;
             }
+
+            // increase count variable to display captcha
+            if (isset($_POST['submit'])){
+                if (!Application::$app->cookie->get('count')) {
+                    Application::$app->cookie->set('count', 1, 1);
+                } else {
+                    $count = $_COOKIE['count'] + 1;
+                    Application::$app->cookie->set('count', $count, 1);
+                }
+            }
         }
         $this->setLayout('auth');
         return $this->render('login', [

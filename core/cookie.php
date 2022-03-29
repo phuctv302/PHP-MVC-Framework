@@ -3,9 +3,9 @@
 namespace core;
 
 class Cookie {
-    public function set($key, $value){
+    public function set($key, $value, $expiresIn){
         setcookie($key, $value,
-            time() + $_ENV['COOKIE_EXPIRES'] * 24 * 60 * 60, null, null, null, true);
+            time() + $expiresIn * 24 * 60 * 60, null, null, null, true);
     }
 
     public function get($key){

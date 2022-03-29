@@ -62,6 +62,13 @@ input:focus {
     font-size: 13px;
 }
 
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
 /* auth page
 ***************************************************************** */
 .body {
