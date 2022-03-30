@@ -41,6 +41,11 @@ class Request{
             foreach ($_POST as $key => $value){
                 // sanitize data
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+
+                // for upload user photo
+                if (empty($body['photo'])){
+                    $body['photo'] = Application::$app->user->photo ?? 'default.jpg';
+                }
             }
         }
 

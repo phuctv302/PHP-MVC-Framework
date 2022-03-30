@@ -24,24 +24,35 @@ use core\MyCaptcha;
             Welcome back. Login to start working
         </p>
 
-        <?php $form = \core\form\Form::begin("", "post", "base-form auth-form") ?>
+        <form method="post" action="" class="base-form auth-form">
+            <div class="form__group">
+                <label>Your email</label>
+                <input type="email" name="email" placeholder="Your email"
+                       value="<?= $model->email ?>"
+                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
+            </div>
+            <div class="form__group">
+                <label>Password</label>
+                <span class="forgot-password">
+                <a href="/forgot" class="text-blue">Forget your password?</a >
+            </span>
+                <input type="password" name="password" placeholder="Your password"
+                       value="<?= $model->password ?>"
+                       class="<?php echo $model->hasError("password") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("password") ?></div>
+            </div>
 
-        <div class="form__group">
-            <?php echo $form->field($model, 'email') ?>
-        </div>
+            <?php
+            // Captcha
+            if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3) {
+                echo "<div class='g-recaptcha' data-sitekey=" . $_ENV['PUBLIC_KEY'] . "></div>";
+            }
+            ?>
 
-        <div class="form__group">
-            <?php echo $form->field($model, 'password')->passwordField() ?>
-        </div>
-
-        <?php
-        if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3) {
-            echo "<div class='g-recaptcha' data-sitekey=" . $_ENV['PUBLIC_KEY'] . "></div>";
-        }
-        ?>
-
-        <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
-        <?php \core\form\Form::end() ?>
+            <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
+            <a href="/register" class="btn btn--green btn--auth" >Not having an account. Signup now!</a>
+        </form>
 
         <div class="other-auth text--center">
             <p class="other-auth__title text--gray">

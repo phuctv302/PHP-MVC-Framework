@@ -20,14 +20,14 @@
             <div class="form__group">
                 <label>New password</label>
                 <input type="password" name="password" placeholder="New password"
-                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
-                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
+                       class="<?php echo $model->hasError("password") ? "is-invalid" : "" ?>"
+                <div class="invalid-feedback"><?php echo $model->getFirstError("password") ?></div>
             </div>
             <div class="form__group">
                 <label>Confirm new password</label>
                 <input type="password" name="confirm_password" placeholder="Confirm new password"
-                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
-                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
+                       class="<?php echo $model->hasError("confirm_password") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("confirm_password") ?></div>
             </div>
 
             <button type="submit" class="btn btn--green btn--auth">Reset password</button>

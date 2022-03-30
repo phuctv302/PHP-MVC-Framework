@@ -148,6 +148,7 @@ input:focus {
     font-weight: bold;
     color: white;
     padding: 11px 25px;
+    margin: 8px 0;
 }
 .btn--auth:hover {
     cursor: pointer;
@@ -289,7 +290,6 @@ input:focus {
 
 /* User information */
 .user-view__content {
-    min-height: 1300px;
     width: 80%;
     padding: 0 20px;
     margin-left: 90px;
@@ -349,11 +349,15 @@ input:focus {
     margin-bottom: 80px;
 }
 
-.user-detail img {
+.user-detail .user-detail__image {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     margin-right: 20px;
+}
+
+#profile-image-upload {
+    display: none;
 }
 
 .info__name {
@@ -410,6 +414,7 @@ input:focus {
     flex-grow: 1;
     background-color: #f6f6f6;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
+    width: 270px;
 }
 
 .menu__header {
@@ -439,6 +444,10 @@ input:focus {
     font-weight: 300;
     margin-bottom: 20px;
     padding: 20px 0 0 20px;
+}
+
+.right-nav__el i {
+    width: 13px;
 }
 
 .right-nav__el .el__label {
@@ -576,4 +585,33 @@ input:focus {
 .btn-update:hover {
     background-color: #4d920c;
     cursor: pointer;
+}
+
+/* ALERT */
+.alert {
+    position: fixed;
+    max-width: 50%;
+    padding: 25px 50px;
+    top: 0;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: 21px;
+    color: white;
+    transform: translate(-50%, 0);
+    font-weight: 500;
+}
+
+.alert--success {
+    background-color: #2bd14e;
+}
+.alert--error {
+    background-color: red;
+}
+
+.is-invalid {
+    border-color: red;
 }

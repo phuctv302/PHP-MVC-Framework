@@ -8,7 +8,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
     <nav class="user-view__left-menu">
         <ul class="left-nav">
             <li class="left-nav__user-image">
-                <img src="/public/img/users/<?php echo $user->photo ?>" alt="User image" />
+                <img src="/public/img/users/<?php echo $user->photo ?>" alt="User image"/>
             </li>
             <li class="left-nav__el left-nav__el--active">
                 <i class="fas fa-user-circle"></i>
@@ -39,7 +39,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
     <div class="user-view__content">
         <div class="content__header">
             <div class="header__account">
-                <i class="fas fa-arrow-left text--gray"></i>
+                <a href="/"><i class="fas fa-arrow-left text--gray"></i></a>
                 <div class="account__info">
                     <p class="info__label text--gray">Account</p>
                     <p class="info__content">
@@ -50,17 +50,21 @@ $this->title = $user->getDisplayName(); // this ~ view instance
 
             <div class="btn btn-edit show-form"
             ><span><i class="fas fa-arrow-up"></i></span> Edit my
-                account</div
+                account
+            </div
             >
         </div>
 
-        <div class="content__detail">
+        <div class="content__detail" >
             <div class="user-detail">
-                <img
-                        class="user-detail__image"
-                        src="/public/img/users/<?php echo $user->photo ?>"
-                        alt="User"
-                />
+                <form id="profile-image-form" action="/profile-image" method="post">
+                    <img class="user-detail__image" src="/public/img/users/<?php echo $user->photo ?>">
+                    <input
+                            id="profile-image-upload"
+                            type="file"
+                            name="photo"
+                    >
+                </form>
                 <div class="user-detail__info">
                     <p class="info__name"><?php echo $user->getDisplayName() ?></p>
                     <p class="info__job text--gray">
@@ -217,14 +221,18 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__label">Your first name</p>
                 <p class="form__sub-label">Your first name</p>
             </div>
-            <input value="<?php echo $user->firstname ?>" type="text" name="firstname" />
+            <input value="<?php echo $user->firstname ?>" type="text" name="firstname"
+                   class="<?php echo $model->hasError("firstname") ? "is-invalid" : "" ?>">
+            <div class="invalid-feedback"><?php echo $model->getFirstError("firstname") ?></div>
         </div>
         <div class="form__group">
             <div class="form__label-container">
                 <p class="form__label">Your last name</p>
                 <p class="form__sub-label">Your last name</p>
             </div>
-            <input value="<?php echo $user->lastname ?>" type="text" name="lastname" />
+            <input value="<?php echo $user->lastname ?>" type="text" name="lastname"
+                   class="<?php echo $model->hasError("lastname") ? "is-invalid" : "" ?>">
+            <div class="invalid-feedback"><?php echo $model->getFirstError("lastname") ?></div>
         </div>
         <div class="form__group">
             <div class="form__label-container">
@@ -236,14 +244,17 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                     type="email"
                     name="email"
                     disabled
-            />
+                    class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
+            <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
         </div>
         <div class="form__group">
             <div class="form__label-container">
                 <p class="form__label">Username</p>
                 <p class="form__sub-label">Your username</p>
             </div>
-            <input value="@<?php echo $user->username ?>" type="text" name="username" disabled/>
+            <input value="@<?php echo $user->username ?>" type="text" name="username" disabled
+                   class="<?php echo $model->hasError("username") ? "is-invalid" : "" ?>">
+            <div class="invalid-feedback"><?php echo $model->getFirstError("username") ?></div>
         </div>
         <div class="form__group">
             <div class="form__label-container">
@@ -254,28 +265,28 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                     value="<?php echo $user->job_title ?>"
                     type="text"
                     name="job_title"
-            />
+                    class="<?php echo $model->hasError("job_title") ? "is-invalid" : "" ?>">
         </div>
         <div class="form__group">
             <div class="form__label-container">
                 <p class="form__label">Profile image</p>
                 <p class="form__sub-label">Profile image</p>
             </div>
-            <input type="file" name="photo" />
+            <input type="file" name="photo" value=<?php echo $model->photo ?>>
         </div>
         <div class="form__group">
             <div class="form__label-container">
                 <p class="form__label">Date of birth</p>
                 <p class="form__sub-label">Date of birth</p>
             </div>
-            <input value="<?php echo date('Y-m-d', 981158400) ?>" type="date" name="birthday" />
+            <input value="<?php echo date('Y-m-d', 981158400) ?>" type="date" name="birthday"/>
         </div>
         <div class="form__group">
             <div class="form__label-container">
                 <p class="form__label">Your phone number</p>
                 <p class="form__sub-label">Your phone number</p>
             </div>
-            <input value="0984801847" type="number" name="phone" />
+            <input value="0984801847" type="number" name="phone"/>
         </div>
         <div class="form__group">
             <div class="form__label-container">

@@ -16,35 +16,53 @@
             Welcome. Signup to start working
         </p>
 
-        <?php $form = \core\form\Form::begin("", "post", "base-form auth-form") ?>
-
+        <form action="" method="post" class="base-form auth-form">
             <div class="form__group">
-                <?php echo $form->field($model, 'firstname') ?>
+                <label>First name</label>
+                <input type="text" name="firstname" placeholder="Your first name"
+                       value="<?= $model->firstname ?>"
+                       class="<?php echo $model->hasError("firstname") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("firstname") ?></div>
             </div>
-
             <div class="form__group">
-                <?php echo $form->field($model, 'lastname') ?>
+                <label>Last name</label>
+                <input type="text" name="lastname" placeholder="Your last name"
+                       value="<?= $model->lastname ?>"
+                       class="<?php echo $model->hasError("lastname") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("lastname") ?></div>
             </div>
-
             <div class="form__group">
-                <?php echo $form->field($model, 'email') ?>
+                <label>Your email</label>
+                <input type="email" name="email" placeholder="Your email"
+                       value="<?= $model->email ?>"
+                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
             </div>
-
             <div class="form__group">
-                <?php echo $form->field($model, 'username') ?>
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Username"
+                       value="<?= $model->username ?>"
+                       class="<?php echo $model->hasError("username") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("username") ?></div>
             </div>
-
             <div class="form__group">
-                <?php echo $form->field($model, 'password')->passwordField() ?>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Your password"
+                       value="<?= $model->password ?>"
+                       class="<?php echo $model->hasError("password") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("password") ?></div>
             </div>
-
             <div class="form__group">
-                <?php echo $form->field($model, 'confirm_password')->passwordField() ?>
+                <label>Confirm Password</label>
+                <input type="password" name="password" placeholder="Confirm password"
+                       value="<?= $model->confirm_password ?>"
+                       class="<?php echo $model->hasError("confirm_password") ? "is-invalid" : "" ?>">
+                <div class="invalid-feedback"><?php echo $model->getFirstError("confirm_password") ?></div>
             </div>
-
 
             <button type="submit" class="btn btn--green btn--auth">Sign up your new account</button>
-        <?php \core\form\Form::end() ?>
+            <a href="/login" class="btn btn--green btn--auth" >Having an account. Login now!</a>
+        </form>
 
         <div class="other-auth text--center">
             <p class="other-auth__title text--gray">

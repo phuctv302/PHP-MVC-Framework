@@ -49,5 +49,6 @@ $app->router->post('/reset', [AuthController::class, 'reset']);
 
 $app->router->get('/profile', [AuthController::class, 'profile']);
 $app->router->post('/profile', [AuthController::class, 'updateUser']);
+$app->router->post('/profile-image', [AuthController::class, 'updatePhoto']);
 
 $app->run();

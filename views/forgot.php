@@ -20,7 +20,8 @@
             <div class="form__group">
                 <label>Your email</label>
                 <input type="email" name="email" placeholder="Your email"
-                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
+                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>"
+                        value=<?php echo $model->email ?>>
                 <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
             </div>
 

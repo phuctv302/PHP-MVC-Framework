@@ -20,7 +20,8 @@ class EditForm extends Model {
 
     public function rules(): array{
         return [
-            'firstname' => [self::RULE_REQUIRED]
+            'firstname' => [self::RULE_REQUIRED],
+            'lastname' => [self::RULE_REQUIRED]
         ];
     }
 
