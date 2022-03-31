@@ -69,8 +69,6 @@ class AuthController extends Controller {
             ]);
         }
 
-        var_dump($user);
-
         // Get method
         $this->setLayout('auth');
         return $this->render('register', [
