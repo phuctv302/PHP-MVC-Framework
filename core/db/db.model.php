@@ -7,16 +7,16 @@ use core\Model;
 use models\User;
 
 abstract class DbModel extends Model{
-    abstract public static function tableName(): string;
+    abstract public static function tableName();
 
-    abstract public function attributes(): array; // return all database columns name
+    abstract public function attributes(); // return all database columns name
 
-    abstract public static function primaryKey(): string;
+    abstract public static function primaryKey();
 
     public function save(){
         $table_name = $this->tableName();
         $attributes = $this->attributes();
-        $params = array_map(fn($attr) => ":$attr", $attributes);
+        $params = array_map(function($attr) { return ":$attr"; }, $attributes);
         $statement = self::prepare("INSERT INTO $table_name (" . implode(',', $attributes) . ")
             VALUES(" . implode(',', $params) . ")");
 
@@ -35,7 +35,7 @@ abstract class DbModel extends Model{
     public static function findOne($where){
         $table_name = static::tableName(); // users
         $attributes = array_keys($where); // ['email']
-        $sql = implode("AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)); // 'email = :email'
+        $sql = implode("AND ", array_map(function($attr){ return "$attr = :$attr"; }, $attributes)); // 'email = :email'
 
         // SELECT * FROM $users WHERE email = :email [AND firstname = :firstname]
         $statement = self::prepare("SELECT * FROM $table_name WHERE $sql");
@@ -52,11 +52,11 @@ abstract class DbModel extends Model{
 
         // for finding user
         $attribute = array_keys($where);
-        $sql = implode("AND", array_map(fn($attr) => "$attr = :$attr", $attribute));
+        $sql = implode("AND", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
 
         // for updating user
         $updateAttributes = array_keys($updateData);
-        $updateSql = implode(",", array_map(fn($attr) => "$attr = :$attr", $updateAttributes));
+        $updateSql = implode(",", array_map(function($attr){ return "$attr = :$attr"; }, $updateAttributes));
 
         // UPDATE users SET firstname="Hoang", lastname="Van" WHERE email="phuc@example.com"
         $statement = self::prepare("

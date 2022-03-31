@@ -3,38 +3,39 @@
 namespace core;
 
 use core\db\Database;
+use Exception;
 
 class Application{
-    public static string $ROOT_DIR;
+    public static $ROOT_DIR;
 
-    public string $layout = 'main';
-    public string $userClass;
-    public Database $db;
-    public Router $router;
-    public Request $request;
-    public Response $response;
-    public Session $session;
-    public Cookie $cookie;
-    public static Application $app;
-    public ?Controller $controller = null;
-    public ?UserModel $user;
-    public View $view;
+    public $layout = 'main';
+    public $userClass;
+    public $db;
+    public $router;
+    public $request;
+    public $response;
+    public $session;
+    public $cookie;
+    public static $app;
+    public $controller = null;
+    public $user;
+    public $view;
 
     /**
      * @return Controller
      */
-    public function getController(): Controller{
+    public function getController(){
         return $this->controller;
     }
 
     /**
      * @param Controller $controller
      */
-    public function setController(Controller $controller): void{
+    public function setController($controller){
         $this->controller = $controller;
     }
 
-    public function __construct($rootPath, array $config){
+    public function __construct($rootPath, $config){
         $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
@@ -63,15 +64,15 @@ class Application{
     public function run(){
         try{
             echo $this->router->resolve();
-        } catch (\Exception $e){
+        } catch (Exception $e){
             $this->response->setStatusCode($e->getCode());
             echo $this->view->renderView('_error', [
-                'exceptions' => $e
+                'exception' => $e
             ]);
         }
     }
 
-    public function login(UserModel $user){
+    public function login($user){
         // save user into session
         $this->user = $user;
 

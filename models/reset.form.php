@@ -2,11 +2,12 @@
 
 namespace models;
 
+use core\Application;
 use core\Model;
 
 class ResetForm extends Model {
-    public string $password;
-    public string $confirm_password;
+    public $password;
+    public $confirm_password;
 
     public function rules(): array{
         return [
@@ -22,7 +23,7 @@ class ResetForm extends Model {
         // find user with that token
         $user = User::findOne(['reset_token' => $reset_token]);
         if (!$user){
-            $this->addError('reset_token', 'Reset token is invalid!');
+            Application::$app->session->setFlash('error', 'Reset token is invalid!');
             return false;
         }
 

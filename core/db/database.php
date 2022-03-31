@@ -3,16 +3,17 @@
 namespace core\db;
 
 use core\Application;
+use PDO;
 
 class Database {
-    public \PDO $pdo;
+    public $pdo;
 
-    public function __construct(array $config){
+    public function __construct($config){
         $dsn = $config['dsn'] ?? '';
         $user = $config['user'] ?? '';
         $password = $config['password'] ?? '';
-        $this->pdo = new \PDO($dsn, $user, $password);
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $this->pdo = new PDO($dsn, $user, $password);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function applyMigration(){
@@ -55,11 +56,11 @@ class Database {
         $statement = $this->pdo->prepare("SELECT migration FROM migrations");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_COLUMN);
+        return $statement->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    public function saveMigrations(array $migrations){
-        $str = implode(",", array_map(fn($m) => "('$m')", $migrations));
+    public function saveMigrations($migrations){
+        $str = implode(",", array_map(function($m) { return "('$m')";}, $migrations));
         $statement = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES
             $str
         ");

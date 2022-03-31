@@ -6,9 +6,9 @@ use core\Application;
 use core\exceptions\ForbiddenException;
 
 class AuthMiddleware extends BaseMiddleware{
-    public array $actions = [];
+    public $actions = [];
 
-    public function __construct(array $actions = []){
+    public function __construct($actions = []){
         $this->actions = $actions;
     }
 

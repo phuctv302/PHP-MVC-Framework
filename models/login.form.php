@@ -7,8 +7,8 @@ use core\Model;
 
 class LoginForm extends Model{
 
-    public string $email = '';
-    public string $password = '';
+    public $email = '';
+    public $password = '';
 
     public function rules(): array{
         return [

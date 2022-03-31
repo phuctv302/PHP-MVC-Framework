@@ -1,6 +1,6 @@
 <?php
 // autoload
-include 'includes/autoloader.inc.php';
+include dirname(__DIR__) . '/includes/autoloader.inc.php';
 
 use core\Application;
 use core\MyDotenv;
@@ -8,7 +8,7 @@ use controllers\SiteController;
 use controllers\AuthController;
 
 // config environment variables
-$dotenv = new MyDotenv(__DIR__ . '/.env');
+$dotenv = new MyDotenv(dirname(__DIR__) . '/.env');
 $dotenv->load();
 $config = [
     'userClass' => \models\User::class,
@@ -19,7 +19,7 @@ $config = [
     ]
 ];
 
-$app = new Application(__DIR__, $config);
+$app = new Application(dirname(__DIR__), $config);
 
 
 /*

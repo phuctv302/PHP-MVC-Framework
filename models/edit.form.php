@@ -7,10 +7,10 @@ use core\Model;
 
 class EditForm extends Model {
 
-    public string $firstname = '';
-    public string $lastname = '';
-    public string $job_title = '';
-    public string $photo = '';
+    public $firstname = '';
+    public $lastname = '';
+    public $job_title = '';
+    public $photo = '';
 
     public function updateUser($data){
         $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title', 'photo']);

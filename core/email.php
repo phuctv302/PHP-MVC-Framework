@@ -5,15 +5,15 @@ namespace core;
 use models\User;
 
 class Email extends Controller {
-    public string $to = '';
-    public string $from = '';
+    public $to = '';
+    public $from = '';
 
     // pass to view
-    public string $firstname = '';
-    public string $url = '';
+    public $firstname = '';
+    public $url = '';
 
 
-    public function __construct(User $user, string $url){
+    public function __construct($user, $url){
         $this->to = $user->email;
         $this->from = $_ENV['EMAIL_FROM'];
         $this->firstname = $user->firstname;

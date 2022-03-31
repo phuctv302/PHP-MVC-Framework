@@ -5,9 +5,9 @@ namespace core;
 use core\exceptions\NotFoundException;
 
 class Router{
-    public Request $request;
-    public Response $response;
-    protected array $routes = [];
+    public $request;
+    public $response;
+    protected $routes = [];
 
     /**
      * e.g: @var $routes = [
@@ -29,7 +29,7 @@ class Router{
     /**
      * @param Request $request
      */
-    public function __construct(Request $request, Response $response){
+    public function __construct($request, $response){
         $this->request = $request;
         $this->response = $response;
     }
@@ -38,9 +38,10 @@ class Router{
         $path = $this->request->getPath();
         $method = $this->request->method();
 
+
         $callback = $this->routes[$method][$path] ?? false;
 
-        if ($callback === false){
+        if ($callback == false){
             $this->response->setStatusCode(404);
             throw new NotFoundException();
         }

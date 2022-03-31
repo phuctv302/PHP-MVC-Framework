@@ -9,20 +9,20 @@ class User extends UserModel{
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
-    public string $firstname = '';
-    public string $lastname = '';
-    public string $email = '';
-    public string $username = '';
-    public int $status = self::STATUS_INACTIVE;
-    public string $password = '';
-    public string $photo = 'default.jpg';
-    public string $confirm_password = '';
+    public $firstname = '';
+    public $lastname = '';
+    public $email = '';
+    public $username = '';
+    public $status = self::STATUS_INACTIVE;
+    public $password = '';
+    public $photo = 'default.jpg';
+    public $confirm_password = '';
 
-    public static function tableName(): string{
+    public static function tableName(){
         return 'users';
     }
 
-    public static function primaryKey(): string{
+    public static function primaryKey(){
         return 'id';
     }
 
@@ -32,7 +32,7 @@ class User extends UserModel{
         return parent::save();
     }
 
-    public function rules(): array{
+    public function rules(){
         return [
             'firstname' => [self::RULE_REQUIRED],
             'lastname' => [self::RULE_REQUIRED],
@@ -52,7 +52,7 @@ class User extends UserModel{
         return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status'];
     }
 
-    public function labels(): array{
+    public function labels(){
         return [
             'firstname' => 'First name',
             'lastname' => 'Last name',

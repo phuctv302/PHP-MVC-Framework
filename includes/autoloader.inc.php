@@ -2,14 +2,14 @@
 spl_autoload_register('myAutoLoader');
 
 function myAutoLoader($class_name){
-    //    $path = getcwd();
+        $path = dirname(__DIR__);
 
     //    $ds = DIRECTORY_SEPARATOR; // "/"
     // $class_name: core\MyApplication
     // => root/core/application.php
 
     //    $full_path = $path . '\\' . $class_name . $extension;
-    $full_path = formattedPath($class_name);
+    $full_path = $path . '\\' . formattedPath($class_name);
 //    echo $full_path;
     //    echo "<br>";
 
@@ -17,13 +17,14 @@ function myAutoLoader($class_name){
         return false;
     }
 
+
     include_once $full_path;
 }
 
 /*
  * eg of class_name: core\MyApplication.php
  * */
-function formattedPath($class_name): string{
+function formattedPath($class_name){
     $extension = ".php";
 
     // get the last word of class_name separated by "\"

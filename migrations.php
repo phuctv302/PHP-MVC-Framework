@@ -6,7 +6,7 @@ use core\Application;
 use core\MyDotenv;
 
 // config environment variables
-$dotenv = new MyDotenv(__DIR__ . '/.env');
+$dotenv = new MyDotenv(dirname(__DIR__) . '/.env');
 $dotenv->load();
 $config = [
     'userClass' => \models\User::class,
@@ -17,6 +17,6 @@ $config = [
     ]
 ];
 
-$app = new Application(dỉname(__DIR__), $config);
+$app = new Application(dirname(__DIR__), $config);
 
 $app->db->applyMigration();

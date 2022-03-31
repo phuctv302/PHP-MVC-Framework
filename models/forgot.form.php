@@ -7,7 +7,7 @@ use core\Email;
 
 class ForgotForm extends Model {
 
-    public string $email = '';
+    public $email = '';
 
     public function rules(): array{
         return [
@@ -28,12 +28,18 @@ class ForgotForm extends Model {
         User::updateOne(['email' => $this->email], ['reset_token' => $reset_token]);
 
         // get url to reset password: reset?token=.....
-        $url = "http://127.0.0.1:8080/reset?token=$reset_token";
+        $url = $this->getUrl() . "/reset?token=$reset_token";
 
         // config email options
         $email = new Email($user, $url);
 
         // send mail
         return $email->sendPasswordReset();
+    }
+
+    public function getUrl(){
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'http') === 0 ? 'http' : 'https';
+        $host = $_SERVER['SERVER_NAME'];
+        return $protocol . '://' . $host;
     }
 }

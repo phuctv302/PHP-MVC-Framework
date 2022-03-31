@@ -18,9 +18,9 @@ abstract class Model{
         }
     }
 
-    abstract public function rules(): array;
+    abstract public function rules();
 
-    public function labels(): array{
+    public function labels(){
         return [];
     }
 
@@ -28,7 +28,7 @@ abstract class Model{
         return $this->labels()[$attribute] ?? $attribute;
     }
 
-    public array $errors = [];
+    public $errors = [];
 
     public function validate(){
         foreach ($this->rules() as $attribute => $rules){
@@ -73,7 +73,7 @@ abstract class Model{
         return empty($this->errors); // errors is empty means NO ERROR
     }
 
-    private function addErrorForRule(string $attribute, string $rule, $params = []){
+    private function addErrorForRule($attribute, $rule, $params = []){
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value){
             $message = str_replace("{{$key}}", $value, $message);
@@ -81,7 +81,7 @@ abstract class Model{
         $this->errors[$attribute][] = $message;
     }
 
-    public function addError(string $attribute, string $message){
+    public function addError($attribute, $message){
         $this->errors[$attribute][] = $message;
     }
 

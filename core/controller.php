@@ -5,10 +5,10 @@ namespace core;
 use core\middlewares\BaseMiddleware;
 
 class Controller{
-    public string $layout = 'main';
-    public string $action = '';
+    public $layout = 'main';
+    public $action = '';
 
-    protected array $middlewares = [];
+    protected $middlewares = [];
 
     public function setLayout($layout){
         $this->layout = $layout;
@@ -25,7 +25,7 @@ class Controller{
     /**
      * @return array
      */
-    public function getMiddlewares(): array{
+    public function getMiddlewares(){
         return $this->middlewares;
     }
 

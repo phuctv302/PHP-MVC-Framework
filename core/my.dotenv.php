@@ -2,10 +2,10 @@
 
 namespace core;
 
-class MyDotenv{
+class MyDotenv {
     protected $path;
 
-    public function __construct(string $path){
+    public function __construct($path){
         if (!file_exists($path)){
             throw new \InvalidArgumentException(sprintf("%s does not exist", $path));
         }
