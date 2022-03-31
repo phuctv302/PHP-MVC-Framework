@@ -3,10 +3,10 @@
 include 'includes/autoloader.inc.php';
 
 use core\Application;
-use core\Dotenv;
+use core\MyDotenv;
 
 // config environment variables
-$dotenv = new Dotenv(__DIR__ . '/.env');
+$dotenv = new MyDotenv(__DIR__ . '/.env');
 $dotenv->load();
 $config = [
     'userClass' => \models\User::class,
@@ -17,6 +17,6 @@ $config = [
     ]
 ];
 
-$app = new Application(__DIR__, $config);
+$app = new Application(dỉname(__DIR__), $config);
 
 $app->db->applyMigration();

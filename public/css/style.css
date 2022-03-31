@@ -613,5 +613,5 @@ input:focus {
 }
 
 .is-invalid {
-    border-color: red;
+    border: 1px solid #FF0000 !important;
 }

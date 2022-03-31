@@ -3,7 +3,7 @@
 namespace core\middlewares;
 
 use core\Application;
-use core\exception\ForbiddenException;
+use core\exceptions\ForbiddenException;
 
 class AuthMiddleware extends BaseMiddleware{
     public array $actions = [];

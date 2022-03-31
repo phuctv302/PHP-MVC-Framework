@@ -5,11 +5,6 @@ namespace core;
 use core\db\Database;
 
 class Application{
-    // for event
-    const EVENT_BEFORE_REQUEST = 'beforeRequest';
-    const EVENT_AFTER_REQUEST = 'afterRequest';
-    protected array $event_listeners = [];
-
     public static string $ROOT_DIR;
 
     public string $layout = 'main';
@@ -66,13 +61,12 @@ class Application{
     }
 
     public function run(){
-        $this->triggerEvent(self::EVENT_BEFORE_REQUEST);
         try{
             echo $this->router->resolve();
         } catch (\Exception $e){
             $this->response->setStatusCode($e->getCode());
             echo $this->view->renderView('_error', [
-                'exception' => $e
+                'exceptions' => $e
             ]);
         }
     }
@@ -90,16 +84,5 @@ class Application{
     public function logout(){
         $this->user = null;
         $this->cookie->remove('user');
-    }
-
-    public function triggerEvent($event_name){
-        $callbacks = $this->event_listeners[$event_name] ?? [];
-        foreach ($callbacks as $callback){
-            call_user_func($callback);
-        }
-    }
-
-    public function on($event_name, $callback){
-        $this->event_listeners[$event_name][] = $callback;
     }
 }

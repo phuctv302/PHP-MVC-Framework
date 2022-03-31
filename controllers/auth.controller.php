@@ -142,14 +142,17 @@ class AuthController extends Controller {
                 Application::$app->response->redirect('/profile');
                 return;
             }
+
             $this->setLayout('main');
             return $this->render('profile', [
-                'model' => Application::$app->user
+                'model' => $edit_form,
+                'user' => Application::$app->user,
             ]);
         }
         $this->setLayout('main');
         return $this->render('profile', [
-            'model' => Application::$app->user
+            'model' => Application::$app->user,
+            'user' => Application::$app->user,
         ]);
     }
 

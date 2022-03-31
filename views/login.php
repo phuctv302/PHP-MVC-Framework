@@ -28,6 +28,7 @@ use core\MyCaptcha;
             <div class="form__group">
                 <label>Your email</label>
                 <input type="email" name="email" placeholder="Your email"
+                       required
                        value="<?= $model->email ?>"
                        class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
@@ -38,6 +39,7 @@ use core\MyCaptcha;
                 <a href="/forgot" class="text-blue">Forget your password?</a >
             </span>
                 <input type="password" name="password" placeholder="Your password"
+                       required
                        value="<?= $model->password ?>"
                        class="<?php echo $model->hasError("password") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("password") ?></div>
@@ -45,7 +47,7 @@ use core\MyCaptcha;
 
             <?php
             // Captcha
-            if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3) {
+            if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3){
                 echo "<div class='g-recaptcha' data-sitekey=" . $_ENV['PUBLIC_KEY'] . "></div>";
             }
             ?>

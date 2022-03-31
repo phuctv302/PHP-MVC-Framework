@@ -1,6 +1,6 @@
 <?php
 
-namespace core\exception;
+namespace core\exceptions;
 
 class NotFoundException extends \Exception{
     protected $code = 404;

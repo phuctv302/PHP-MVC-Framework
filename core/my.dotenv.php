@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Dotenv{
+class MyDotenv{
     protected $path;
 
     public function __construct(string $path){

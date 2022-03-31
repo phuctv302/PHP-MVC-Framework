@@ -21,12 +21,14 @@
                 <label>First name</label>
                 <input type="text" name="firstname" placeholder="Your first name"
                        value="<?= $model->firstname ?>"
+                       required
                        class="<?php echo $model->hasError("firstname") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("firstname") ?></div>
             </div>
             <div class="form__group">
                 <label>Last name</label>
                 <input type="text" name="lastname" placeholder="Your last name"
+                       required
                        value="<?= $model->lastname ?>"
                        class="<?php echo $model->hasError("lastname") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("lastname") ?></div>
@@ -34,6 +36,7 @@
             <div class="form__group">
                 <label>Your email</label>
                 <input type="email" name="email" placeholder="Your email"
+                       required
                        value="<?= $model->email ?>"
                        class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
@@ -41,6 +44,7 @@
             <div class="form__group">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Username"
+                       required
                        value="<?= $model->username ?>"
                        class="<?php echo $model->hasError("username") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("username") ?></div>
@@ -48,6 +52,7 @@
             <div class="form__group">
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Your password"
+                       required
                        value="<?= $model->password ?>"
                        class="<?php echo $model->hasError("password") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("password") ?></div>
@@ -55,6 +60,7 @@
             <div class="form__group">
                 <label>Confirm Password</label>
                 <input type="password" name="password" placeholder="Confirm password"
+                       required
                        value="<?= $model->confirm_password ?>"
                        class="<?php echo $model->hasError("confirm_password") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("confirm_password") ?></div>

@@ -13,15 +13,16 @@
         </div>
         <h1 class="auth__title text--center">Forgot password</h1>
         <p class="auth__sub-title text--gray text--center">
-            Enter your email to reset your password
+            Enter your email to reset your       
         </p>
 
         <form action="" method="post" class="form base-form auth-form">
             <div class="form__group">
                 <label>Your email</label>
                 <input type="email" name="email" placeholder="Your email"
+                       required
                        class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>"
-                        value=<?php echo $model->email ?>>
+                       value=<?php echo $model->email ?>>
                 <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
             </div>
 

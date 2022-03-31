@@ -2,7 +2,7 @@
 
 namespace core;
 
-use core\exception\NotFoundException;
+use core\exceptions\NotFoundException;
 
 class Router{
     public Request $request;

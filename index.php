@@ -3,12 +3,12 @@
 include 'includes/autoloader.inc.php';
 
 use core\Application;
-use core\Dotenv;
+use core\MyDotenv;
 use controllers\SiteController;
 use controllers\AuthController;
 
 // config environment variables
-$dotenv = new Dotenv(__DIR__ . '/.env');
+$dotenv = new MyDotenv(__DIR__ . '/.env');
 $dotenv->load();
 $config = [
     'userClass' => \models\User::class,
@@ -21,13 +21,6 @@ $config = [
 
 $app = new Application(__DIR__, $config);
 
-// Event
-//$app->on(Application::EVENT_BEFORE_REQUEST, function (){
-//    echo 'Before request';
-//});
-//$app->on(Application::EVENT_BEFORE_REQUEST, function (){
-//    echo 'Before request 2';
-//});
 
 /*
  * SiteController::class return "SiteController"

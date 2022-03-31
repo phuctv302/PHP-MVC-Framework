@@ -77,7 +77,6 @@ abstract class DbModel extends Model{
 
         // execute statement
         $statement->execute();
-//        return self::findOne($where);
     }
 
     public static function prepare($sql){

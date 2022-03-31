@@ -26,9 +26,9 @@
     const success_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('success') ?>\"");
     const error_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('error') ?>\"");
 
-    if (success_mes) {
+    if (success_mes){
         showAlert('success', success_mes);
-    } else if (error_mes) {
+    } else if (error_mes){
         showAlert('error', error_mes);
     }
 </script>
