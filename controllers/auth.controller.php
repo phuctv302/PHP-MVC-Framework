@@ -56,6 +56,7 @@ class AuthController extends Controller {
         if ($request->isPost()){
             // save data to user model
             $user->loadData($request->getBody());
+            var_dump($user);
 
             if ($user->validate() && $user->save()){
                 Application::$app->session->setFlash('success', 'Thanks for registering');
@@ -67,6 +68,8 @@ class AuthController extends Controller {
                 'model' => $user
             ]);
         }
+
+        var_dump($user);
 
         // Get method
         $this->setLayout('auth');

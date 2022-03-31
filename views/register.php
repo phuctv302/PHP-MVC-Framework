@@ -59,9 +59,9 @@
             </div>
             <div class="form__group">
                 <label>Confirm Password</label>
-                <input type="password" name="password" placeholder="Confirm password"
+                <input type="password" name="confirm_password" placeholder="Confirm password"
                        required
-                       value="<?= $model->confirm_password ?>"
+                       value="<?php echo $model->confirm_password ?>"
                        class="<?php echo $model->hasError("confirm_password") ? "is-invalid" : "" ?>">
                 <div class="invalid-feedback"><?php echo $model->getFirstError("confirm_password") ?></div>
             </div>
