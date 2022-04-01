@@ -4,6 +4,7 @@ namespace core\db;
 
 use core\Application;
 use core\Model;
+use core\Session;
 use models\User;
 
 abstract class DbModel extends Model{
@@ -48,6 +49,13 @@ abstract class DbModel extends Model{
     }
 
     public static function updateOne($where, $updateData){
+        // CHECK CSRF ATTACK
+        if (!isset($_POST[Session::CSRF_TOKEN_KEY])
+            || $_POST[Session::CSRF_TOKEN_KEY] != $_SESSION[Session::CSRF_TOKEN_KEY]){
+            Application::$app->session->setFlash('error', 'CSRF Attacking! We\'re not gonna submit your form');
+            return false;
+        }
+
         $table_name = static::tableName();
 
         // for finding user
@@ -58,6 +66,7 @@ abstract class DbModel extends Model{
         $updateAttributes = array_keys($updateData);
         $updateSql = implode(",", array_map(function($attr){ return "$attr = :$attr"; }, $updateAttributes));
 
+
         // UPDATE users SET firstname="Hoang", lastname="Van" WHERE email="phuc@example.com"
         $statement = self::prepare("
             UPDATE $table_name
@@ -65,18 +74,51 @@ abstract class DbModel extends Model{
             WHERE $sql
             ");
 
+        // FOR UPDATING IMAGE
+        $uploadedFile = '';
+        if (isset($_FILES['photo'])){
+            // check if user post image
+//            var_dump(strpos($_FILES['photo']['type'], 'image') !== 0);
+//            exit;
+            if (strpos($_FILES['photo']['type'], 'image') !== 0){
+                Application::$app->session->setFlash('error', 'Please choose an image!');
+                return false;
+            } else {
+                // copy image to public/img/users/user-{id}-{time()}
+                $uploadedDir = Application::$ROOT_DIR . '\\public\\img\\users\\';
+                $uploadedExt = '.' . explode('/', $_FILES['photo']['type'])[1];
+                $uploadedFile = 'user-'
+                    . Application::$app->cookie->get('user')
+                    . '-'
+                    . time()
+                    . $uploadedExt;
+
+                move_uploaded_file($_FILES['photo']['tmp_name'], $uploadedDir . $uploadedFile);
+            }
+        }
+
 
         // Bind value
         foreach ($where as $key => $value){
-            $statement->bindValue("$key", $value);
-        }
-
-        foreach ($updateData as $key => $value){
             $statement->bindValue(":$key", $value);
         }
 
+        foreach ($updateData as $key => $value){
+
+            if ($key == 'photo'){
+                $value = $uploadedFile;
+            }
+
+            $statement->bindValue(":$key", $value);
+        }
+
+//        var_dump($statement);
+//        exit;
+
         // execute statement
         $statement->execute();
+
+        return true;
     }
 
     public static function prepare($sql){

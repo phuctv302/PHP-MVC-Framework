@@ -18,7 +18,7 @@ class Controller{
         return Application::$app->view->renderView($view, $params);
     }
 
-    public function registerMiddleware(BaseMiddleware $middleware){
+    public function registerMiddleware($middleware){
         $this->middlewares[] = $middleware;
     }
 

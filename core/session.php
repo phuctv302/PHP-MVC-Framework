@@ -4,9 +4,12 @@ namespace core;
 
 class Session {
     protected const FLASH_KEY = 'flash_messages';
+    public const CSRF_TOKEN_KEY = 'csrf_token';
 
     public function __construct(){
         session_start();
+
+        // SET NOTIFICATION
         $flash_messages = $_SESSION[self::FLASH_KEY] ?? [];
         if (!empty($flash_messages)){
             foreach ($flash_messages as $_key => &$flash_message){
@@ -15,6 +18,12 @@ class Session {
             }
         }
         $_SESSION[self::FLASH_KEY] = $flash_messages;
+
+        // SET CSRF TOKEN
+        if (!isset($_SESSION[self::CSRF_TOKEN_KEY])){
+            $random_token = base64_encode(openssl_random_pseudo_bytes(32));
+            $_SESSION[self::CSRF_TOKEN_KEY] = $random_token;
+        }
     }
 
 

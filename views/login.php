@@ -52,6 +52,17 @@ use core\MyCaptcha;
             }
             ?>
 
+            <div class="form__checkbox">
+                <input
+                        type="checkbox"
+                        name="save-auth"
+                        id="save-auth"
+                />
+                <label for="save-auth" class="text--gray"
+                >Keep me logged in</label
+                >
+            </div>
+
             <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
             <a href="/register" class="btn btn--green btn--auth" >Not having an account. Signup now!</a>
         </form>

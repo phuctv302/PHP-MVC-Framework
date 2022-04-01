@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-/* General elements 
+/* General elements
 ****************************************************************** */
 body {
     position: relative;
@@ -534,6 +534,17 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+}
+
+.form-edit .form__group .form__label-container {
+    float: left;
+    width: 30%;
+}
+
+.form-edit .form__group input {
+    float: right;
+    width: 70%;
 }
 
 .form-edit input {

@@ -17,6 +17,7 @@ class User extends UserModel{
     public $password = '';
     public $photo = 'default.jpg';
     public $confirm_password = '';
+    public $job_title = '';
 
     public static function tableName(){
         return 'users';
@@ -34,8 +35,8 @@ class User extends UserModel{
 
     public function rules(){
         return [
-            'firstname' => [self::RULE_REQUIRED],
-            'lastname' => [self::RULE_REQUIRED],
+            'firstname' => [self::RULE_REQUIRED, self::RULE_STRING],
+            'lastname' => [self::RULE_REQUIRED, self::RULE_STRING],
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
                 self::RULE_UNIQUE, 'class' => self::class
             ]],
@@ -49,7 +50,7 @@ class User extends UserModel{
 
     public function attributes(): array{
         // return all database column name
-        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status'];
+        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status', 'job_title'];
     }
 
     public function labels(){

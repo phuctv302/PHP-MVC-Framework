@@ -9,6 +9,7 @@ abstract class Model{
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
     public const RULE_UNIQUE = 'unique';
+    public const RULE_STRING = 'string';
 
     public function loadData($data){
         foreach ($data as $key => $value){
@@ -54,6 +55,10 @@ abstract class Model{
                     $rule['match'] = $this->getLabel($rule['match']);
                     $this->addErrorForRule($attribute, self::RULE_MATCH, $rule);
                 }
+                if ($rule_name === self::RULE_STRING
+                    && preg_match("/[^a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u", $value)){
+                    $this->addErrorForRule($attribute, self::RULE_STRING);
+                }
                 if ($rule_name === self::RULE_UNIQUE){
                     $class_name = $rule['class'];
                     $uniqueAttr = $rule['attribute'] ?? $attribute;
@@ -92,7 +97,8 @@ abstract class Model{
             self::RULE_MIN => 'Min length of this field must be {min}',
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
-            self::RULE_UNIQUE => 'Record with this {field} already exists'
+            self::RULE_UNIQUE => 'Record with this {field} already exists',
+            self::RULE_STRING => 'This field contains only string'
         ];
     }
 

@@ -60,7 +60,6 @@ class AuthController extends Controller {
             if ($user->validate() && $user->save()){
                 Application::$app->session->setFlash('success', 'Thanks for registering');
                 Application::$app->response->redirect('/login');
-                exit;
             }
             $this->setLayout('auth');
             return $this->render('register', [
@@ -126,23 +125,20 @@ class AuthController extends Controller {
         ]);
     }
 
-    public function updateUser(Request $request){
+    public function updateUser($request){
         $edit_form = new EditForm();
         if ($request->isPost()){
             $edit_form->loadData($request->getBody());
-
-            // if user not choose new photo
-            if (empty($edit_form->photo)){
-                $edit_form->photo = Application::$app->user->photo;
-            }
-
 
             if ($edit_form->validate() && $edit_form->updateUser($request->getBody())){
                 Application::$app->session->setFlash('success', 'Update data successfully');
                 Application::$app->response->redirect('/profile');
                 return;
+            } else if (!$edit_form->validate()){
+                Application::$app->session->setFlash('error', 'Oops! Invalid input data.');
             }
-
+            echo 'This line';
+            exit;
             $this->setLayout('main');
             return $this->render('profile', [
                 'model' => $edit_form,
@@ -156,9 +152,9 @@ class AuthController extends Controller {
         ]);
     }
 
-    public function updatePhoto(Request $request, Response $response){
+    public function updatePhoto($request, $response){
         $image_form = new ImageForm();
-        if (isset($_POST['photo']) && !empty($_POST['photo'])){
+        if (isset($_FILES['photo']) && !empty($_FILES['photo'])){
             $image_form->loadData($request->getBody());
 
             if ($image_form->validate() && $image_form->uploadUserPhoto($request->getBody())){
@@ -166,14 +162,17 @@ class AuthController extends Controller {
                 $response->redirect('/profile');
                 return;
             }
-            $this->setLayout('main');
-            return $this->render('profile', [
-                'model' => Application::$app->user
-            ]);
+            $response->redirect('/profile');
+//            $this->setLayout('main');
+//            return $this->render('profile', [
+//                'model' => $image_form,
+//                'user' => Application::$app->user,
+//            ]);
         }
         $this->setLayout('main');
         return $this->render('profile', [
-            'model' => Application::$app->user
+            'model' => Application::$app->user,
+            'user' => Application::$app->user,
         ]);
     }
 

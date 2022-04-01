@@ -38,9 +38,19 @@ class Request{
         }
 
         if ($this->method() === 'post'){
+            // if user submit file image
+            if (isset($_FILES['photo'])){
+                $_POST['photo'] = $_FILES['photo']['name'];
+            }
+
             foreach ($_POST as $key => $value){
                 // sanitize data
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+
+                // for file image
+                if ($key == 'photo'){
+                    $body[$key] = $value;
+                }
 
                 // for upload user photo
                 if (empty($body['photo'])){

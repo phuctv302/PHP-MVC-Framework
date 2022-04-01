@@ -1,5 +1,8 @@
 <?php
 /** @var $this \core\View */
+
+use core\Session;
+
 $this->title = $user->getDisplayName(); // this ~ view instance
 ?>
 
@@ -57,8 +60,10 @@ $this->title = $user->getDisplayName(); // this ~ view instance
 
         <div class="content__detail" >
             <div class="user-detail">
-                <form id="profile-image-form" action="/profile-image" method="post">
+                <form id="profile-image-form" action="/profile-image" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY])?>">
                     <img class="user-detail__image" src="/public/img/users/<?php echo $user->photo ?>">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="300000000" />
                     <input
                             id="profile-image-upload"
                             type="file"
@@ -207,7 +212,8 @@ $this->title = $user->getDisplayName(); // this ~ view instance
 
 <div class="layout hidden"></div>
 
-<form class="form form-edit hidden" action="" method="post">
+<form class="form form-edit hidden" action="/profile" method="post" enctype="multipart/form-data" >
+    <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY])?>">
     <div class="form__header">
         <p class="form__title">Edit personal account</p>
         <div class="form__close-container close-form">
@@ -274,7 +280,8 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__label">Profile image</p>
                 <p class="form__sub-label">Profile image</p>
             </div>
-            <input type="file" name="photo" value=<?php echo $model->photo ?>>
+            <input type="hidden" name="MAX_FILE_SIZE" value="300000000" />
+            <input type="file" name="photo">
         </div>
         <div class="form__group">
             <div class="form__label-container">

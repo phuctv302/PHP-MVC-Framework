@@ -13,7 +13,22 @@ class ImageForm extends Model {
     }
 
     public function uploadUserPhoto($newPhoto){
-        User::updateOne([User::primaryKey() => $_COOKIE['user']], $newPhoto);
-        return true;
+        $filterData = $this->filterFields($newPhoto, ['photo']);
+        if (User::updateOne([User::primaryKey() => $_COOKIE['user']], $filterData)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function filterFields($data, $allowedFields= []){
+        $filterData = [];
+        foreach ($allowedFields as $allowedField){
+            if (in_array($allowedField, array_keys($data))){
+                $filterData[$allowedField] = $data[$allowedField];
+            }
+        }
+
+        return $filterData;
     }
 }

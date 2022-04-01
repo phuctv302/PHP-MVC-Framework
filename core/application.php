@@ -48,7 +48,7 @@ class Application{
 
         $this->db = new Database($config['db']);
 
-        $primaryValue = $this->cookie->get('user');
+        $primaryValue = $this->cookie->get('user') ?: $this->session->get('user');
         if ($primaryValue){
             $primaryKey = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
@@ -78,7 +78,17 @@ class Application{
 
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
-        $this->cookie->set('user', $primaryValue, $_ENV['COOKIE_EXPIRES']);
+
+        // if user check remember me checkbox
+        if (isset($_POST['save-auth']) && $_POST['save-auth'] == 'on'){
+            $this->cookie->set('user', $primaryValue, $_ENV['COOKIE_EXPIRES']);
+        } else if (!isset($_POST['save-auth'])){
+            $this->session->set('user', $primaryValue);
+        }
+
+        // reset captcha
+        Application::$app->cookie->remove('count');
+
         return true;
     }
 

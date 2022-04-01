@@ -10,6 +10,9 @@ class m0001_initial{
                 lastname VARCHAR(255) NOT NULL,
                 username VARCHAR(255) NOT NULL,
                 job_title VARCHAR(255) NOT NULL,
+                address VARCHAR(255) NOT NULL,
+                birthday DATE NOT NULL,
+                phone INT NOT NULL,
                 photo VARCHAR(255) DEFAULT 'default.jpg',
                 status TINYINT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP             
