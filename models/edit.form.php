@@ -11,15 +11,20 @@ class EditForm extends Model {
     public $lastname = '';
     public $job_title = '';
     public $photo = '';
+    public $birthday = '';
+    public $phone = '';
+    public $address = '';
 
     public function updateUser($data){
         if (!empty($_FILES['photo']['tmp_name'])) {
-            $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title', 'photo']);
+            $filterData = $this->filterFields($data,
+                ['firstname', 'lastname', 'job_title', 'photo', 'address', 'birthday', 'phone']);
         } else {
-            $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title']);
+            $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title', 'address', 'birthday', 'phone']);
         }
 
-        if (User::updateOne([User::primaryKey() => $_COOKIE['user']], $filterData)){
+        if (User::updateOne([User::primaryKey() => $_COOKIE['user'] ?? $_SESSION['user']]
+            , $filterData)){
             return true;
         } else {
             return false;

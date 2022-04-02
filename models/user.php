@@ -18,6 +18,8 @@ class User extends UserModel{
     public $photo = 'default.jpg';
     public $confirm_password = '';
     public $job_title = '';
+    public $birthday = '';
+    public $phone = '';
 
     public static function tableName(){
         return 'users';
@@ -48,9 +50,9 @@ class User extends UserModel{
         ];
     }
 
-    public function attributes(): array{
+    public function attributes(){
         // return all database column name
-        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status', 'job_title'];
+        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status', 'job_title', 'address', 'phone'];
     }
 
     public function labels(){

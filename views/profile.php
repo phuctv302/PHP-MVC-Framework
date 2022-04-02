@@ -35,7 +35,10 @@ $this->title = $user->getDisplayName(); // this ~ view instance
             </li>
         </ul>
 
-        <a href="/logout" class="logout-btn">Logout</a>
+        <form class="form-logout">
+            <i class="fas fa-power-off"></i>
+            <a href="/logout" class="logout-btn text--gray">Logout</a>
+        </form>
     </nav>
 
     <!-- Info of user -->
@@ -79,7 +82,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                         <b>Email address:</b> <?php echo $user->email ?>
                     </p>
                     <p class="info__phone">
-                        <b>Phone number:</b> 0984801847
+                        <b>Phone number:</b> <?php echo $user->phone ?>
                     </p>
                 </div>
             </div>
@@ -89,8 +92,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <div class="info__content">
                     <p class="label text--gray"><b>Address</b></p>
                     <p class="value">
-                        Ngo 362, Giai Phong, Thinh Liet, Hoang Mai, Ha
-                        Noi
+                        <?php echo $user->address ?>
                     </p>
                 </div>
             </div>
@@ -288,14 +290,14 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__label">Date of birth</p>
                 <p class="form__sub-label">Date of birth</p>
             </div>
-            <input value="<?php echo date('Y-m-d', 981158400) ?>" type="date" name="birthday"/>
+            <input value="<?php echo $model->birthday ?>" type="date" name="birthday"/>
         </div>
         <div class="form__group">
             <div class="form__label-container">
                 <p class="form__label">Your phone number</p>
                 <p class="form__sub-label">Your phone number</p>
             </div>
-            <input value="0984801847" type="number" name="phone"/>
+            <input value="<?php echo $model->phone ?>" type="number" name="phone"/>
         </div>
         <div class="form__group">
             <div class="form__label-container">
@@ -303,7 +305,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__sub-label">Current address</p>
             </div>
             <input
-                    value="Ngo 362, Giai Phong, Thinh Liet, Hoang Mai, Ha Noi"
+                    value="<?php echo $model->address ?>"
                     type="text"
                     name="address"
             />

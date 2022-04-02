@@ -36,7 +36,7 @@ use core\MyCaptcha;
             <div class="form__group">
                 <label>Password</label>
                 <span class="forgot-password">
-                <a href="/forgot" class="text-blue">Forget your password?</a >
+                <a href="/forgot" class="text--blue">Forget your password?</a >
             </span>
                 <input type="password" name="password" placeholder="Your password"
                        required
@@ -64,7 +64,7 @@ use core\MyCaptcha;
             </div>
 
             <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
-            <a href="/register" class="btn btn--green btn--auth" >Not having an account. Signup now!</a>
+            <a href="/register" class="text--blue text--center" >Not having an account. Signup now!</a>
         </form>
 
         <div class="other-auth text--center">
@@ -73,20 +73,20 @@ use core\MyCaptcha;
             </p>
 
             <div class="other-auth__button">
-                <a class="btn btn--gray text-blue"
+                <a class="btn btn--gray text--blue"
                 >Login with Google</a
                 >
-                <a class="btn btn--gray text-blue"
+                <a class="btn btn--gray text--blue"
                 >Login with Microsoft</a
                 >
-                <a class="btn btn--gray text-blue"
+                <a class="btn btn--gray text--blue"
                 >Login with SAML</a
                 >
             </div>
         </div>
 
         <div class="guest-auth text--center">
-            <a href="#" class="text-blue"
+            <a href="#" class="text--blue"
             >Login with Guest/Client access?</a
             >
         </div>

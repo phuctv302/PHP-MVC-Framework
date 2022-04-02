@@ -23,26 +23,25 @@ class AuthController extends Controller {
     public function login(Request $request, Response $response){
         $login_form = new LoginForm();
         $myCaptcha = new MyCaptcha();
-        if ($request->isPost()){
-            $login_form->loadData($request->getBody());
-            if ($login_form->validate() && $login_form->login() && $myCaptcha->verifyResponse()){
-                Application::$app->session->setFlash('success', 'Login successfully');
-                $response->redirect('/profile');
-                return;
-            } else if(!$myCaptcha->verifyResponse()) {
-                Application::$app->session->setFlash('error', 'Please verify captcha!');
-            }
+        $login_form->loadData($request->getBody());
+        if ($login_form->validate() && $login_form->login() && $myCaptcha->verifyResponse()){
+            Application::$app->session->setFlash('success', 'Login successfully');
+            $response->redirect('/profile');
+            return;
+        } else if (!$myCaptcha->verifyResponse()){
+            Application::$app->session->setFlash('error', 'Please verify captcha!');
+        }
 
-            // increase count variable to display captcha
-            if (isset($_POST['submit'])){
-                if (!Application::$app->cookie->get('count')) {
-                    Application::$app->cookie->set('count', 1, 1);
-                } else {
-                    $count = $_COOKIE['count'] + 1;
-                    Application::$app->cookie->set('count', $count, 1);
-                }
+        // increase count variable to display captcha
+        if (isset($_POST['submit'])){
+            if (!Application::$app->cookie->get('count')){
+                Application::$app->cookie->set('count', 1, 1);
+            } else {
+                $count = $_COOKIE['count'] + 1;
+                Application::$app->cookie->set('count', $count, 1);
             }
         }
+
         $this->setLayout('auth');
         return $this->render('login', [
             'model' => $login_form
@@ -53,21 +52,13 @@ class AuthController extends Controller {
         $user = new User();
 
         // post method
-        if ($request->isPost()){
-            // save data to user model
-            $user->loadData($request->getBody());
+        // save data to user model
+        $user->loadData($request->getBody());
 
-            if ($user->validate() && $user->save()){
-                Application::$app->session->setFlash('success', 'Thanks for registering');
-                Application::$app->response->redirect('/login');
-            }
-            $this->setLayout('auth');
-            return $this->render('register', [
-                'model' => $user
-            ]);
+        if ($user->validate() && $user->save()){
+            Application::$app->session->setFlash('success', 'Thanks for registering');
+            Application::$app->response->redirect('/login');
         }
-
-        // Get method
         $this->setLayout('auth');
         return $this->render('register', [
             'model' => $user
@@ -79,108 +70,35 @@ class AuthController extends Controller {
         $response->redirect('/login');
     }
 
-    public function forgot(Request $request){
+    public function forgotPassword(Request $request){
         $forgot_form = new ForgotForm();
 
-        if ($request->isPost()){
-            $forgot_form->loadData($request->getBody());
-            // send token to user email
-            if ($forgot_form->validate() && $forgot_form->sendToken()){
-                Application::$app->session->setFlash('success', 'Token has sent to your email');
-                Application::$app->response->redirect('/login');
-                return;
-            }
-            $this->setLayout('auth');
-            return $this->render('forgot', [
-                'model' => $forgot_form
-            ]);
+        $forgot_form->loadData($request->getBody());
+        // send token to user email
+        if ($forgot_form->validate() && $forgot_form->sendToken()){
+            Application::$app->session->setFlash('success', 'Token has sent to your email');
+            Application::$app->response->redirect('/login');
+            return;
         }
-
         $this->setLayout('auth');
         return $this->render('forgot', [
             'model' => $forgot_form
         ]);
     }
 
-    public function reset(Request $request){
+    public function resetPassword(Request $request){
         $reset_form = new ResetForm();
 
-        if ($request->isPost()){
-            $reset_form->loadData($request->getBody());
-            // send token to user email
-            if ($reset_form->validate() && $reset_form->resetPassword()){
-                Application::$app->session->setFlash('success', 'Reset password successfully');
-                Application::$app->response->redirect('/login');
-                return;
-            }
-            $this->setLayout('auth');
-            return $this->render('reset', [
-                'model' => $reset_form
-            ]);
+        $reset_form->loadData($request->getBody());
+        // send token to user email
+        if ($reset_form->validate() && $reset_form->resetPassword()){
+            Application::$app->session->setFlash('success', 'Reset password successfully');
+            Application::$app->response->redirect('/login');
+            return;
         }
-
         $this->setLayout('auth');
         return $this->render('reset', [
             'model' => $reset_form
-        ]);
-    }
-
-    public function updateUser($request){
-        $edit_form = new EditForm();
-        if ($request->isPost()){
-            $edit_form->loadData($request->getBody());
-
-            if ($edit_form->validate() && $edit_form->updateUser($request->getBody())){
-                Application::$app->session->setFlash('success', 'Update data successfully');
-                Application::$app->response->redirect('/profile');
-                return;
-            } else if (!$edit_form->validate()){
-                Application::$app->session->setFlash('error', 'Oops! Invalid input data.');
-            }
-            echo 'This line';
-            exit;
-            $this->setLayout('main');
-            return $this->render('profile', [
-                'model' => $edit_form,
-                'user' => Application::$app->user,
-            ]);
-        }
-        $this->setLayout('main');
-        return $this->render('profile', [
-            'model' => Application::$app->user,
-            'user' => Application::$app->user,
-        ]);
-    }
-
-    public function updatePhoto($request, $response){
-        $image_form = new ImageForm();
-        if (isset($_FILES['photo']) && !empty($_FILES['photo'])){
-            $image_form->loadData($request->getBody());
-
-            if ($image_form->validate() && $image_form->uploadUserPhoto($request->getBody())){
-                Application::$app->session->setFlash('success', "Update photo successfully");
-                $response->redirect('/profile');
-                return;
-            }
-            $response->redirect('/profile');
-//            $this->setLayout('main');
-//            return $this->render('profile', [
-//                'model' => $image_form,
-//                'user' => Application::$app->user,
-//            ]);
-        }
-        $this->setLayout('main');
-        return $this->render('profile', [
-            'model' => Application::$app->user,
-            'user' => Application::$app->user,
-        ]);
-    }
-
-    public function profile(){
-        $this->setLayout('main');
-        return $this->render('profile', [
-            'user' => Application::$app->user,
-            'model' => Application::$app->user
         ]);
     }
 }

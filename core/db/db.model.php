@@ -49,6 +49,7 @@ abstract class DbModel extends Model{
     }
 
     public static function updateOne($where, $updateData){
+        // TODO: put it to Middlewares
         // CHECK CSRF ATTACK
         if (!isset($_POST[Session::CSRF_TOKEN_KEY])
             || $_POST[Session::CSRF_TOKEN_KEY] != $_SESSION[Session::CSRF_TOKEN_KEY]){
@@ -74,12 +75,11 @@ abstract class DbModel extends Model{
             WHERE $sql
             ");
 
+        // TODO: put it to ImageUploadService
         // FOR UPDATING IMAGE
         $uploadedFile = '';
-        if (isset($_FILES['photo'])){
+        if (isset($_FILES['photo']) && !empty($_FILES['photo']['tmp_name'])){
             // check if user post image
-//            var_dump(strpos($_FILES['photo']['type'], 'image') !== 0);
-//            exit;
             if (strpos($_FILES['photo']['type'], 'image') !== 0){
                 Application::$app->session->setFlash('error', 'Please choose an image!');
                 return false;

@@ -8,35 +8,23 @@ use Exception;
 class Application{
     public static $ROOT_DIR;
 
+    public static $app;
+
+    // TODO: controller should control layout
     public $layout = 'main';
-    public $userClass;
+    public $user_class;
     public $db;
     public $router;
     public $request;
     public $response;
     public $session;
     public $cookie;
-    public static $app;
     public $controller = null;
     public $user;
     public $view;
 
-    /**
-     * @return Controller
-     */
-    public function getController(){
-        return $this->controller;
-    }
-
-    /**
-     * @param Controller $controller
-     */
-    public function setController($controller){
-        $this->controller = $controller;
-    }
-
     public function __construct($rootPath, $config){
-        $this->userClass = $config['userClass'];
+        $this->user_class = $config['user_class'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();
@@ -48,10 +36,11 @@ class Application{
 
         $this->db = new Database($config['db']);
 
-        $primaryValue = $this->cookie->get('user') ?: $this->session->get('user');
-        if ($primaryValue){
-            $primaryKey = $this->userClass::primaryKey();
-            $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
+        // TODO: token should be a random string more than 64 chars
+        $primary_value = $this->cookie->get('user') ?: $this->session->get('user');
+        if ($primary_value){
+            $primary_key = $this->user_class::primaryKey();
+            $this->user = $this->user_class::findOne([$primary_key => $primary_value]);
         } else{
             $this->user = null;
         }
@@ -62,7 +51,7 @@ class Application{
     }
 
     public function run(){
-        try{
+        try {
             echo $this->router->resolve();
         } catch (Exception $e){
             $this->response->setStatusCode($e->getCode());
@@ -76,14 +65,15 @@ class Application{
         // save user into session
         $this->user = $user;
 
-        $primaryKey = $user->primaryKey();
-        $primaryValue = $user->{$primaryKey};
+        $primary_key = $user->primaryKey();
+        $primary_value = $user->{$primary_key};
 
+        // TODO: should be in controller
         // if user check remember me checkbox
         if (isset($_POST['save-auth']) && $_POST['save-auth'] == 'on'){
-            $this->cookie->set('user', $primaryValue, $_ENV['COOKIE_EXPIRES']);
+            $this->cookie->set('user', $primary_value, $_ENV['COOKIE_EXPIRES']);
         } else if (!isset($_POST['save-auth'])){
-            $this->session->set('user', $primaryValue);
+            $this->session->set('user', $primary_value);
         }
 
         // reset captcha

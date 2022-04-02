@@ -67,7 +67,7 @@
             </div>
 
             <button type="submit" class="btn btn--green btn--auth">Sign up your new account</button>
-            <a href="/login" class="btn btn--green btn--auth" >Having an account. Login now!</a>
+            <a href="/login" class="text--center text--blue" >Having an account. Login now!</a>
         </form>
 
         <div class="other-auth text--center">
@@ -76,20 +76,20 @@
             </p>
 
             <div class="other-auth__button">
-                <a class="btn btn--gray text-blue"
+                <a class="btn btn--gray text--blue"
                 >Login with Google</a
                 >
-                <a class="btn btn--gray text-blue"
+                <a class="btn btn--gray text--blue"
                 >Login with Microsoft</a
                 >
-                <a class="btn btn--gray text-blue"
+                <a class="btn btn--gray text--blue"
                 >Login with SAML</a
                 >
             </div>
         </div>
 
         <div class="guest-auth text--center">
-            <a href="#" class="text-blue"
+            <a href="#" class="text--blue"
             >Login with Guest/Client access?</a
             >
         </div>

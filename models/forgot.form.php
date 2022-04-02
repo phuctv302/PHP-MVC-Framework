@@ -23,7 +23,7 @@ class ForgotForm extends Model {
             return false;
         }
 
-        // create a random reset token and TODO: save to users table
+        // create a random reset token
         $reset_token = bin2hex(random_bytes(32));
         User::updateOne(['email' => $this->email], ['reset_token' => $reset_token]);
 

@@ -2,8 +2,7 @@
 
 namespace core;
 
-use models\User;
-
+// TODO: Email should be a service
 class Email extends Controller {
     public $to = '';
     public $from = '';
@@ -20,6 +19,7 @@ class Email extends Controller {
         $this->url = $url;
     }
 
+    // TODO: send email content direct to param
     // send actual email with nice UI
     public function send($view, $subject){
         // get html
@@ -35,8 +35,8 @@ class Email extends Controller {
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
         // More headers. From is required, rest other headers are optional
-        $headers .= 'From: <phuctanki323232@gmail.com>' . "\r\n";
-        $headers .= 'Cc: sales@example.com' . "\r\n";
+        $headers .= 'From: <' . $_ENV['EMAIL_FROM'] . '>' . "\r\n";
+//        $headers .= 'Cc: sales@example.com' . "\r\n";
 
         // send mail
         return mail($this->to, $subject, $message, $headers);

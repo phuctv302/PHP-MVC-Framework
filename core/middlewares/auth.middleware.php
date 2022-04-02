@@ -16,8 +16,10 @@ class AuthMiddleware extends BaseMiddleware{
      * @throws ForbiddenException
      */
     public function execute(){
+        // not logged in yet
         if (Application::isGuest()){
             if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)){
+                // TODO: Redirect to login
                 throw new ForbiddenException();
             }
         }
