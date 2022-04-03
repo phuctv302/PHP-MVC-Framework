@@ -11,7 +11,6 @@ class Application{
     public static $app;
 
     // TODO: controller should control layout
-    public $layout = 'main';
     public $user_class;
     public $db;
     public $router;

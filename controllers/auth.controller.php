@@ -20,6 +20,7 @@ class AuthController extends Controller {
         $this->registerMiddleware(new AuthMiddleware(['profile']));
     }
 
+
     public function login(Request $request, Response $response){
         $login_form = new LoginForm();
         $myCaptcha = new MyCaptcha();

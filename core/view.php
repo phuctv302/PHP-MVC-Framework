@@ -13,7 +13,9 @@ class View{
     }
 
     protected function layoutContent(){
-        $layout = Application::$app->layout;
+
+        // default layout is 'main'
+        $layout = 'main';
         if (Application::$app->controller){
             $layout = Application::$app->controller->layout;
         }

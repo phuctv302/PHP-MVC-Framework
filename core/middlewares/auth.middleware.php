@@ -18,6 +18,7 @@ class AuthMiddleware extends BaseMiddleware{
     public function execute(){
         // not logged in yet
         if (Application::isGuest()){
+            // actions is empty means all routes are restricted to access
             if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)){
                 // TODO: Redirect to login
                 throw new ForbiddenException();

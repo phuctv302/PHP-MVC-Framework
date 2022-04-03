@@ -51,6 +51,8 @@ class Router{
         }
 
         if (is_array($callback)){
+            // e.g of callback: [AuthController::class, 'profile'] -> [controller, 'action']
+
             $controller = new $callback[0]();
             Application::$app->controller = $controller;
             $controller->action = $callback[1];
