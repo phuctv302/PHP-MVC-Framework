@@ -4,6 +4,7 @@ namespace controllers;
 
 use core\Application;
 use core\Controller;
+use core\middlewares\AuthMiddleware;
 use core\MyCaptcha;
 use models\ForgotForm;
 use models\LoginForm;
@@ -11,6 +12,7 @@ use models\ResetForm;
 use models\User;
 
 class SiteController extends Controller{
+
     public function home(){
         $currentUser = Application::$app->user ?? false;
 
@@ -18,14 +20,6 @@ class SiteController extends Controller{
             'user' => $currentUser
         ];
         return $this->render('home', $params);
-    }
-
-    public function userUpdateForm(){
-        $this->setLayout('main');
-        return $this->render('profile', [
-            'model' => Application::$app->user,
-            'user' => Application::$app->user,
-        ]);
     }
 
     public function profile(){

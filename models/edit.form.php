@@ -4,6 +4,7 @@ namespace models;
 
 use core\Application;
 use core\Model;
+use services\ImageUploadService;
 
 class EditForm extends Model {
 
@@ -23,8 +24,7 @@ class EditForm extends Model {
             $filterData = $this->filterFields($data, ['firstname', 'lastname', 'job_title', 'address', 'birthday', 'phone']);
         }
 
-        if (User::updateOne([User::primaryKey() => $_COOKIE['user'] ?? $_SESSION['user']]
-            , $filterData)){
+        if (User::updateOne([User::primaryKey() => Application::$app->user->id], $filterData)){
             return true;
         } else {
             return false;
@@ -34,7 +34,8 @@ class EditForm extends Model {
     public function rules(): array{
         return [
             'firstname' => [self::RULE_REQUIRED, self::RULE_STRING],
-            'lastname' => [self::RULE_REQUIRED, self::RULE_STRING]
+            'lastname' => [self::RULE_REQUIRED, self::RULE_STRING],
+            'phone' => [self::RULE_NUMBER]
         ];
     }
 

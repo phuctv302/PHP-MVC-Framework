@@ -2,6 +2,8 @@
 
 namespace core;
 
+use utils\TokenGenerator;
+
 class Session {
     protected const FLASH_KEY = 'flash_messages';
     public const CSRF_TOKEN_KEY = 'csrf_token';
@@ -21,8 +23,7 @@ class Session {
 
         // SET CSRF TOKEN
         if (!isset($_SESSION[self::CSRF_TOKEN_KEY])){
-            $random_token = base64_encode(openssl_random_pseudo_bytes(32));
-            $_SESSION[self::CSRF_TOKEN_KEY] = $random_token;
+            $_SESSION[self::CSRF_TOKEN_KEY] = TokenGenerator::signToken();
         }
     }
 

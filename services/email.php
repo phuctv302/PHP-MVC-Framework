@@ -1,9 +1,10 @@
 <?php
 
-namespace core;
+namespace services;
 
-// TODO: Email should be a service
-class Email extends Controller {
+use core\Application;
+
+class Email  {
     public $to = '';
     public $from = '';
 
@@ -19,15 +20,20 @@ class Email extends Controller {
         $this->url = $url;
     }
 
-    // TODO: send email content direct to param
     // send actual email with nice UI
     public function send($view, $subject){
         // get html
-        $message = $this->render($view, [
+        /** @var $controller \core\Controller */
+        $message = Application::$app->controller->render($view, [
             'firstname' => $this->firstname,
             'url' => $this->url,
             'subject' => $subject
         ]);
+//        $message = $this->render($view, [
+//            'firstname' => $this->firstname,
+//            'url' => $this->url,
+//            'subject' => $subject
+//        ]);
 
         // email options
         // It is mandatory to set the content-type when sending HTML email

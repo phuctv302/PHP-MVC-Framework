@@ -3,7 +3,8 @@
 namespace models;
 
 use core\Model;
-use core\Email;
+use services\Email;
+use utils\TokenGenerator;
 
 class ForgotForm extends Model {
 
@@ -24,7 +25,7 @@ class ForgotForm extends Model {
         }
 
         // create a random reset token
-        $reset_token = bin2hex(random_bytes(32));
+        $reset_token = TokenGenerator::signToken();
         User::updateOne(['email' => $this->email], ['reset_token' => $reset_token]);
 
         // get url to reset password: reset?token=.....

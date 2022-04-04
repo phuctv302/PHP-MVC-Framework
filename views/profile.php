@@ -1,5 +1,8 @@
 <?php
-/** @var $this \core\View */
+/** @var $this \core\View
+ * @var $model \core\Model;
+ * @var $user \core\UserModel
+ */
 
 use core\Session;
 
@@ -35,9 +38,10 @@ $this->title = $user->getDisplayName(); // this ~ view instance
             </li>
         </ul>
 
-        <form class="form-logout">
-            <i class="fas fa-power-off"></i>
-            <a href="/logout" class="logout-btn text--gray">Logout</a>
+        <form class="form-logout" enctype="multipart/form-data" method="post" action="/logout">
+            <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY])?>">
+            <button class="logout-btn text--gray"><i class="fas fa-power-off"></i></button>
+            <button class="logout-btn text--gray">Logout</button>
         </form>
     </nav>
 
@@ -297,7 +301,9 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__label">Your phone number</p>
                 <p class="form__sub-label">Your phone number</p>
             </div>
-            <input value="<?php echo $model->phone ?>" type="number" name="phone"/>
+            <input value="<?php echo $model->phone ?>" type="text" name="phone"
+                   class="<?php echo $model->hasError("phone") ? "is-invalid" : "" ?>"/>
+            <div class="invalid-feedback"><?php echo $model->getFirstError("phone") ?></div>
         </div>
         <div class="form__group">
             <div class="form__label-container">

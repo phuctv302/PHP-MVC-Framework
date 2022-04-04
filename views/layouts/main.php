@@ -28,6 +28,16 @@ use core\Application;
             rel="stylesheet"
             media="all"
     />
+
+    <style>
+        .form-logout .logout-btn {
+            border: none;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
 </head>
     <body>
         {{content}}

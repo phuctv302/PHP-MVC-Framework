@@ -296,6 +296,12 @@ input:focus {
     align-items: center;
 }
 
+.form-logout .logout-btn {
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
 /* User information */
 .user-view__content {
     width: 80%;

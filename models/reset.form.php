@@ -18,7 +18,7 @@ class ResetForm extends Model {
 
     public function resetPassword(){
         // get reset token from url
-        $reset_token = explode('=', $_SERVER['REQUEST_URI'])[1];
+        $reset_token = explode('=', $_SERVER['REQUEST_URI'], 2)[1];
 
         // find user with that token
         $user = User::findOne(['reset_token' => $reset_token]);

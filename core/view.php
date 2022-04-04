@@ -2,7 +2,7 @@
 
 namespace core;
 
-class View{
+class View {
     public $title = '';
 
     public function renderView($view, $params = []){

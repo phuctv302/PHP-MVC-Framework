@@ -6,6 +6,7 @@ use core\Application;
 use core\Model;
 use core\Session;
 use models\User;
+use services\ImageUploadService;
 
 abstract class DbModel extends Model{
     abstract public static function tableName();
@@ -36,7 +37,10 @@ abstract class DbModel extends Model{
     public static function findOne($where){
         $table_name = static::tableName(); // users
         $attributes = array_keys($where); // ['email']
-        $sql = implode("AND ", array_map(function($attr){ return "$attr = :$attr"; }, $attributes)); // 'email = :email'
+        $sql = implode(" AND ", array_map(function($attr){
+            if ($attr == 'expired_at') return "$attr > :$attr";
+            return "$attr = :$attr";
+            }, $attributes)); // 'email = :email'
 
         // SELECT * FROM $users WHERE email = :email [AND firstname = :firstname]
         $statement = self::prepare("SELECT * FROM $table_name WHERE $sql");
@@ -44,24 +48,19 @@ abstract class DbModel extends Model{
             $statement->bindValue(":$key", $item);
         }
 
+//        var_dump($statement);
+//        exit;
+
         $statement->execute();
         return $statement->fetchObject(static::class);
     }
 
     public static function updateOne($where, $updateData){
-        // TODO: put it to Middlewares
-        // CHECK CSRF ATTACK
-        if (!isset($_POST[Session::CSRF_TOKEN_KEY])
-            || $_POST[Session::CSRF_TOKEN_KEY] != $_SESSION[Session::CSRF_TOKEN_KEY]){
-            Application::$app->session->setFlash('error', 'CSRF Attacking! We\'re not gonna submit your form');
-            return false;
-        }
-
         $table_name = static::tableName();
 
         // for finding user
         $attribute = array_keys($where);
-        $sql = implode("AND", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
+        $sql = implode(" AND ", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
 
         // for updating user
         $updateAttributes = array_keys($updateData);
@@ -75,40 +74,18 @@ abstract class DbModel extends Model{
             WHERE $sql
             ");
 
-        // TODO: put it to ImageUploadService
         // FOR UPDATING IMAGE
-        $uploadedFile = '';
-        if (isset($_FILES['photo']) && !empty($_FILES['photo']['tmp_name'])){
-            // check if user post image
-            if (strpos($_FILES['photo']['type'], 'image') !== 0){
-                Application::$app->session->setFlash('error', 'Please choose an image!');
-                return false;
-            } else {
-                // copy image to public/img/users/user-{id}-{time()}
-                $uploadedDir = Application::$ROOT_DIR . '\\public\\img\\users\\';
-                $uploadedExt = '.' . explode('/', $_FILES['photo']['type'])[1];
-                $uploadedFile = 'user-'
-                    . Application::$app->cookie->get('user')
-                    . '-'
-                    . time()
-                    . $uploadedExt;
-
-                move_uploaded_file($_FILES['photo']['tmp_name'], $uploadedDir . $uploadedFile);
-            }
-        }
-
+        $uploadedFile = (new ImageUploadService)->upload();
 
         // Bind value
         foreach ($where as $key => $value){
             $statement->bindValue(":$key", $value);
         }
 
+        if (isset($_FILES['photo']) && !empty($_FILES['photo']['tmp_name'])){
+            $updateData['photo'] = $uploadedFile ?: Application::$app->user->photo;
+        }
         foreach ($updateData as $key => $value){
-
-            if ($key == 'photo'){
-                $value = $uploadedFile;
-            }
-
             $statement->bindValue(":$key", $value);
         }
 
@@ -119,6 +96,27 @@ abstract class DbModel extends Model{
         $statement->execute();
 
         return true;
+    }
+
+    // Delete all record matching the condition
+    public static function deleteOne($where){
+        $table_name = static::tableName();
+
+        $attribute = array_keys($where);
+
+        $sql = $sql = implode("AND", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
+
+        $statement = self::prepare("
+            DELETE FROM $table_name
+            WHERE $sql
+        ");
+
+        // Bind value
+        foreach ($where as $key => $value){
+            $statement->bindValue(":$key", $value);
+        }
+
+        $statement->execute();
     }
 
     public static function prepare($sql){

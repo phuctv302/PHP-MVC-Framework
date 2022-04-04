@@ -9,6 +9,9 @@ class Router{
     public $response;
     protected $routes = [];
 
+    /** @var $middlewares \core\middlewares\BaseMiddleware */
+    public $middlewares = [];
+
     /**
      * e.g: @var $routes = [
      *      'get' => [
@@ -17,12 +20,22 @@ class Router{
      *       ],
      *       'post' => ...
      * */
-    public function get($path, $callback){
+    public function get($path, $callback, $middlewares = []){
         $this->routes['get'][$path] = $callback;
+        if ($path == Application::$app->request->getPath()
+            && !empty($middlewares)
+            && Application::$app->request->method() === 'get'){
+            $this->middlewares = $middlewares;
+        }
     }
 
-    public function post($path, $callback){
+    public function post($path, $callback, $middlewares = []){
         $this->routes['post'][$path] = $callback;
+        if ($path == Application::$app->request->getPath()
+            && !empty($middlewares)
+            && Application::$app->request->method() === 'post'){
+            $this->middlewares = $middlewares;
+        }
     }
 
 
@@ -53,13 +66,19 @@ class Router{
         if (is_array($callback)){
             // e.g of callback: [AuthController::class, 'profile'] -> [controller, 'action']
 
+            /** @var $controller \core\Controller
+             */
             $controller = new $callback[0]();
             Application::$app->controller = $controller;
             $controller->action = $callback[1];
             $callback[0] = $controller;
 
-            foreach ($controller->getMiddlewares() as $middleware){
-                $middleware->execute();
+            // execute middleware
+            /** @var $middleware \core\middlewares\BaseMiddleware */
+            if (!empty($this->middlewares)){
+                foreach ($this->middlewares as $middleware){
+                    $middleware->execute();
+                }
             }
         }
 

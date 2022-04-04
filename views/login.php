@@ -2,6 +2,8 @@
 
 <?php
 
+/** @var $model \core\Model */
+
 use core\Application;
 use core\MyCaptcha;
 

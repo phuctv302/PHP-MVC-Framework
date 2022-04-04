@@ -2,6 +2,7 @@
 
 namespace models;
 
+use core\Application;
 use core\Model;
 
 class ImageForm extends Model {
@@ -13,8 +14,8 @@ class ImageForm extends Model {
     }
 
     public function uploadUserPhoto($newPhoto){
-        $filterData = $this->filterFields($newPhoto, ['photo']);
-        if (User::updateOne([User::primaryKey() => $_COOKIE['user']], $filterData)){
+        $filter_data = $this->filterFields($newPhoto, ['photo']);
+        if (User::updateOne([User::primaryKey() => Application::$app->user->id], $filter_data)){
             return true;
         } else {
             return false;

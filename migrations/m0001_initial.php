@@ -14,7 +14,7 @@ class m0001_initial{
                 birthday DATE NOT NULL,
                 phone INT,
                 photo VARCHAR(255) DEFAULT 'default.jpg',
-                status TINYINT NOT NULL,
+                reset_token VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP             
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);

@@ -12,13 +12,16 @@ use models\EditForm;
 use models\ForgotForm;
 use models\ImageForm;
 use models\LoginForm;
+use models\LoginSession;
 use models\ResetForm;
 use models\User;
+use utils\DateConverter;
+use utils\TokenGenerator;
 
 class AuthController extends Controller {
-    public function __construct(){
-        $this->registerMiddleware(new AuthMiddleware(['profile']));
-    }
+//    public function __construct(){
+//        $this->registerMiddleware(new AuthMiddleware(['profile']));
+//    }
 
 
     public function login(Request $request, Response $response){
@@ -26,6 +29,21 @@ class AuthController extends Controller {
         $myCaptcha = new MyCaptcha();
         $login_form->loadData($request->getBody());
         if ($login_form->validate() && $login_form->login() && $myCaptcha->verifyResponse()){
+            $user = Application::$app->user;
+
+            // sign new login token and save it to database
+            $login_token = $login_form->signToken($user);
+
+            // if user check remember me checkbox
+            if (isset($_POST['save-auth']) && $_POST['save-auth'] == 'on'){
+                Application::$app->cookie->set('user', $login_token, $_ENV['COOKIE_EXPIRES']);
+            } else if (!isset($_POST['save-auth'])){
+                Application::$app->session->set('user', $login_token);
+            }
+
+            // reset captcha
+            Application::$app->cookie->remove('count');
+
             Application::$app->session->setFlash('success', 'Login successfully');
             $response->redirect('/profile');
             return;
@@ -66,7 +84,10 @@ class AuthController extends Controller {
         ]);
     }
 
-    public function logout(Request $request, Response $response){
+    public function logout($request, $response){
+        // remove login session row from login_session table
+        LoginSession::deleteOne(['user_id' => Application::$app->user->id]);
+
         Application::$app->logout();
         $response->redirect('/login');
     }

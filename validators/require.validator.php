@@ -4,9 +4,9 @@ namespace validators;
 
 use core\Validator;
 
-class RequireValidator extends Validator {
+class RequireValidator implements Validator {
 
-    public function validate($value, $rule){
-        if ()
+    public static function validate($value, $rule = null, $model = null, $attribute = null){
+        return !$value;
     }
 }

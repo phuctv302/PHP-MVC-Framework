@@ -5,15 +5,11 @@ namespace models;
 use core\UserModel;
 
 class User extends UserModel{
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_DELETED = 2;
 
     public $firstname = '';
     public $lastname = '';
     public $email = '';
     public $username = '';
-    public $status = self::STATUS_INACTIVE;
     public $password = '';
     public $photo = 'default.jpg';
     public $confirm_password = '';
@@ -30,7 +26,6 @@ class User extends UserModel{
     }
 
     public function save(){
-        $this->status = self::STATUS_INACTIVE;
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
     }
@@ -52,7 +47,7 @@ class User extends UserModel{
 
     public function attributes(){
         // return all database column name
-        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'status', 'job_title', 'address', 'phone'];
+        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'job_title', 'address', 'phone'];
     }
 
     public function labels(){

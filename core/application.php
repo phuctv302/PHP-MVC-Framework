@@ -4,6 +4,9 @@ namespace core;
 
 use core\db\Database;
 use Exception;
+use models\LoginSession;
+use models\User;
+use utils\DateConverter;
 
 class Application{
     public static $ROOT_DIR;
@@ -35,12 +38,16 @@ class Application{
 
         $this->db = new Database($config['db']);
 
-        // TODO: token should be a random string more than 64 chars
-        $primary_value = $this->cookie->get('user') ?: $this->session->get('user');
-        if ($primary_value){
-            $primary_key = $this->user_class::primaryKey();
-            $this->user = $this->user_class::findOne([$primary_key => $primary_value]);
-        } else{
+        $login_token = $this->cookie->get('user') ?: $this->session->get('user');
+        if ($login_token){
+            $login_session = LoginSession::findOne(
+                ['login_token' => $login_token, 'expired_at' => DateConverter::toDate(time())]
+            );
+
+            $user = User::findOne(['id' => $login_session->user_id]);
+
+            $this->user = $user;
+        } else {
             $this->user = null;
         }
     }
@@ -64,25 +71,12 @@ class Application{
         // save user into session
         $this->user = $user;
 
-        $primary_key = $user->primaryKey();
-        $primary_value = $user->{$primary_key};
-
-        // TODO: should be in controller
-        // if user check remember me checkbox
-        if (isset($_POST['save-auth']) && $_POST['save-auth'] == 'on'){
-            $this->cookie->set('user', $primary_value, $_ENV['COOKIE_EXPIRES']);
-        } else if (!isset($_POST['save-auth'])){
-            $this->session->set('user', $primary_value);
-        }
-
-        // reset captcha
-        Application::$app->cookie->remove('count');
-
         return true;
     }
 
     public function logout(){
         $this->user = null;
         $this->cookie->remove('user');
+        $this->session->remove('user');
     }
 }
