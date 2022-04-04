@@ -1,19 +1,21 @@
 <?php
 
-namespace core;
+namespace services;
 
+// TODO: move to service
 class MyCaptcha {
     // API key configuration
     public static $SITE_KEY = '6Lc3UyUfAAAAABb5JaeeRE7av5mdN4_aSPIZcilB';
     public static $SECRET_KEY = '6Lc3UyUfAAAAAOK4_QO3TLEwkjsOuAxdIMCWDxna';
 
     // verify response
-    public function verifyResponse(){
-        if (isset($_POST['submit'])){
+    // TODO: get submit from request obj, better through param, should be static
+    public static function verifyResponse($body){
+        if (isset($body['submit'])){
             $secret = self::$SECRET_KEY;
 
-            if (isset($_POST['g-recaptcha-response'])){
-                $response = $_POST['g-recaptcha-response'];
+            if (isset($body['g-recaptcha-response'])){
+                $response = $body['g-recaptcha-response'];
             } else {
                 return true;
             }

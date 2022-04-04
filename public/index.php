@@ -42,10 +42,13 @@ $app->router->post('/forgot', [AuthController::class, 'forgotPassword']);
 $app->router->get('/reset', [SiteController::class, 'resetPasswordForm']);
 $app->router->post('/reset', [AuthController::class, 'resetPassword']);
 
-$app->router->get('/profile', [SiteController::class, 'profile'], [new AuthMiddleware(['profile'])]);
-$app->router->post('/profile', [UserController::class, 'updateUser'], [new CsrfMiddleware()]);
-$app->router->post('/profile-image', [UserController::class, 'updatePhoto'], [new CsrfMiddleware()]);
+// TODO: remove actions in middlewares
+$app->router->get('/profile', [SiteController::class, 'profile'], [new AuthMiddleware()]);
+// TODO: authenticate!!!!!!!!!!!!!
+$app->router->post('/profile', [UserController::class, 'updateUser'], [new AuthMiddleware(), new CsrfMiddleware()]);
+$app->router->post('/profile-image', [UserController::class, 'updatePhoto'], [new AuthMiddleware(), new CsrfMiddleware()]);
 
+// TODO: check if authenticated, then redirect to profile, else login
 $app->router->get('/', [SiteController::class, 'home']);
 
 $app->run();

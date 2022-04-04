@@ -74,15 +74,23 @@ abstract class DbModel extends Model{
             WHERE $sql
             ");
 
-        // FOR UPDATING IMAGE
-        $uploadedFile = (new ImageUploadService)->upload();
 
         // Bind value
         foreach ($where as $key => $value){
             $statement->bindValue(":$key", $value);
         }
 
-        if (isset($_FILES['photo']) && !empty($_FILES['photo']['tmp_name'])){
+        // FOR UPDATING IMAGE
+        if (ImageUploadService::checkImageExist('photo')){
+            $uploadedDir = Application::$ROOT_DIR . '\\public\\img\\users\\';
+            $uploadedExt = '.' . explode('/', $_FILES['photo']['type'])[1];
+            $uploadedFile = 'user-'
+                . Application::$app->user->id
+                . '-'
+                . time()
+                . $uploadedExt;
+
+            ImageUploadService::upload('photo', $uploadedDir . $uploadedFile);
             $updateData['photo'] = $uploadedFile ?: Application::$app->user->photo;
         }
         foreach ($updateData as $key => $value){
@@ -99,7 +107,7 @@ abstract class DbModel extends Model{
     }
 
     // Delete all record matching the condition
-    public static function deleteOne($where){
+    public static function delete($where){
         $table_name = static::tableName();
 
         $attribute = array_keys($where);

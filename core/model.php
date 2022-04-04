@@ -46,6 +46,12 @@ abstract class Model{
         foreach ($this->rules() as $attribute => $rules){
             $value = $this->{$attribute};
             foreach ($rules as $rule){
+
+                //TODO: OOP!!!!
+//                if ($rule->validate(value)) {
+//                    $this->addErrorForRule($attribute, $rule->errors);
+//                }
+
                 $rule_name = $rule;
                 if (!is_string($rule_name)){
                     $rule_name = $rule[0];
@@ -79,6 +85,8 @@ abstract class Model{
                     && NumberValidator::validate($value)){
                     $this->addErrorForRule($attribute, self::RULE_NUMBER);
                 }
+
+                // TODO: check uniqueness at controller
                 if ($rule_name === self::RULE_UNIQUE
                     && UniqueValidator::validate($value, $rule, $this, $attribute)){
                         $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $this->getLabel($attribute)]);

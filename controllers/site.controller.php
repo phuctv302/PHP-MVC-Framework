@@ -5,7 +5,7 @@ namespace controllers;
 use core\Application;
 use core\Controller;
 use core\middlewares\AuthMiddleware;
-use core\MyCaptcha;
+use services\MyCaptcha;
 use models\ForgotForm;
 use models\LoginForm;
 use models\ResetForm;
@@ -13,13 +13,14 @@ use models\User;
 
 class SiteController extends Controller{
 
-    public function home(){
+    public function home($request, $response){
         $currentUser = Application::$app->user ?? false;
 
-        $params = [
-            'user' => $currentUser
-        ];
-        return $this->render('home', $params);
+        if (!$currentUser){
+            $response->redirect('/login');
+        } else {
+            $response->redirect('/profile');
+        }
     }
 
     public function profile(){

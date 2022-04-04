@@ -5,7 +5,7 @@
 /** @var $model \core\Model */
 
 use core\Application;
-use core\MyCaptcha;
+use services\MyCaptcha;
 
     $this->title = 'Login';
 

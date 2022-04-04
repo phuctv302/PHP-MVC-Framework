@@ -26,6 +26,7 @@ class LoginForm extends Model{
         ];
     }
 
+    // TODO: move to login.session
     public function login(){
         $user = User::findOne(['email' => $this->email]);
         if (!$user){
@@ -42,6 +43,7 @@ class LoginForm extends Model{
 
     /** @var $user \models\User
      */
+    // TODO: move to login.session
     public function signToken($user){
         $login_session = new LoginSession();
 
@@ -56,6 +58,7 @@ class LoginForm extends Model{
             'user_id' => $primary_value,
             'expired_at' => $expired_at
         ]);
+        // TODO: persistence operations should be at controller
         $login_session->save();
 
         return $login_token;
