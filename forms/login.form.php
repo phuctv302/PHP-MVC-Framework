@@ -10,6 +10,7 @@ class LoginForm extends Model{
 
     public $email = '';
     public $password = '';
+    public $save_auth = '';
 
     public function rules(): array{
         return [

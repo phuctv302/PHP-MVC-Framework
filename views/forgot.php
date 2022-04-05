@@ -16,7 +16,7 @@
             Enter your email to reset your       
         </p>
 
-        <form action="" method="post" class="form base-form auth-form">
+        <form action="/forgot" method="post" class="form base-form auth-form">
             <div class="form__group">
                 <label>Your email</label>
                 <input type="email" name="email" placeholder="Your email"

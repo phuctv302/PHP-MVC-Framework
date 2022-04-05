@@ -16,7 +16,7 @@
             Welcome. Signup to start working
         </p>
 
-        <form action="" method="post" class="base-form auth-form">
+        <form action="/register" method="post" class="base-form auth-form">
             <div class="form__group">
                 <label>First name</label>
                 <input type="text" name="firstname" placeholder="Your first name"

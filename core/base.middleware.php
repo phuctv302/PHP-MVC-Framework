@@ -1,6 +1,6 @@
 <?php
 
-namespace core\middlewares;
+namespace core;
 
 abstract class BaseMiddleware{
     abstract public function execute();

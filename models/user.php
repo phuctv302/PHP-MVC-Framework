@@ -68,7 +68,7 @@ class User extends DbModel {
         ];
     }
 
-    public function getDisplayName(): string{
+    public function getDisplayName(){
         return $this->lastname . ' ' . $this->firstname;
     }
 
@@ -80,8 +80,7 @@ class User extends DbModel {
             $filterData = $edit_form->filterFields((array) $edit_form, ['firstname', 'lastname', 'job_title', 'address', 'birthday', 'phone']);
         }
 
-        // TODO: persistent ops should be in controllers
-        if (User::updateOne([User::primaryKey() => Application::$app->user->id], $filterData)){
+        if (User::updateOne([User::primaryKey() => $this->getUser()->id], $filterData)){
             return true;
         } else {
             return false;
@@ -90,10 +89,27 @@ class User extends DbModel {
 
     public function uploadUserPhoto($newPhoto){
         $filter_data = $this->filterFields((array) $newPhoto, ['photo']);
-        if (User::updateOne([User::primaryKey() => Application::$app->user->id], $filter_data)){
+        if (User::updateOne([User::primaryKey() => $this->getUser()->id], $filter_data)){
             return true;
         } else {
             return false;
         }
+    }
+
+    /** @var $login_form \forms\LoginForm */
+    public static function login($login_form){
+        $user = self::findOne(['email' => $login_form->email]);
+        if (!$user){
+            $login_form->addError('email', 'User does not exist with this email');
+            return false;
+        }
+        if (!password_verify($login_form->password, $user->password)){
+            $login_form->addError('password', 'Password is incorrect');
+            return false;
+        }
+
+        // ON SUCCESS
+        Application::$app->user = $user;
+        return true;
     }
 }

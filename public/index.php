@@ -4,8 +4,8 @@ include dirname(__DIR__) . '/includes/autoloader.inc.php';
 
 use controllers\UserController;
 use core\Application;
-use core\middlewares\AuthMiddleware;
-use core\middlewares\CsrfMiddleware;
+use middlewares\AuthMiddleware;
+use middlewares\CsrfMiddleware;
 use core\MyDotenv;
 use controllers\SiteController;
 use controllers\AuthController;
@@ -41,13 +41,10 @@ $app->router->post('/forgot', [AuthController::class, 'forgotPassword']);
 $app->router->get('/reset', [SiteController::class, 'resetPasswordForm']);
 $app->router->post('/reset', [AuthController::class, 'resetPassword']);
 
-// TODO: remove actions in middlewares
 $app->router->get('/profile', [SiteController::class, 'profile'], [new AuthMiddleware()]);
-// TODO: authenticate!!!!!!!!!!!!!
 $app->router->post('/profile', [UserController::class, 'updateUser'], [new AuthMiddleware(), new CsrfMiddleware()]);
 $app->router->post('/profile-image', [UserController::class, 'updatePhoto'], [new AuthMiddleware(), new CsrfMiddleware()]);
 
-// TODO: check if authenticated, then redirect to profile, else login
 $app->router->get('/', [SiteController::class, 'home']);
 
 $app->run();

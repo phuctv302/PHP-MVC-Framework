@@ -10,26 +10,26 @@ use models\User;
 use services\ImageUploadService;
 
 class UserController extends Controller {
-    public function updateUser($request){
+    public function updateUser($request, $response){
         $edit_form = new EditForm();
         $edit_form->loadData($request->getBody());
         $user = new User();
 
         // validate form
         if (!$edit_form->validate()){
-            Application::$app->session->setFlash('error', 'Oops! Invalid input data.');
+            $this->getSession()->setFlash('error', 'Oops! Invalid input data.');
             $this->setLayout('main');
             return $this->render('profile', [
                 'model' => $edit_form,
-                'user' => Application::$app->user,
+                'user' => $this->getUser(),
             ]);
         }
 
         // ON SUCCESS
         $user->updateUser($edit_form);
 
-        Application::$app->session->setFlash('success', 'Update data successfully');
-        Application::$app->response->redirect('/profile');
+        $this->getSession()->setFlash('success', 'Update data successfully');
+        $response->redirect('/profile');
         exit;
     }
 
@@ -37,21 +37,19 @@ class UserController extends Controller {
         $image_form = new ImageForm();
         $user = new User();
 
-        // TODO: use image upload service to check
         if (ImageUploadService::checkImageExist('photo')){
             $image_form->loadData($request->getBody());
 
             if ($image_form->validate() && $user->uploadUserPhoto($request->getBody())){
-                Application::$app->session->setFlash('success', "Update photo successfully");
+                $this->getSession()->setFlash('success', "Update photo successfully");
                 $response->redirect('/profile');
-                return;
             }
             $response->redirect('/profile');
         }
         $this->setLayout('main');
         return $this->render('profile', [
-            'model' => Application::$app->user,
-            'user' => Application::$app->user,
+            'model' => $this->getUser(),
+            'user' => $this->getUser(),
         ]);
     }
 

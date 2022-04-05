@@ -12,7 +12,7 @@ use models\User;
 class SiteController extends Controller{
 
     public function home($request, $response){
-        $currentUser = Application::$app->user ?? false;
+        $currentUser = $this->getUser() ?? false;
 
         if (!$currentUser){
             $response->redirect('/login');
@@ -24,8 +24,8 @@ class SiteController extends Controller{
     public function profile(){
         $this->setLayout('main');
         return $this->render('profile', [
-            'user' => Application::$app->user,
-            'model' => Application::$app->user
+            'user' => $this->getUser(),
+            'model' => $this->getUser()
         ]);
     }
 

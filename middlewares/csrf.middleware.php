@@ -1,8 +1,9 @@
 <?php
 
-namespace core\middlewares;
+namespace middlewares;
 
 use core\Application;
+use core\BaseMiddleware;
 use core\Session;
 
 class CsrfMiddleware extends BaseMiddleware {

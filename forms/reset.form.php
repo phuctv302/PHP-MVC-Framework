@@ -2,9 +2,7 @@
 
 namespace forms;
 
-use core\Application;
 use core\Model;
-use models\User;
 use validators\MatchValidator;
 use validators\MaxValidator;
 use validators\MinValidator;

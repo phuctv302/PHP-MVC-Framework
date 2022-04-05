@@ -26,7 +26,7 @@ use services\MyCaptcha;
             Welcome back. Login to start working
         </p>
 
-        <form method="post" action="" class="base-form auth-form">
+        <form method="post" action="/login" class="base-form auth-form">
             <div class="form__group">
                 <label>Your email</label>
                 <input type="email" name="email" placeholder="Your email"
@@ -57,10 +57,10 @@ use services\MyCaptcha;
             <div class="form__checkbox">
                 <input
                         type="checkbox"
-                        name="save-auth"
-                        id="save-auth"
+                        name="save_auth"
+                        id="save_auth"
                 />
-                <label for="save-auth" class="text--gray"
+                <label for="save_auth" class="text--gray"
                 >Keep me logged in</label
                 >
             </div>

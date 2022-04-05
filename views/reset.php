@@ -16,7 +16,7 @@
             Please remember your password!
         </p>
 
-        <form action="" method="post" class="form base-form auth-form">
+        <form action="/reset" method="post" class="form base-form auth-form">
             <input type="hidden" value="">
             <div class="form__group">
                 <label>New password</label>

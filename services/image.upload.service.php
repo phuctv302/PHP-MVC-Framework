@@ -11,7 +11,6 @@ class ImageUploadService {
         return isset($_FILES[$attribute])&& !empty($_FILES[$attribute]['tmp_name']);
     }
 
-    // TODO: generalize service: add ($attribute, $path) as params
     public static function upload($attribute, $path){
         // check if user post image
         if (strpos($_FILES[$attribute]['type'], 'image') !== 0){

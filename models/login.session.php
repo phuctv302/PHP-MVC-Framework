@@ -2,7 +2,6 @@
 
 namespace models;
 
-use core\Application;
 use core\db\DbModel;
 use utils\DateConverter;
 use utils\TokenGenerator;
@@ -40,8 +39,7 @@ class LoginSession extends DbModel {
 
     /** @var $user \models\User
      */
-    // TODO: move to login.session
-    public static function createNewLoginSesison($user){
+    public static function create($user){
         $login_session = new LoginSession();
 
         $primary_key = $user->primaryKey();
@@ -55,24 +53,7 @@ class LoginSession extends DbModel {
             'user_id' => $primary_value,
             'expired_at' => $expired_at
         ]);
-        // TODO: persistence operations should be at controller
 
         return $login_session;
-    }
-
-    // TODO: move to login session
-    /** @var $login_form \forms\LoginForm */
-    public static function login($login_form){
-        $user = User::findOne(['email' => $login_form->email]);
-        if (!$user){
-            $login_form->addError('email', 'User does not exist with this email');
-            return false;
-        }
-        if (!password_verify($login_form->password, $user->password)){
-            $login_form->addError('password', 'Password is incorrect');
-            return false;
-        }
-
-        return Application::$app->login($user);
     }
 }

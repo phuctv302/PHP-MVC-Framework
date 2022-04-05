@@ -37,7 +37,7 @@ const hideAlert = () => {
 const showAlert = (type, msg, time = 3) => {
     hideAlert();
 
-    const markup = `<div class="alert alert--${type}"></div>`;
+    const markup = `<div class="alert alert--${type}">${msg}</div>`;
     document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
 
     window.setTimeout(hideAlert, time * 1000);
@@ -55,3 +55,5 @@ $('.user-detail__image').on('click', function(){
 $('#profile-image-upload').on('change', function(){
     $('#profile-image-form').submit();
 })
+
+// TODO: use jquery for all script

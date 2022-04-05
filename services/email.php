@@ -4,7 +4,7 @@ namespace services;
 
 use core\Application;
 
-class Email  {
+class Email {
     public $to = '';
     public $from = '';
 
@@ -29,11 +29,6 @@ class Email  {
             'url' => $this->url,
             'subject' => $subject
         ]);
-//        $message = $this->render($view, [
-//            'firstname' => $this->firstname,
-//            'url' => $this->url,
-//            'subject' => $subject
-//        ]);
 
         // email options
         // It is mandatory to set the content-type when sending HTML email
@@ -44,7 +39,7 @@ class Email  {
         $headers .= 'From: <' . $_ENV['EMAIL_FROM'] . '>' . "\r\n";
 //        $headers .= 'Cc: sales@example.com' . "\r\n";
 
-        // send mail
+        // send mails
         return mail($this->to, $subject, $message, $headers);
     }
 

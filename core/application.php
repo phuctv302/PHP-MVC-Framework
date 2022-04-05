@@ -35,18 +35,6 @@ class Application{
 
         $this->db = new Database($config['db']);
 
-        $login_token = $this->cookie->get('user') ?: $this->session->get('user');
-        if ($login_token){
-            $login_session = LoginSession::findOne(
-                ['login_token' => $login_token, 'expired_at' => DateConverter::toDate(time())]
-            );
-
-            $user = User::findOne(['id' => $login_session->user_id]);
-
-            $this->user = $user;
-        } else {
-            $this->user = null;
-        }
     }
 
     public static function isGuest(){
@@ -62,18 +50,5 @@ class Application{
                 'exception' => $e
             ]);
         }
-    }
-
-    public function login($user){
-        // save user into session
-        $this->user = $user;
-
-        return true;
-    }
-
-    public function logout(){
-        $this->user = null;
-        $this->cookie->remove('user');
-        $this->session->remove('user');
     }
 }

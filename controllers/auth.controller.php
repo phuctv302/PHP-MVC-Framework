@@ -2,7 +2,6 @@
 
 namespace controllers;
 
-use core\Application;
 use core\Controller;
 use services\Email;
 use services\MyCaptcha;
@@ -26,33 +25,28 @@ class AuthController extends Controller {
         $login_form->loadData($body);
 
         // ON SUCCESS
-        if ($login_form->validate() && LoginSession::login($login_form) && MyCaptcha::verifyResponse($body)){
-            $user = Application::$app->user;
+        if ($login_form->validate() && User::login($login_form) && MyCaptcha::verifyResponse($body['g-recaptcha-response'])){
+            $user = $this->getUser();
 
             // create new login session and save it to database
-            $login_session = LoginSession::createNewLoginSesison($user);
+            $login_session = LoginSession::create($user);
             $login_session->save();
             $login_token = $login_session->login_token;
 
-            // TODO: get post data from request obj
             // if user check remember me checkbox
-            if (isset($body['save-auth']) && $body['save-auth'] == 'on'){
-                Application::$app->cookie->set('user', $login_token, $_ENV['COOKIE_EXPIRES']);
-            } else if (!isset($body['save-auth'])){
-                Application::$app->session->set('user', $login_token);
+            if (!empty($login_form->save_auth) && $login_form->save_auth == 'on'){
+                $this->getCookie()->set('user', $login_token);
+            } else if (empty($login_form->save_auth)){
+                $this->getSession()->set('user', $login_token);
             }
 
-            // reset captcha
-            MyCaptcha::reset();
-
-            Application::$app->session->setFlash('success', 'Login successfully');
+            $this->getSession()->setFlash('success', 'Login successfully');
             $response->redirect('/profile');
-            exit;
         } else if (!$login_form->validate()){
-            Application::$app->session->setFlash(
+            $this->getSession()->setFlash(
                 'error', 'Oops! Invalid input data');
-        } else if (!MyCaptcha::verifyResponse($body)){
-            Application::$app->session->setFlash(
+        } else if (!MyCaptcha::verifyResponse($body['g-recaptcha-response'])){
+            $this->getSession()->setFlash(
                 'error', 'Please verify captcha!');
         }
         MyCaptcha::increaseCounter($body);
@@ -62,22 +56,6 @@ class AuthController extends Controller {
         ]);
     }
 
-    // SIGN UP FUNCTION
-    public function isExisted($value, $class_name, $unique_attr){
-        $table_name = $class_name::tableName();
-        $statement = Application::$app->db->prepare(
-            "SELECT * FROM $table_name WHERE $unique_attr = :attr"
-        );
-
-        $statement->bindValue(":attr", $value);
-        $statement->execute();
-        $record = $statement->fetchObject();
-        if ($record){
-            return true; // true means this record has already existed in table
-        }
-        return false;
-    }
-
     public function register($request, $response){
         $user = new User();
 
@@ -85,7 +63,7 @@ class AuthController extends Controller {
         $user->loadData($request->getBody());
 
         if ($this->isExisted($user->email, User::class, 'email')){
-            Application::$app->session->setFlash(
+            $this->getSession()->setFlash(
                 'error', 'User with this email has already existed!'
             );
             $this->setLayout('auth');
@@ -94,7 +72,7 @@ class AuthController extends Controller {
             ]);
         }
         if (!$user->validate()){
-            Application::$app->session->setFlash(
+            $this->getSession()->setFlash(
                 'error', 'Oops! Invalid input data');
             $this->setLayout('auth');
             return $this->render('register', [
@@ -102,7 +80,7 @@ class AuthController extends Controller {
             ]);
         }
         if (!$user->save()){
-            Application::$app->session->setFlash(
+            $this->getSession()->setFlash(
                 'error', 'Error signing up user. Please try again later!');
             $this->setLayout('auth');
             return $this->render('register', [
@@ -111,7 +89,7 @@ class AuthController extends Controller {
         }
 
         // ON SUCCESS
-        Application::$app->session->setFlash('success', 'Thanks for registering');
+        $this->getSession()->setFlash('success', 'Thanks for registering');
         $response->redirect('/login');
         exit;
         //        $this->setLayout('auth');
@@ -122,13 +100,18 @@ class AuthController extends Controller {
 
     public function logout($request, $response){
         // remove login session row from login_session table
-        // TODO: check if login session exists, then remove it from DB
-        $login_token = Application::$app->cookie->get('user') ?: Application::$app->session->get('user');
+        $login_token = $this->getCookie()->get('user') ?: $this->getSession()->get('user');
         if ($login_token){
             LoginSession::delete(['login_token' => $login_token]);
         }
 
-        Application::$app->logout();
+        $this->getApp()->user = null;
+        $this->getCookie()->remove('user');
+        $this->getSession()->remove('user');
+
+        // reset captcha
+        $this->getCookie()->remove('count');
+
         $response->redirect('/login');
     }
 
@@ -151,7 +134,7 @@ class AuthController extends Controller {
         // config email options
         $email = new Email($user, $url);
 
-        // send mail
+        // send mails
         return $email->sendPasswordReset();
     }
 
@@ -167,9 +150,8 @@ class AuthController extends Controller {
         $forgot_form->loadData($request->getBody());
         // send token to user email
         if ($forgot_form->validate() && $this->sendToken($forgot_form)){
-            Application::$app->session->setFlash('success', 'Token has sent to your email');
+            $this->getSession()->setFlash('success', 'Token has sent to your email');
             $response->redirect('/login');
-            return;
         }
         $this->setLayout('auth');
         return $this->render('forgot', [
@@ -188,7 +170,7 @@ class AuthController extends Controller {
         // find user with that token
         $user = User::findOne(['reset_token' => $reset_token]);
         if (!$user){
-            Application::$app->session->setFlash(
+           $this->getSession()->setFlash(
                 'error', 'Reset token is invalid!'
             );
             return false;
@@ -196,7 +178,7 @@ class AuthController extends Controller {
 
         // ON ERROR
         if (!$reset_form->validate()){
-            Application::$app->session->setFlash(
+            $this->getSession()->setFlash(
                 'error', 'Oops! Invalid input data!');
             $this->setLayout('auth');
             return $this->render('reset', [
@@ -209,10 +191,9 @@ class AuthController extends Controller {
         User::updateOne(['id' => $user->id],
             ['password' => password_hash($reset_form->password, PASSWORD_DEFAULT),
                 'reset_token' => NULL]);
-        Application::$app->session->setFlash(
+        $this->getSession()->setFlash(
             'success', 'Reset password successfully!'
         );
         $response->redirect('/login');
-        exit;
     }
 }

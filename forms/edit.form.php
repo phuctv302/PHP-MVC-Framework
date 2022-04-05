@@ -2,13 +2,7 @@
 
 namespace forms;
 
-use core\Application;
 use core\Model;
-use models\User;
-use services\ImageUploadService;
-use validators\NumberValidator;
-use validators\RequireValidator;
-use validators\StringValidator;
 
 class EditForm extends Model {
 
@@ -21,11 +15,6 @@ class EditForm extends Model {
     public $address = '';
 
     public function rules() {
-        return [
-            //TODO: OOP!!!!
-            'firstname' => [new RequireValidator(), new StringValidator()],
-            'lastname' => [new RequireValidator(), new StringValidator()],
-            'phone' => [new NumberValidator()]
-        ];
+        return [];
     }
 }

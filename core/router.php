@@ -7,41 +7,10 @@ use core\exceptions\NotFoundException;
 class Router{
     public $request;
     public $response;
-    protected $routes = [];
+    protected $callback;
 
-    /** @var $middlewares \core\middlewares\BaseMiddleware */
+    /** @var $middlewares \core\BaseMiddleware */
     public $middlewares = [];
-
-    /**
-     * e.g: @var $routes = [
-     *      'get' => [
-     *          '/' => callback,
-     *          '/contact' => callback
-     *       ],
-     *       'post' => ...
-     * */
-    public function get($path, $callback, $middlewares = []){
-        $this->routes['get'][$path] = $callback;
-
-        // Get the right middleware
-        if ($path == Application::$app->request->getPath()
-            && !empty($middlewares)
-            && Application::$app->request->method() === 'get'){
-            $this->middlewares = $middlewares;
-        }
-    }
-
-    public function post($path, $callback, $middlewares = []){
-        $this->routes['post'][$path] = $callback;
-
-        // Get the right middleware
-        if ($path == Application::$app->request->getPath()
-            && !empty($middlewares)
-            && Application::$app->request->method() === 'post'){
-            $this->middlewares = $middlewares;
-        }
-    }
-
 
     /**
      * @param Request $request
@@ -51,27 +20,46 @@ class Router{
         $this->response = $response;
     }
 
+    /**
+     * e.g: @var $routes = [
+     *      'get' => [
+     *          '/' => [callback, middlewares]
+     *          '/contact' => callback
+     *       ],
+     *       'post' => ...
+     * */
+    public function get($path, $callback, $middlewares = []){
+        // Get the right middleware
+        if ($path == $this->request->getPath() && $this->request->method() === 'get'){
+            $this->callback = $callback;
+            $this->middlewares = $middlewares;
+        }
+    }
+
+    public function post($path, $callback, $middlewares = []){
+        // Get the right middleware
+        if ($path == $this->request->getPath() && $this->request->method() === 'post'){
+            $this->callback = $callback;
+            $this->middlewares = $middlewares;
+        }
+    }
+
     public function resolve(){
-        $path = $this->request->getPath();
-        $method = $this->request->method();
 
-
-        $callback = $this->routes[$method][$path] ?? false;
-
-        if ($callback == false){
+        if ($this->callback == false){
             $this->response->setStatusCode(404);
             throw new NotFoundException();
         }
 
-        if (is_array($callback)){
+        if (is_array($this->callback)){
             // e.g of callback: [AuthController::class, 'profile'] -> [controller, 'action']
 
             /** @var $controller \core\Controller
              */
-            $controller = new $callback[0]();
+            $controller = new $this->callback[0]();
             Application::$app->controller = $controller;
-            $controller->action = $callback[1];
-            $callback[0] = $controller;
+            $controller->action = $this->callback[1];
+            $this->callback[0] = $controller;
 
             // execute middleware
             /** @var $middleware \core\middlewares\BaseMiddleware */
@@ -82,6 +70,6 @@ class Router{
             }
         }
 
-        return call_user_func($callback, $this->request, $this->response);
+        return call_user_func($this->callback, $this->request, $this->response);
     }
 }

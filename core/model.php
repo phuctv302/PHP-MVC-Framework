@@ -12,15 +12,14 @@ abstract class Model{
         }
     }
 
-    public function filterFields($data, $allowedFields= []){
-        $filterData = [];
-        foreach ($allowedFields as $allowedField){
-            if (in_array($allowedField, array_keys($data))){
-                $filterData[$allowedField] = $data[$allowedField];
+    public function filterFields($data, $allowed_fields= []){
+        $filter_data = [];
+        foreach ($allowed_fields as $allowed_field){
+            if (in_array($allowed_field, array_keys($data))){
+                $filter_data[$allowed_field] = $data[$allowed_field];
             }
         }
-
-        return $filterData;
+        return $filter_data;
     }
 
     abstract public function rules();

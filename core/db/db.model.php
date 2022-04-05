@@ -131,4 +131,14 @@ abstract class DbModel extends Model{
         return Application::$app->db->pdo->prepare($sql);
 
     }
+
+    // GET USER FROM APPLICATION
+    public function getUser(){
+        return Application::$app->user;
+    }
+
+    // GET APPLICATION
+    public function getApp(){
+        return Application::$app;
+    }
 }
