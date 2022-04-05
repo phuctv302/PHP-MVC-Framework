@@ -4,11 +4,9 @@ namespace controllers;
 
 use core\Application;
 use core\Controller;
-use core\middlewares\AuthMiddleware;
-use services\MyCaptcha;
-use models\ForgotForm;
-use models\LoginForm;
-use models\ResetForm;
+use forms\ForgotForm;
+use forms\LoginForm;
+use forms\ResetForm;
 use models\User;
 
 class SiteController extends Controller{

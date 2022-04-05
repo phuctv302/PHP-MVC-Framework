@@ -6,7 +6,11 @@ use core\Validator;
 
 class EmailValidator implements Validator {
 
-    public static function validate($value, $rule, $model = null, $attribute = null){
+    public function validate($value){
         return !filter_var($value, FILTER_VALIDATE_EMAIL);
+    }
+
+    public function error(){
+        return 'Invalid email address';
     }
 }

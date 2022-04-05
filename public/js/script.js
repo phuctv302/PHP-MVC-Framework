@@ -37,7 +37,7 @@ const hideAlert = () => {
 const showAlert = (type, msg, time = 3) => {
     hideAlert();
 
-    const markup = `<div class="alert alert--${type}">${msg}</div>`;
+    const markup = `<div class="alert alert--${type}"></div>`;
     document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
 
     window.setTimeout(hideAlert, time * 1000);

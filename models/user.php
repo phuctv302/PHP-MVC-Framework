@@ -2,9 +2,17 @@
 
 namespace models;
 
-use core\UserModel;
+use core\Application;
+use core\db\DbModel;
+use services\ImageUploadService;
+use validators\EmailValidator;
+use validators\MatchValidator;
+use validators\MaxValidator;
+use validators\MinValidator;
+use validators\RequireValidator;
+use validators\StringValidator;
 
-class User extends UserModel{
+class User extends DbModel {
 
     public $firstname = '';
     public $lastname = '';
@@ -32,22 +40,21 @@ class User extends UserModel{
 
     public function rules(){
         return [
-            'firstname' => [self::RULE_REQUIRED, self::RULE_STRING],
-            'lastname' => [self::RULE_REQUIRED, self::RULE_STRING],
-            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
-                self::RULE_UNIQUE, 'class' => self::class
-            ]],
-            'username' => [self::RULE_REQUIRED, [
-                self::RULE_UNIQUE, 'class' => self::class
-            ]],
-            'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 24]],
-            'confirm_password' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']]
+            'firstname' => [new RequireValidator(), new StringValidator()],
+            'lastname' => [new RequireValidator(), new StringValidator()],
+            'email' => [new RequireValidator(), new EmailValidator()],
+            'username' => [new RequireValidator()],
+            'password' => [new RequireValidator(),
+                new MinValidator(8),
+                new MaxValidator(24)],
+            'confirm_password' => [new RequireValidator(),
+                new MatchValidator($this, 'password')]
         ];
     }
 
     public function attributes(){
         // return all database column name
-        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password', 'job_title', 'address', 'phone'];
+        return ['firstname', 'lastname', 'email', 'photo', 'username', 'password'];
     }
 
     public function labels(){
@@ -63,5 +70,30 @@ class User extends UserModel{
 
     public function getDisplayName(): string{
         return $this->lastname . ' ' . $this->firstname;
+    }
+
+    public function updateUser($edit_form){
+        if (ImageUploadService::checkImageExist('photo')) {
+            $filterData = $edit_form->filterFields((array) $edit_form,
+                ['firstname', 'lastname', 'job_title', 'photo', 'address', 'birthday', 'phone']);
+        } else {
+            $filterData = $edit_form->filterFields((array) $edit_form, ['firstname', 'lastname', 'job_title', 'address', 'birthday', 'phone']);
+        }
+
+        // TODO: persistent ops should be in controllers
+        if (User::updateOne([User::primaryKey() => Application::$app->user->id], $filterData)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function uploadUserPhoto($newPhoto){
+        $filter_data = $this->filterFields((array) $newPhoto, ['photo']);
+        if (User::updateOne([User::primaryKey() => Application::$app->user->id], $filter_data)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

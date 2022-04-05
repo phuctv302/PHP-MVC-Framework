@@ -3,5 +3,7 @@
 namespace core;
 
 interface Validator {
-    public static function validate($value, $rule, $model, $attribute);
+    public function validate($value);
+
+    public function error();
 }

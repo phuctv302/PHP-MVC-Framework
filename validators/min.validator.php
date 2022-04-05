@@ -7,13 +7,17 @@ use core\Validator;
 class MinValidator implements Validator {
 
     private $min;
-    private $errors;
 
-    public function __construct($min) {
+    public function __construct($min){
         $this->min = $min;
     }
 
-    public static function validate($value, $rule, $model = null, $attribute = null){
-        return strlen($value) < $rule['min'];
+
+    public function validate($value){
+        return strlen($value) < $this->min;
+    }
+
+    public function error(){
+        return "Min length of this field must be $this->min";
     }
 }

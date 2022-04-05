@@ -1,7 +1,7 @@
 <?php
 /** @var $this \core\View
- * @var $model \core\Model;
- * @var $user \core\UserModel
+ * @var $model \core\Model
+ * @var $user \models\User
  */
 
 use core\Session;
@@ -233,7 +233,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__label">Your first name</p>
                 <p class="form__sub-label">Your first name</p>
             </div>
-            <input value="<?php echo $user->firstname ?>" type="text" name="firstname"
+            <input value="<?php echo $model->firstname ?>" type="text" name="firstname"
                    required
                    class="<?php echo $model->hasError("firstname") ? "is-invalid" : "" ?>">
             <div class="invalid-feedback"><?php echo $model->getFirstError("firstname") ?></div>
@@ -243,7 +243,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__label">Your last name</p>
                 <p class="form__sub-label">Your last name</p>
             </div>
-            <input value="<?php echo $user->lastname ?>" type="text" name="lastname"
+            <input value="<?php echo $model->lastname ?>" type="text" name="lastname"
                    required
                    class="<?php echo $model->hasError("lastname") ? "is-invalid" : "" ?>">
             <div class="invalid-feedback"><?php echo $model->getFirstError("lastname") ?></div>
@@ -276,7 +276,7 @@ $this->title = $user->getDisplayName(); // this ~ view instance
                 <p class="form__sub-label">Job title</p>
             </div>
             <input
-                    value="<?php echo $user->job_title ?>"
+                    value="<?php echo $model->job_title ?>"
                     type="text"
                     name="job_title"
                     class="<?php echo $model->hasError("job_title") ? "is-invalid" : "" ?>">

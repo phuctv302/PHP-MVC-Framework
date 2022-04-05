@@ -8,8 +8,7 @@ class ImageUploadService {
 
     // check photo is posted?
     public static function checkImageExist($attribute){
-        $body = Application::$app->request->getBody();
-        return isset($body[$attribute]) && !empty($body[$attribute]);
+        return isset($_FILES[$attribute])&& !empty($_FILES[$attribute]['tmp_name']);
     }
 
     // TODO: generalize service: add ($attribute, $path) as params

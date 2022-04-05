@@ -13,7 +13,6 @@ class Application{
 
     public static $app;
 
-    public $user_class;
     public $db;
     public $router;
     public $request;
@@ -25,7 +24,6 @@ class Application{
     public $view;
 
     public function __construct($rootPath, $config){
-        $this->user_class = $config['user_class'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();

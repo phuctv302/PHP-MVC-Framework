@@ -22,6 +22,8 @@ class Router{
      * */
     public function get($path, $callback, $middlewares = []){
         $this->routes['get'][$path] = $callback;
+
+        // Get the right middleware
         if ($path == Application::$app->request->getPath()
             && !empty($middlewares)
             && Application::$app->request->method() === 'get'){
@@ -31,6 +33,8 @@ class Router{
 
     public function post($path, $callback, $middlewares = []){
         $this->routes['post'][$path] = $callback;
+
+        // Get the right middleware
         if ($path == Application::$app->request->getPath()
             && !empty($middlewares)
             && Application::$app->request->method() === 'post'){
@@ -57,10 +61,6 @@ class Router{
         if ($callback == false){
             $this->response->setStatusCode(404);
             throw new NotFoundException();
-        }
-
-        if (is_string($callback)){
-            return Application::$app->view->renderView($callback);
         }
 
         if (is_array($callback)){

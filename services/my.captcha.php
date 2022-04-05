@@ -3,6 +3,8 @@
 namespace services;
 
 // TODO: move to service
+use core\Application;
+
 class MyCaptcha {
     // API key configuration
     public static $SITE_KEY = '6Lc3UyUfAAAAABb5JaeeRE7av5mdN4_aSPIZcilB';
@@ -28,4 +30,20 @@ class MyCaptcha {
             return $row['success'];
         }
     }
+
+    public static function increaseCounter($body){
+        if (isset($body['submit'])){
+            if (!Application::$app->cookie->get('count')){
+                Application::$app->cookie->set('count', 1, 1);
+            } else {
+                $count = $_COOKIE['count'] + 1;
+                Application::$app->cookie->set('count', $count, 1);
+            }
+        }
+    }
+
+    public static function reset(){
+        Application::$app->cookie->remove('count');
+    }
+
 }
