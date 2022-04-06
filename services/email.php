@@ -2,6 +2,7 @@
 
 namespace services;
 
+// Sending email to user's email
 class Email {
     public $to = '';
     public $from = '';

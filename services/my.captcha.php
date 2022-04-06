@@ -2,17 +2,23 @@
 
 namespace services;
 
+// Verify captcha
 class MyCaptcha {
     // API key configuration
     public static $SITE_KEY = '6Lc3UyUfAAAAABb5JaeeRE7av5mdN4_aSPIZcilB';
 
     // verify response
+    /**
+     * @return true if captcha is checked or not displayed yet
+     * otherwise @return false
+     * */
     public static function verifyResponse($code){
         $secret = $_ENV['SECRET_KEY'];
 
         if (is_string($code)){
             $response = $code;
         } else {
+            // captcha is not displayed yet
             return true;
         }
 

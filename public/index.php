@@ -47,4 +47,5 @@ $app->router->post('/profile-image', [UserController::class, 'updatePhoto'], [ne
 
 $app->router->get('/', [SiteController::class, 'home']);
 
+// execute the callback and middlewares
 $app->run();

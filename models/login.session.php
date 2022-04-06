@@ -7,6 +7,7 @@ use utils\DateConverter;
 use utils\TokenGenerator;
 use validators\RequireValidator;
 
+// Save user to session or cookie in a more secure way
 class LoginSession extends DbModel {
 
     public $login_token = '';
@@ -25,10 +26,6 @@ class LoginSession extends DbModel {
         return 'login_token';
     }
 
-    public static function foreignKey(){
-        return 'user_id';
-    }
-
     public function rules(){
         return [
             'login_token' => [new RequireValidator()],
@@ -37,8 +34,7 @@ class LoginSession extends DbModel {
         ];
     }
 
-    /** @var $user \models\User
-     */
+    /** @var $user \models\User */
     public static function create($user){
         $login_session = new LoginSession();
 

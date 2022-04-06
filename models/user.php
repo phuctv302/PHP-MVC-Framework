@@ -33,6 +33,7 @@ class User extends DbModel {
         return 'id';
     }
 
+    // Hash password and save user to database
     public function save(){
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
@@ -88,13 +89,22 @@ class User extends DbModel {
         return self::updateOne([self::primaryKey() => $this->getUser()->id], $filter_data);
     }
 
-    /** @var $login_form \forms\LoginForm */
+    /** @var $login_form \forms\LoginForm
+     *  @return true if login successfully
+     * @return false if user not found or wrong password
+     */
     public static function login($login_form){
+
+        // find user with input email address
         $user = self::findOne(['email' => $login_form->email]);
+
+        // ERROR user not found
         if (!$user){
             $login_form->addError('email', 'User does not exist with this email');
             return false;
         }
+
+        // ERROR wrong password
         if (!password_verify($login_form->password, $user->password)){
             $login_form->addError('password', 'Password is incorrect');
             return false;
