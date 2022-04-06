@@ -1,5 +1,8 @@
 <?php
-    $this->title = 'Reset your password';
+
+/** @var $model \core\Model */
+
+$this->title = 'Reset your password';
 ?>
 
 <div class="body__auth">
@@ -18,20 +21,9 @@
 
         <form action="" method="post" class="form base-form auth-form">
             <input type="hidden" value="">
-            <div class="form__group">
-                <label>New password</label>
-                <input type="password" name="password" placeholder="New password"
-                       value="<?php echo $model->password ?>"
-                       class="<?php echo $model->hasError("password") ? "is-invalid" : "" ?>"
-                <div class="invalid-feedback"><?php echo $model->getFirstError("password") ?></div>
-            </div>
-            <div class="form__group">
-                <label>Confirm new password</label>
-                <input type="password" name="confirm_password" placeholder="Confirm new password"
-                       value="<?php echo $model->confirm_password ?>"
-                       class="<?php echo $model->hasError("confirm_password") ? "is-invalid" : "" ?>">
-                <div class="invalid-feedback"><?php echo $model->getFirstError("confirm_password") ?></div>
-            </div>
+
+            <?php echo \inputs\InputField::render("New password", "password", "password", "New password", $model) ?>
+            <?php echo \inputs\InputField::render("Confirm new password", "password", "confirm_password", "Confirm new password", $model) ?>
 
             <button type="submit" class="btn btn--green btn--auth">Reset password</button>
         </form>

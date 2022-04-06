@@ -3,19 +3,31 @@
 namespace controllers;
 
 use core\Controller;
-use services\Email;
-use services\MyCaptcha;
 use forms\ForgotForm;
 use forms\LoginForm;
-use models\LoginSession;
 use forms\ResetForm;
+use models\LoginSession;
 use models\User;
+use services\Email;
+use services\MyCaptcha;
 use utils\TokenGenerator;
+
 
 /** @var $request \core\Request
  * @var $response \core\Response
  */
 class AuthController extends Controller {
+
+    private function increaseCounter($body){
+        if (isset($body['submit'])){
+            if (!$this->getCookie()->get('count')){
+                $this->getCookie()->setForCaptcha('count', 1);
+            } else {
+                $count = $_COOKIE['count'] + 1;
+                $this->getCookie()->setForCaptcha('count', $count);
+            }
+        }
+    }
 
     // LOGIN FUNCTION
     public function login($request, $response){
@@ -24,39 +36,63 @@ class AuthController extends Controller {
 
         $login_form->loadData($body);
 
-        // ON SUCCESS
-        if ($login_form->validate() && User::login($login_form) && MyCaptcha::verifyResponse($body['g-recaptcha-response'])){
-            $user = $this->getUser();
+        // ERROR
+        if (!$login_form->validate()){
+            $this->getSession()->setFlash(
+                'error', 'Oops! Invalid input data.');
 
-            // create new login session and save it to database
-            $login_session = LoginSession::create($user);
-            $login_session->save();
-            $login_token = $login_session->login_token;
+            $this->increaseCounter($body);
 
-            // remember me checkbox
-            if (!empty($login_form->save_auth) && $login_form->save_auth == 'on'){
-                $this->getCookie()->set('user', $login_token);
-            } else if (empty($login_form->save_auth)){
-                $this->getSession()->set('user', $login_token);
-            }
-
-            // reset captcha
-            $this->getCookie()->remove('count');
-
-            $this->getSession()->setFlash('success', 'Login successfully');
-            $response->redirect('/profile');
+            $this->setLayout('auth');
+            return $this->render('login', [
+                'model' => $login_form
+            ]);
         }
 
-        // USER NOT CHECK CAPTCHA
-        if (!MyCaptcha::verifyResponse($body['g-recaptcha-response'] ?? null)){
+        if (!User::login($login_form)){
+            $this->getSession()->setFlash(
+                'error', 'Error logging user in!');
+
+            $this->increaseCounter($body);
+
+            $this->setLayout('auth');
+            return $this->render('login', [
+                'model' => $login_form
+            ]);
+        }
+
+        if (!MyCaptcha::verifyResponse($body['g-recaptcha-response'])){
             $this->getSession()->setFlash(
                 'error', 'Please verify captcha!');
+
+            $this->increaseCounter($body);
+
+            $this->setLayout('auth');
+            return $this->render('login', [
+                'model' => $login_form
+            ]);
         }
-        MyCaptcha::increaseCounter($body, $this->getCookie());
-        $this->setLayout('auth');
-        return $this->render('login', [
-            'model' => $login_form
-        ]);
+
+        // ON SUCCESS
+        $user = $this->getUser();
+
+        // create new login session and save it to database
+        $login_session = LoginSession::create($user);
+        $login_session->save();
+        $login_token = $login_session->login_token;
+
+        // remember me checkbox
+        if (!empty($login_form->save_auth) && $login_form->save_auth == 'on'){
+            $this->getCookie()->set('user', $login_token);
+        } else if (empty($login_form->save_auth)){
+            $this->getSession()->set('user', $login_token);
+        }
+
+        // reset captcha
+        $this->getCookie()->remove('count');
+
+        $this->getSession()->setFlash('success', 'Login successfully');
+        $response->redirect('/profile');
     }
 
     public function register($request, $response){
@@ -141,10 +177,10 @@ class AuthController extends Controller {
         ]);
 
         // send mails
-        return $email->sendPasswordReset($message);
+        return $email->send($message, 'Your password reset token');
     }
 
-    public function getUrl(){
+    private function getUrl(){
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'http') === 0 ? 'http' : 'https';
         $host = $_SERVER['SERVER_NAME'];
         return $protocol . '://' . $host;
@@ -176,7 +212,7 @@ class AuthController extends Controller {
         // find user with that token
         $user = User::findOne(['reset_token' => hash('sha256', $reset_token)]);
         if (!$user){
-           $this->getSession()->setFlash(
+            $this->getSession()->setFlash(
                 'error', 'Reset token is invalid!'
             );
             $this->setLayout('auth');
@@ -195,11 +231,20 @@ class AuthController extends Controller {
             ]);
         }
 
+        if (!User::updateOne(['id' => $user->id],
+            ['password' => password_hash($reset_form->password, PASSWORD_DEFAULT),
+                'reset_token' => NULL])){
+            $this->getSession()->setFlash(
+                'error', 'Error resetting password!');
+
+            $this->setLayout('auth');
+            return $this->render('reset', [
+                'model' => $reset_form
+            ]);
+        }
+
         // ON SUCCESS => redirect to login form
         // updating password and set reset_token = NULL
-        User::updateOne(['id' => $user->id],
-            ['password' => password_hash($reset_form->password, PASSWORD_DEFAULT),
-                'reset_token' => NULL]);
         $this->getSession()->setFlash(
             'success', 'Reset password successfully!'
         );

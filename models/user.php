@@ -73,27 +73,19 @@ class User extends DbModel {
     }
 
     public function updateUser($edit_form){
-        if (ImageUploadService::checkImageExist('photo')) {
-            $filterData = $edit_form->filterFields((array) $edit_form,
+        if (ImageUploadService::checkFileExist('photo')){
+            $filterData = self::filterFields((array)$edit_form,
                 ['firstname', 'lastname', 'job_title', 'photo', 'address', 'birthday', 'phone']);
         } else {
-            $filterData = $edit_form->filterFields((array) $edit_form, ['firstname', 'lastname', 'job_title', 'address', 'birthday', 'phone']);
+            $filterData = self::filterFields((array)$edit_form, ['firstname', 'lastname', 'job_title', 'address', 'birthday', 'phone']);
         }
 
-        if (User::updateOne([User::primaryKey() => $this->getUser()->id], $filterData)){
-            return true;
-        } else {
-            return false;
-        }
+        return self::updateOne([self::primaryKey() => $this->getUser()->id], $filterData);
     }
 
     public function uploadUserPhoto($newPhoto){
-        $filter_data = $this->filterFields((array) $newPhoto, ['photo']);
-        if (User::updateOne([User::primaryKey() => $this->getUser()->id], $filter_data)){
-            return true;
-        } else {
-            return false;
-        }
+        $filter_data = self::filterFields((array)$newPhoto, ['photo']);
+        return self::updateOne([self::primaryKey() => $this->getUser()->id], $filter_data);
     }
 
     /** @var $login_form \forms\LoginForm */

@@ -4,11 +4,9 @@ namespace core\db;
 
 use core\Application;
 use core\Model;
-use core\Session;
-use models\User;
 use services\ImageUploadService;
 
-abstract class DbModel extends Model{
+abstract class DbModel extends Model {
     abstract public static function tableName();
 
     abstract public function attributes(); // return all database columns name
@@ -18,7 +16,9 @@ abstract class DbModel extends Model{
     public function save(){
         $table_name = $this->tableName();
         $attributes = $this->attributes();
-        $params = array_map(function($attr) { return ":$attr"; }, $attributes);
+        $params = array_map(function ($attr){
+            return ":$attr";
+        }, $attributes);
         $statement = self::prepare("INSERT INTO $table_name (" . implode(',', $attributes) . ")
             VALUES(" . implode(',', $params) . ")");
 
@@ -37,10 +37,11 @@ abstract class DbModel extends Model{
     public static function findOne($where){
         $table_name = static::tableName(); // users
         $attributes = array_keys($where); // ['email']
-        $sql = implode(" AND ", array_map(function($attr){
-            if ($attr == 'expired_at') return "$attr > :$attr";
+        $sql = implode(" AND ", array_map(function ($attr){
+            if ($attr == 'expired_at')
+                return "$attr > :$attr";
             return "$attr = :$attr";
-            }, $attributes)); // 'email = :email'
+        }, $attributes)); // 'email = :email'
 
         // SELECT * FROM $users WHERE email = :email [AND firstname = :firstname]
         $statement = self::prepare("SELECT * FROM $table_name WHERE $sql");
@@ -48,8 +49,8 @@ abstract class DbModel extends Model{
             $statement->bindValue(":$key", $item);
         }
 
-//        var_dump($statement);
-//        exit;
+        //        var_dump($statement);
+        //        exit;
 
         $statement->execute();
         return $statement->fetchObject(static::class);
@@ -60,11 +61,15 @@ abstract class DbModel extends Model{
 
         // for finding user
         $attribute = array_keys($where);
-        $sql = implode(" AND ", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
+        $sql = implode(" AND ", array_map(function ($attr){
+            return "$attr = :$attr";
+        }, $attribute));
 
         // for updating user
         $updateAttributes = array_keys($updateData);
-        $updateSql = implode(",", array_map(function($attr){ return "$attr = :$attr"; }, $updateAttributes));
+        $updateSql = implode(",", array_map(function ($attr){
+            return "$attr = :$attr";
+        }, $updateAttributes));
 
 
         // UPDATE users SET firstname="Hoang", lastname="Van" WHERE email="phuc@example.com"
@@ -81,7 +86,7 @@ abstract class DbModel extends Model{
         }
 
         // FOR UPDATING IMAGE
-        if (ImageUploadService::checkImageExist('photo')){
+        if (ImageUploadService::checkFileExist('photo')){
             $uploadedDir = Application::$ROOT_DIR . '\\public\\img\\users\\';
             $uploadedExt = '.' . explode('/', $_FILES['photo']['type'])[1];
             $uploadedFile = 'user-'
@@ -101,8 +106,8 @@ abstract class DbModel extends Model{
             $statement->bindValue(":$key", $value);
         }
 
-//        var_dump($statement);
-//        exit;
+        //        var_dump($statement);
+        //        exit;
 
         // execute statement
         $statement->execute();
@@ -116,7 +121,9 @@ abstract class DbModel extends Model{
 
         $attribute = array_keys($where);
 
-        $sql = implode("AND", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
+        $sql = implode("AND", array_map(function ($attr){
+            return "$attr = :$attr";
+        }, $attribute));
 
         $statement = self::prepare("
             DELETE FROM $table_name

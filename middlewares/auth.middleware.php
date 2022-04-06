@@ -2,14 +2,13 @@
 
 namespace middlewares;
 
-use core\Application;
 use core\BaseMiddleware;
 use core\exceptions\ForbiddenException;
 use models\LoginSession;
 use models\User;
 use utils\DateConverter;
 
-class AuthMiddleware extends BaseMiddleware{
+class AuthMiddleware extends BaseMiddleware {
 
     /**
      * @throws ForbiddenException

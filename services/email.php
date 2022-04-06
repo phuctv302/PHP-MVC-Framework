@@ -20,13 +20,9 @@ class Email {
 
         // More headers. From is required, rest other headers are optional
         $headers .= 'From: <' . $_ENV['EMAIL_FROM'] . '>' . "\r\n";
-//        $headers .= 'Cc: sales@example.com' . "\r\n";
+        //        $headers .= 'Cc: sales@example.com' . "\r\n";
 
         // send mails
         return mail($this->to, $subject, $message, $headers);
-    }
-
-    public function sendPasswordReset($message){
-        return $this->send($message, 'Your password reset token');
     }
 }

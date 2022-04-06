@@ -1,6 +1,6 @@
 <?php
 
-class m0001_initial{
+class m0001_initial {
     public function up(){
         $db = \core\Application::$app->db;
         $SQL = "CREATE TABLE users (

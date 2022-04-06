@@ -24,14 +24,4 @@ class MyCaptcha {
         return $row['success'];
     }
 
-    public static function increaseCounter($body, $cookie){
-        if (isset($body['submit'])){
-            if (!$cookie->get('count')){
-                $cookie->setForCaptcha('count', 1);
-            } else {
-                $count = $_COOKIE['count'] + 1;
-                $cookie->setForCaptcha('count', $count);
-            }
-        }
-    }
 }

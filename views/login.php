@@ -4,14 +4,14 @@
 
 /** @var $model \core\Model */
 
+// remove
 use core\Application;
 use inputs\InputField;
 use services\MyCaptcha;
 
-    $this->title = 'Login';
+$this->title = 'Login';
 
-    $my_captcha = new MyCaptcha();
-    $input_field = new InputField()
+$input_field = new InputField()
 ?>
 
 <div class="body__auth">
@@ -30,12 +30,12 @@ use services\MyCaptcha;
 
         <form method="post" action="/login" class="base-form auth-form">
 
-            <?php echo $input_field->render("Your email", "email", "email", "Your email", $model) ?>
+            <?php echo InputField::render("Your email", "email", "email", "Your email", $model) ?>
 
             <div class="form__group">
                 <label>Password</label>
                 <span class="forgot-password">
-                <a href="/forgot" class="text--blue">Forget your password?</a >
+                <a href="/forgot" class="text--blue">Forget your password?</a>
             </span>
                 <input type="password" name="password" placeholder="Your password"
                        required
@@ -63,7 +63,7 @@ use services\MyCaptcha;
             </div>
 
             <input name="submit" class="btn btn--green btn--auth" type="submit" value="Login to start working">
-            <a href="/register" class="text--blue text--center" >Not having an account. Signup now!</a>
+            <a href="/register" class="text--blue text--center">Not having an account. Signup now!</a>
         </form>
 
         <div class="other-auth text--center">

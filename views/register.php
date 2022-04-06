@@ -1,10 +1,8 @@
 <?php
 
-    use inputs\InputField;
+/** @var $model \core\Model */
 
-    $this->title = 'Signup';
-
-    $input_field = new InputField()
+$this->title = 'Signup';
 ?>
 
 <div class="body__auth">
@@ -23,15 +21,15 @@
 
         <form action="/register" method="post" class="base-form auth-form">
 
-            <?php echo $input_field->render("First name", "text", "firstname", "Your first name", $model) ?>
-            <?php echo $input_field->render("Last name", "text", "lastname", "Your last name", $model) ?>
-            <?php echo $input_field->render("Email", "email", "email", "Your email", $model) ?>
-            <?php echo $input_field->render("Username", "text", "username", "Your username", $model) ?>
-            <?php echo $input_field->render("Password", "password", "password", "Your password", $model) ?>
-            <?php echo $input_field->render("Confirm password", "password", "confirm_password", "Your confirm password", $model) ?>
+            <?php echo \inputs\InputField::render("First name", "text", "firstname", "Your first name", $model) ?>
+            <?php echo \inputs\InputField::render("Last name", "text", "lastname", "Your last name", $model) ?>
+            <?php echo \inputs\InputField::render("Email", "email", "email", "Your email", $model) ?>
+            <?php echo \inputs\InputField::render("Username", "text", "username", "Your username", $model) ?>
+            <?php echo \inputs\InputField::render("Password", "password", "password", "Your password", $model) ?>
+            <?php echo \inputs\InputField::render("Confirm password", "password", "confirm_password", "Your confirm password", $model) ?>
 
             <button type="submit" class="btn btn--green btn--auth">Sign up your new account</button>
-            <a href="/login" class="text--center text--blue" >Having an account. Login now!</a>
+            <a href="/login" class="text--center text--blue">Having an account. Login now!</a>
         </form>
 
         <div class="other-auth text--center">
@@ -54,8 +52,7 @@
 
         <div class="guest-auth text--center">
             <a href="#" class="text--blue"
-            >Login with Guest/Client access?</a
-            >
+            >Login with Guest/Client access?</a>
         </div>
     </div>
 </div>

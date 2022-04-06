@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Request{
+class Request {
     public function getPath(){
         // $_SERVER['REQUEST_URI'] returns path include query string: /path?id=1
         $path = $_SERVER['REQUEST_URI'] ?? '/';

@@ -2,13 +2,13 @@
 // autoload
 include dirname(__DIR__) . '/includes/autoloader.inc.php';
 
+use controllers\AuthController;
+use controllers\SiteController;
 use controllers\UserController;
 use core\Application;
+use core\MyDotenv;
 use middlewares\AuthMiddleware;
 use middlewares\CsrfMiddleware;
-use core\MyDotenv;
-use controllers\SiteController;
-use controllers\AuthController;
 
 // config environment variables
 $dotenv = new MyDotenv(dirname(__DIR__) . '/.env');

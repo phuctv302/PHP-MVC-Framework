@@ -5,7 +5,7 @@ namespace core;
 use core\db\Database;
 use Exception;
 
-class Application{
+class Application {
     public static $ROOT_DIR;
 
     public static $app;
@@ -34,14 +34,10 @@ class Application{
 
     }
 
-    public static function isGuest(){
-        return !self::$app->user;
-    }
-
     public function run(){
         try {
             echo $this->router->resolve();
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $this->response->setStatusCode($e->getCode());
             echo $this->view->render('_error', [
                 'exception' => $e

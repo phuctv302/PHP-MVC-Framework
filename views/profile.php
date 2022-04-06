@@ -42,7 +42,7 @@ $input_field = new InputField()
         </ul>
 
         <form class="form-logout" enctype="multipart/form-data" method="post" action="/logout">
-            <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY])?>">
+            <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY]) ?>">
             <button class="logout-btn text--gray"><i class="fas fa-power-off"></i></button>
             <button class="logout-btn text--gray">Logout</button>
         </form>
@@ -68,12 +68,12 @@ $input_field = new InputField()
             >
         </div>
 
-        <div class="content__detail" >
+        <div class="content__detail">
             <div class="user-detail">
                 <form id="profile-image-form" action="/profile-image" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY])?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY]) ?>">
                     <img class="user-detail__image" src="/public/img/users/<?php echo $user->photo ?>">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="300000000" />
+                    <input type="hidden" name="MAX_FILE_SIZE" value="300000000"/>
                     <input
                             id="profile-image-upload"
                             type="file"
@@ -221,8 +221,8 @@ $input_field = new InputField()
 
 <div class="layout hidden"></div>
 
-<form class="form form-edit hidden" action="/profile" method="post" enctype="multipart/form-data" >
-    <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY])?>">
+<form class="form form-edit hidden" action="/profile" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?php echo($_SESSION[Session::CSRF_TOKEN_KEY]) ?>">
     <div class="form__header">
         <p class="form__title">Edit personal account</p>
         <div class="form__close-container close-form">
@@ -232,15 +232,15 @@ $input_field = new InputField()
 
     <div class="form__content">
 
-        <?php echo $input_field->renderForEdit("Your first name", "Your first name", "text", "firstname", $model) ?>
-        <?php echo $input_field->renderForEdit("Your last name", "Your last name", "text", "lastname", $model) ?>
-        <?php echo $input_field->renderForEdit("Your email address", "Your email address", "email", "email", $user, true) ?>
-        <?php echo $input_field->renderForEdit("Username", "Your username", "text", "username", $user, true) ?>
-        <?php echo $input_field->renderForEdit("Job title", "Job title", "text", "job_title", $model) ?>
-        <?php echo $input_field->renderForEdit("Profile image", "Profile image", "file", "photo", $model) ?>
-        <?php echo $input_field->renderForEdit("Date of birth", "Date of birth", "date", "birthday", $model) ?>
-        <?php echo $input_field->renderForEdit("Your phone number", "Your phone number", "text", "phone", $model) ?>
-        <?php echo $input_field->renderForEdit("Current address", "Current address", "text", "address", $model) ?>
+        <?php echo InputField::renderForEdit("Your first name", "Your first name", "text", "firstname", $model) ?>
+        <?php echo InputField::renderForEdit("Your last name", "Your last name", "text", "lastname", $model) ?>
+        <?php echo InputField::renderForEdit("Your email address", "Your email address", "email", "email", $user, true) ?>
+        <?php echo InputField::renderForEdit("Username", "Your username", "text", "username", $user, true) ?>
+        <?php echo InputField::renderForEdit("Job title", "Job title", "text", "job_title", $model) ?>
+        <?php echo InputField::renderForEdit("Profile image", "Profile image", "file", "photo", $model) ?>
+        <?php echo InputField::renderForEdit("Date of birth", "Date of birth", "date", "birthday", $model) ?>
+        <?php echo InputField::renderForEdit("Your phone number", "Your phone number", "text", "phone", $model) ?>
+        <?php echo InputField::renderForEdit("Current address", "Current address", "text", "address", $model) ?>
 
     </div>
 

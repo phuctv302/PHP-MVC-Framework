@@ -17,7 +17,7 @@ class EditForm extends Model {
     public $phone = '';
     public $address = '';
 
-    public function rules() {
+    public function rules(){
         return [
             'firstname' => [new RequireValidator(), new StringValidator()],
             'lastname' => [new RequireValidator(), new StringValidator()],

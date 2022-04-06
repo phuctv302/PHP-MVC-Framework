@@ -2,7 +2,7 @@
 
 namespace core;
 
-abstract class Model{
+abstract class Model {
 
     public function loadData($data){
         foreach ($data as $key => $value){
@@ -12,7 +12,7 @@ abstract class Model{
         }
     }
 
-    public function filterFields($data, $allowed_fields= []){
+    public static function filterFields($data, $allowed_fields = []){
         $filter_data = [];
         foreach ($allowed_fields as $allowed_field){
             if (in_array($allowed_field, array_keys($data))){

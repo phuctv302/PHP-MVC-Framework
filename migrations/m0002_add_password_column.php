@@ -1,6 +1,6 @@
 <?php
 
-class m0002_add_password_column{
+class m0002_add_password_column {
     public function up(){
         $db = \core\Application::$app->db;
         $SQL = "ALTER TABLE users

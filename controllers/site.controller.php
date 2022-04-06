@@ -2,14 +2,13 @@
 
 namespace controllers;
 
-use core\Application;
 use core\Controller;
 use forms\ForgotForm;
 use forms\LoginForm;
 use forms\ResetForm;
 use models\User;
 
-class SiteController extends Controller{
+class SiteController extends Controller {
 
     public function home($request, $response){
         $currentUser = $this->getUser() ?? false;

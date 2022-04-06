@@ -8,8 +8,6 @@
     <!--  Style   -->
     <link rel="stylesheet" href="/public/css/general.css"/>
     <link rel="stylesheet" href="/public/css/auth.css"/>
-    <link rel="stylesheet" href="/public/css/alert.css"/>
-    <link rel="stylesheet" href="/public/css/account.css"/>
 
     <!-- Jquery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -21,8 +19,7 @@
             type="image/x-icon"
     />
 
-    <title><?php use core\Application;
-                echo $this->title ?> - Base Account
+    <title><?php echo $this->title ?> - Base Account
     </title>
 </head>
 <body>
@@ -32,8 +29,8 @@
 
 <script src="/public/js/script.js"></script>
 <script>
-    const success_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('success') ?>\"");
-    const error_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('error') ?>\"");
+    const success_mes = formatMessage("\"<?php echo core\Application::$app->session->getFlash('success') ?>\"");
+    const error_mes = formatMessage("\"<?php echo core\Application::$app->session->getFlash('error') ?>\"");
 
     if (success_mes) {
         showAlert('success', success_mes);

@@ -2,13 +2,11 @@
 
 namespace services;
 
-use core\Application;
-
 class ImageUploadService {
 
     // check photo is posted?
-    public static function checkImageExist($attribute){
-        return isset($_FILES[$attribute])&& !empty($_FILES[$attribute]['tmp_name']);
+    public static function checkFileExist($attribute){
+        return isset($_FILES[$attribute]) && !empty($_FILES[$attribute]['tmp_name']);
     }
 
     public static function upload($attribute, $path){

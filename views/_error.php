@@ -1,5 +1,8 @@
 <?php
-    $this->title = 'Something went wrong!';
+
+/** @var $exception \Exception */
+
+$this->title = 'Something went wrong!';
 ?>
 
 <h3 class="text--center"><?php echo $exception->getCode() ?> - <?php echo $exception->getMessage() ?></h3>

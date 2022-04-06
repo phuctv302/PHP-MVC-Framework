@@ -14,33 +14,39 @@ class UserController extends Controller {
         $edit_form->loadData($request->getBody());
         $user = new User();
 
-        // ON SUCCESS
-        if ($edit_form->validate() && $user->updateUser($edit_form)){
-            $user->updateUser($edit_form);
-
-            $this->getSession()->setFlash('success', 'Update data successfully');
-            $response->redirect('/profile');
-        } else if (!$edit_form->validate()){
+        // ERROR
+        if (!$edit_form->validate()){
             // validate form error
             $this->getSession()->setFlash('error', 'Oops! Invalid input data.');
-        } else if (!$user->updateUser($edit_form)){
-            // error updating user
-            $this->getSession()->setFlash('error', 'Error updating data.');
+
+            $this->setLayout('main');
+            return $this->render('profile', [
+                'model' => $edit_form,
+                'user' => $this->getUser(),
+            ]);
         }
 
-        // ERROR
-        $this->setLayout('main');
-        return $this->render('profile', [
-            'model' => $edit_form,
-            'user' => $this->getUser(),
-        ]);
+        if (!$user->updateUser($edit_form)){
+            // validate form error
+            $this->getSession()->setFlash('error', 'Oops! Invalid input data.');
+
+            $this->setLayout('main');
+            return $this->render('profile', [
+                'model' => $edit_form,
+                'user' => $this->getUser(),
+            ]);
+        }
+
+        // ON SUCCESS
+        $this->getSession()->setFlash('success', 'Update data successfully');
+        $response->redirect('/profile');
     }
 
     public function updatePhoto($request, $response){
         $image_form = new ImageForm();
         $user = new User();
 
-        if (ImageUploadService::checkImageExist('photo')){
+        if (ImageUploadService::checkFileExist('photo')){
             $image_form->loadData($request->getBody());
 
             if ($image_form->validate() && $user->uploadUserPhoto($request->getBody())){

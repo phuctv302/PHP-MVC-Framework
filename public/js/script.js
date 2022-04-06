@@ -16,12 +16,12 @@ const closeForm = () => {
 }
 
 // event listener for showing form
-for (let i = 0; i < $('.show-form').length; i++){
-   $('.show-form').on('click', showForm)
+for (let i = 0; i < $('.show-form').length; i++) {
+    $('.show-form').on('click', showForm)
 }
 
 // event listener for hiding form
-for (let i = 0; i < $('.close-form').length; i++){
+for (let i = 0; i < $('.close-form').length; i++) {
     $('.close-form').on('click', closeForm)
 }
 
@@ -43,13 +43,13 @@ const showAlert = (type, msg, time = 3) => {
 
 // format message: remove " at the beginning and ending
 const formatMessage = (message) => {
-    return message.substring(1, message.length-1) || false;
+    return message.substring(1, message.length - 1) || false;
 }
 
 // UPLOAD IMAGE ONE CLICK
-$('.user-detail__image').on('click', function(){
+$('.user-detail__image').on('click', function () {
     $('#profile-image-upload').click();
 })
-$('#profile-image-upload').on('change', function(){
+$('#profile-image-upload').on('change', function () {
     $('#profile-image-form').submit();
 })

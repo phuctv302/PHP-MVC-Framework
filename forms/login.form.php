@@ -6,7 +6,7 @@ use core\Model;
 use validators\EmailValidator;
 use validators\RequireValidator;
 
-class LoginForm extends Model{
+class LoginForm extends Model {
 
     public $email = '';
     public $password = '';

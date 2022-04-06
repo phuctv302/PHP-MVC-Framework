@@ -4,7 +4,7 @@ namespace core;
 
 use core\exceptions\NotFoundException;
 
-class Router{
+class Router {
     public $request;
     public $response;
     protected $callback;
