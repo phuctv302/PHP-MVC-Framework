@@ -2,34 +2,17 @@
 
 namespace services;
 
-use core\Application;
-
 class Email {
     public $to = '';
     public $from = '';
 
-    // pass to view
-    public $firstname = '';
-    public $url = '';
-
-
-    public function __construct($user, $url){
+    public function __construct($user){
         $this->to = $user->email;
         $this->from = $_ENV['EMAIL_FROM'];
-        $this->firstname = $user->firstname;
-        $this->url = $url;
     }
 
     // send actual email with nice UI
-    public function send($view, $subject){
-        // get html
-        /** @var $controller \core\Controller */
-        $message = Application::$app->controller->render($view, [
-            'firstname' => $this->firstname,
-            'url' => $this->url,
-            'subject' => $subject
-        ]);
-
+    public function send($message, $subject){
         // email options
         // It is mandatory to set the content-type when sending HTML email
         $headers = "MIME-Version: 1.0" . "\r\n";
@@ -43,7 +26,7 @@ class Email {
         return mail($this->to, $subject, $message, $headers);
     }
 
-    public function sendPasswordReset(){
-        return $this->send('reset.email', 'Your password reset token');
+    public function sendPasswordReset($message){
+        return $this->send($message, 'Your password reset token');
     }
 }

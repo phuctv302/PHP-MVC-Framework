@@ -4,9 +4,6 @@ namespace core;
 
 use core\db\Database;
 use Exception;
-use models\LoginSession;
-use models\User;
-use utils\DateConverter;
 
 class Application{
     public static $ROOT_DIR;
@@ -46,7 +43,7 @@ class Application{
             echo $this->router->resolve();
         } catch (Exception $e){
             $this->response->setStatusCode($e->getCode());
-            echo $this->view->renderView('_error', [
+            echo $this->view->render('_error', [
                 'exception' => $e
             ]);
         }

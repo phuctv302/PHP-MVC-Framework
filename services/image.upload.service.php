@@ -12,14 +12,11 @@ class ImageUploadService {
     }
 
     public static function upload($attribute, $path){
-        // check if user post image
-        if (strpos($_FILES[$attribute]['type'], 'image') !== 0){
-            Application::$app->session->setFlash('error', 'Please choose an image!');
-            return false;
-        } else {
-            // copy image to public/img/users/user-{id}-{time()}
+        // copy image to public/img/users/user-{id}-{time()}
+        move_uploaded_file($_FILES[$attribute]['tmp_name'], $path);
+    }
 
-            move_uploaded_file($_FILES[$attribute]['tmp_name'], $path);
-        }
+    public static function isImage($attribute){
+        return strpos($_FILES[$attribute]['type'], 'image') === 0;
     }
 }

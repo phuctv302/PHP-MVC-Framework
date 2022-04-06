@@ -108,8 +108,9 @@ class User extends DbModel {
             return false;
         }
 
-        // ON SUCCESS
         Application::$app->user = $user;
+
+        // ON SUCCESS
         return true;
     }
 }

@@ -16,22 +16,23 @@ class AuthMiddleware extends BaseMiddleware{
      */
     public function execute(){
 
-        $login_token = Application::$app->cookie->get('user') ?: Application::$app->session->get('user');
+        $login_token = $this->getCookie()->get('user') ?: $this->getSession()->get('user');
+
         if (!$login_token){
-            Application::$app->session->setFlash('error', 'Please login to continue!');
-            Application::$app->response->redirect('/login');
+            $this->getSession()->setFlash('error', 'Please login to continue!');
+            $this->getResponse()->redirect('/login');
         }
         $login_session = LoginSession::findOne(
             ['login_token' => $login_token, 'expired_at' => DateConverter::toDate(time())]
         );
 
         $user = User::findOne(['id' => $login_session->user_id]);
-        // not logged in yet
         if (!$user){
-            Application::$app->session->setFlash('error', 'Please login to continue!');
-            Application::$app->response->redirect('/login');
+            $this->getSession()->setFlash('error', 'Please login to continue!');
+            $this->getResponse()->redirect('/login');
         }
 
-        Application::$app->user = $user;
+        // ON SUCCESS
+        $this->setUser($user);
     }
 }

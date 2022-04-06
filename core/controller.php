@@ -11,7 +11,7 @@ class Controller {
     }
 
     public function render($view, $params = []){
-        return Application::$app->view->renderView($view, $params);
+        return Application::$app->view->render($view, $params);
     }
 
 
@@ -40,6 +40,10 @@ class Controller {
 
     public function getUser(){
         return Application::$app->user;
+    }
+
+    public function setUser($user){
+        Application::$app->user = $user;
     }
 
     public function getApp(){

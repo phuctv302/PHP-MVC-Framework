@@ -3,6 +3,9 @@
 namespace forms;
 
 use core\Model;
+use validators\NumberValidator;
+use validators\RequireValidator;
+use validators\StringValidator;
 
 class EditForm extends Model {
 
@@ -15,6 +18,12 @@ class EditForm extends Model {
     public $address = '';
 
     public function rules() {
-        return [];
+        return [
+            'firstname' => [new RequireValidator(), new StringValidator()],
+            'lastname' => [new RequireValidator(), new StringValidator()],
+            'phone' => [new RequireValidator(), new NumberValidator()],
+            'job_title' => [new RequireValidator()],
+            'address' => [new RequireValidator()],
+        ];
     }
 }

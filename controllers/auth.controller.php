@@ -33,23 +33,26 @@ class AuthController extends Controller {
             $login_session->save();
             $login_token = $login_session->login_token;
 
-            // if user check remember me checkbox
+            // remember me checkbox
             if (!empty($login_form->save_auth) && $login_form->save_auth == 'on'){
                 $this->getCookie()->set('user', $login_token);
             } else if (empty($login_form->save_auth)){
                 $this->getSession()->set('user', $login_token);
             }
 
+            // reset captcha
+            $this->getCookie()->remove('count');
+
             $this->getSession()->setFlash('success', 'Login successfully');
             $response->redirect('/profile');
-        } else if (!$login_form->validate()){
-            $this->getSession()->setFlash(
-                'error', 'Oops! Invalid input data');
-        } else if (!MyCaptcha::verifyResponse($body['g-recaptcha-response'])){
+        }
+
+        // USER NOT CHECK CAPTCHA
+        if (!MyCaptcha::verifyResponse($body['g-recaptcha-response'] ?? null)){
             $this->getSession()->setFlash(
                 'error', 'Please verify captcha!');
         }
-        MyCaptcha::increaseCounter($body);
+        MyCaptcha::increaseCounter($body, $this->getCookie());
         $this->setLayout('auth');
         return $this->render('login', [
             'model' => $login_form
@@ -62,6 +65,7 @@ class AuthController extends Controller {
         // save data to user model
         $user->loadData($request->getBody());
 
+        // check user existed with input email
         if ($this->isExisted($user->email, User::class, 'email')){
             $this->getSession()->setFlash(
                 'error', 'User with this email has already existed!'
@@ -71,6 +75,8 @@ class AuthController extends Controller {
                 'model' => $user
             ]);
         }
+
+        // validate form error
         if (!$user->validate()){
             $this->getSession()->setFlash(
                 'error', 'Oops! Invalid input data');
@@ -79,6 +85,8 @@ class AuthController extends Controller {
                 'model' => $user
             ]);
         }
+
+        // save to db error => if no error: save to db
         if (!$user->save()){
             $this->getSession()->setFlash(
                 'error', 'Error signing up user. Please try again later!');
@@ -91,11 +99,6 @@ class AuthController extends Controller {
         // ON SUCCESS
         $this->getSession()->setFlash('success', 'Thanks for registering');
         $response->redirect('/login');
-        exit;
-        //        $this->setLayout('auth');
-        //        return $this->render('register', [
-        //            'model' => $user
-        //        ]);
     }
 
     public function logout($request, $response){
@@ -105,12 +108,9 @@ class AuthController extends Controller {
             LoginSession::delete(['login_token' => $login_token]);
         }
 
-        $this->getApp()->user = null;
+        $this->setUser(null);
         $this->getCookie()->remove('user');
         $this->getSession()->remove('user');
-
-        // reset captcha
-        $this->getCookie()->remove('count');
 
         $response->redirect('/login');
     }
@@ -126,16 +126,22 @@ class AuthController extends Controller {
 
         // create a random reset token
         $reset_token = TokenGenerator::signToken();
-        User::updateOne(['email' => $forgot_form->email], ['reset_token' => $reset_token]);
+        User::updateOne(['email' => $forgot_form->email], ['reset_token' => hash('sha256', $reset_token)]);
 
         // get url to reset password: reset?token=.....
         $url = $this->getUrl() . "/reset?token=$reset_token";
 
         // config email options
-        $email = new Email($user, $url);
+        $email = new Email($user);
+
+        // message
+        $message = $this->render('mails/reset.email', [
+            'firstname' => $user->firstname,
+            'url' => $url,
+        ]);
 
         // send mails
-        return $email->sendPasswordReset();
+        return $email->sendPasswordReset($message);
     }
 
     public function getUrl(){
@@ -168,12 +174,15 @@ class AuthController extends Controller {
         $reset_token = explode('=', $_SERVER['REQUEST_URI'], 2)[1];
 
         // find user with that token
-        $user = User::findOne(['reset_token' => $reset_token]);
+        $user = User::findOne(['reset_token' => hash('sha256', $reset_token)]);
         if (!$user){
            $this->getSession()->setFlash(
                 'error', 'Reset token is invalid!'
             );
-            return false;
+            $this->setLayout('auth');
+            return $this->render('reset', [
+                'model' => $reset_form
+            ]);
         }
 
         // ON ERROR
@@ -186,8 +195,8 @@ class AuthController extends Controller {
             ]);
         }
 
-        // ON SUCCESS
-        // updating
+        // ON SUCCESS => redirect to login form
+        // updating password and set reset_token = NULL
         User::updateOne(['id' => $user->id],
             ['password' => password_hash($reset_form->password, PASSWORD_DEFAULT),
                 'reset_token' => NULL]);

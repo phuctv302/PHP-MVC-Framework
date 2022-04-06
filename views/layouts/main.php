@@ -12,17 +12,23 @@ use core\Application;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo $this->title; ?> - Base Account</title>
 
-    <link rel="stylesheet" href="/public/css/style.css" />
+    <!--  Style   -->
+    <link rel="stylesheet" href="/public/css/general.css"/>
+    <link rel="stylesheet" href="/public/css/auth.css"/>
+    <link rel="stylesheet" href="/public/css/alert.css"/>
+    <link rel="stylesheet" href="/public/css/account.css"/>
 
     <!-- Jquery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <!-- Icon -->
     <link
             rel="shortcut icon"
             href="https://share-gcdn.basecdn.net/apps/account.png"
             type="image/x-icon"
     />
 
+    <!-- Font awesome -->
     <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.css"
             rel="stylesheet"
@@ -34,7 +40,7 @@ use core\Application;
 
         <script src="/public/js/script.js"></script>
         <script>
-            const success_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('success') ?>\"");
+            const success_mes = formatMessage('"<?php echo Application::$app->session->getFlash('success') ?>"');
             const error_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('error') ?>\"");
 
             if (success_mes){

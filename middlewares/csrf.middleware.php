@@ -9,20 +9,20 @@ use core\Session;
 class CsrfMiddleware extends BaseMiddleware {
 
     public function execute(){
-        $body = Application::$app->request->getBody();
+        $body = $this->getRequest()->getBody();
 
         // Check csrf attack
         if (!isset($body[Session::CSRF_TOKEN_KEY])
-            || $body[Session::CSRF_TOKEN_KEY] !== $_SESSION[Session::CSRF_TOKEN_KEY]){
-            Application::$app->session->setFlash(
+            || $body[Session::CSRF_TOKEN_KEY] !== $this->getSession()->get(Session::CSRF_TOKEN_KEY)){
+            $this->getSession()->setFlash(
                 'error', 'CSRF Attacking! We\'re not gonna submit your form.');
 
-            $currentPath = Application::$app->request->getPath();
+            $currentPath = $this->getRequest()->getPath();
             if ($currentPath === '/profile-image' || $currentPath === '/logout'){
                 $currentPath = '/profile';
             }
 
-            Application::$app->response->redirect($currentPath);
+            $this->getResponse()->redirect($currentPath);
             exit;
         }
     }

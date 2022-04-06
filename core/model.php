@@ -37,7 +37,7 @@ abstract class Model{
     public function validate(){
         foreach ($this->rules() as $attribute => $validators){
             $value = $this->{$attribute};
-            /** @var $validator \validators\RequireValidator */
+            /** e.g: @var $validator \validators\RequireValidator */
             foreach ($validators as $validator){
                 if ($validator->validate($value)){
                     $this->addError($attribute, $validator->error());

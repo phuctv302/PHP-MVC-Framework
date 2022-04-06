@@ -1,36 +1,34 @@
 // SHOW AND HIDE EDIT-FORM (CLICK EDIT BTN AND EDIT ACCOUNT NAVBAR)
 // DOM
-const formEdit = document.querySelector('.form-edit');
-const layout = document.querySelector('.layout');
-const showFormBtns = document.querySelectorAll('.show-form');
-const hideFormBtns = document.querySelectorAll('.close-form');
+const formEdit = $('.form-edit');
+const layout = $('.layout');
 
 // show edit form and add background layout
 const showForm = () => {
-    formEdit.classList.remove('hidden');
-    layout.classList.remove('hidden');
+    formEdit.removeClass('hidden');
+    layout.removeClass('hidden');
 }
 
 // close form function
 const closeForm = () => {
-    formEdit.classList.add('hidden');
-    layout.classList.add('hidden');
+    formEdit.addClass('hidden');
+    layout.addClass('hidden');
 }
 
 // event listener for showing form
-showFormBtns.forEach(btn => {
-    btn.addEventListener('click', showForm)
-})
+for (let i = 0; i < $('.show-form').length; i++){
+   $('.show-form').on('click', showForm)
+}
 
 // event listener for hiding form
-hideFormBtns.forEach(btn => {
-    btn.addEventListener('click', closeForm)
-})
+for (let i = 0; i < $('.close-form').length; i++){
+    $('.close-form').on('click', closeForm)
+}
 
 // SHOW AND HIDE ALERT
 const hideAlert = () => {
-    const alert = document.querySelector('.alert');
-    if (alert) alert.parentElement.removeChild(alert);
+    const alert = $('.alert');
+    if (alert) alert.remove();
 }
 
 // type is either: success or error
@@ -38,7 +36,7 @@ const showAlert = (type, msg, time = 3) => {
     hideAlert();
 
     const markup = `<div class="alert alert--${type}">${msg}</div>`;
-    document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+    $('body').prepend(markup);
 
     window.setTimeout(hideAlert, time * 1000);
 }
@@ -55,5 +53,3 @@ $('.user-detail__image').on('click', function(){
 $('#profile-image-upload').on('change', function(){
     $('#profile-image-form').submit();
 })
-
-// TODO: use jquery for all script

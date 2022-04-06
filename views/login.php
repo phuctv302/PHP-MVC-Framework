@@ -5,11 +5,13 @@
 /** @var $model \core\Model */
 
 use core\Application;
+use inputs\InputField;
 use services\MyCaptcha;
 
     $this->title = 'Login';
 
-    $my_captcha = new MyCaptcha()
+    $my_captcha = new MyCaptcha();
+    $input_field = new InputField()
 ?>
 
 <div class="body__auth">
@@ -27,14 +29,9 @@ use services\MyCaptcha;
         </p>
 
         <form method="post" action="/login" class="base-form auth-form">
-            <div class="form__group">
-                <label>Your email</label>
-                <input type="email" name="email" placeholder="Your email"
-                       required
-                       value="<?= $model->email ?>"
-                       class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
-                <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
-            </div>
+
+            <?php echo $input_field->render("Your email", "email", "email", "Your email", $model) ?>
+
             <div class="form__group">
                 <label>Password</label>
                 <span class="forgot-password">
@@ -50,7 +47,7 @@ use services\MyCaptcha;
             <?php
             // Captcha
             if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3){
-                echo "<div class='g-recaptcha' data-sitekey=" . $_ENV['PUBLIC_KEY'] . "></div>";
+                echo "<div class='g-recaptcha' data-sitekey=" . MyCaptcha::$SITE_KEY . "></div>";
             }
             ?>
 

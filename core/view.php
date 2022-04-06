@@ -5,8 +5,8 @@ namespace core;
 class View {
     public $title = '';
 
-    public function renderView($view, $params = []){
-        $viewContent = $this->renderOnlyView($view, $params);
+    public function render($view, $params = []){
+        $viewContent = $this->renderView($view, $params);
         $layoutContent = $this->layoutContent();
 
         return str_replace('{{content}}', $viewContent, $layoutContent);
@@ -24,7 +24,7 @@ class View {
         return ob_get_clean(); // return output & clear the buffer
     }
 
-    protected function renderOnlyView($view, $params){
+    protected function renderView($view, $params){
         foreach ($params as $key => $value){
             $$key = $value;
         }

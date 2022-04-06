@@ -5,9 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!--  Style   -->
+    <link rel="stylesheet" href="/public/css/general.css"/>
+    <link rel="stylesheet" href="/public/css/auth.css"/>
+    <link rel="stylesheet" href="/public/css/alert.css"/>
+    <link rel="stylesheet" href="/public/css/account.css"/>
+
+    <!-- Jquery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="/public/css/style.css"/>
+    <!--  Icon  -->
     <link
             rel="shortcut icon"
             href="https://share-gcdn.basecdn.net/apps/account.png"
@@ -15,8 +22,8 @@
     />
 
     <title><?php use core\Application;
-
-        echo $this->title ?> - Base Account</title>
+                echo $this->title ?> - Base Account
+    </title>
 </head>
 <body>
 <div class="body">
@@ -28,9 +35,9 @@
     const success_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('success') ?>\"");
     const error_mes = formatMessage("\"<?php echo Application::$app->session->getFlash('error') ?>\"");
 
-    if (success_mes){
+    if (success_mes) {
         showAlert('success', success_mes);
-    } else if (error_mes){
+    } else if (error_mes) {
         showAlert('error', error_mes);
     }
 </script>

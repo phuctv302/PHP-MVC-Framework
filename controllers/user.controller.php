@@ -2,7 +2,6 @@
 
 namespace controllers;
 
-use core\Application;
 use core\Controller;
 use forms\EditForm;
 use forms\ImageForm;
@@ -15,22 +14,26 @@ class UserController extends Controller {
         $edit_form->loadData($request->getBody());
         $user = new User();
 
-        // validate form
-        if (!$edit_form->validate()){
+        // ON SUCCESS
+        if ($edit_form->validate() && $user->updateUser($edit_form)){
+            $user->updateUser($edit_form);
+
+            $this->getSession()->setFlash('success', 'Update data successfully');
+            $response->redirect('/profile');
+        } else if (!$edit_form->validate()){
+            // validate form error
             $this->getSession()->setFlash('error', 'Oops! Invalid input data.');
-            $this->setLayout('main');
-            return $this->render('profile', [
-                'model' => $edit_form,
-                'user' => $this->getUser(),
-            ]);
+        } else if (!$user->updateUser($edit_form)){
+            // error updating user
+            $this->getSession()->setFlash('error', 'Error updating data.');
         }
 
-        // ON SUCCESS
-        $user->updateUser($edit_form);
-
-        $this->getSession()->setFlash('success', 'Update data successfully');
-        $response->redirect('/profile');
-        exit;
+        // ERROR
+        $this->setLayout('main');
+        return $this->render('profile', [
+            'model' => $edit_form,
+            'user' => $this->getUser(),
+        ]);
     }
 
     public function updatePhoto($request, $response){

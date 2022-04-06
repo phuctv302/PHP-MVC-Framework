@@ -5,8 +5,11 @@
  */
 
 use core\Session;
+use inputs\InputField;
 
 $this->title = $user->getDisplayName(); // this ~ view instance
+
+$input_field = new InputField()
 ?>
 
 <div class="user-view">
@@ -228,94 +231,17 @@ $this->title = $user->getDisplayName(); // this ~ view instance
     </div>
 
     <div class="form__content">
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Your first name</p>
-                <p class="form__sub-label">Your first name</p>
-            </div>
-            <input value="<?php echo $model->firstname ?>" type="text" name="firstname"
-                   required
-                   class="<?php echo $model->hasError("firstname") ? "is-invalid" : "" ?>">
-            <div class="invalid-feedback"><?php echo $model->getFirstError("firstname") ?></div>
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Your last name</p>
-                <p class="form__sub-label">Your last name</p>
-            </div>
-            <input value="<?php echo $model->lastname ?>" type="text" name="lastname"
-                   required
-                   class="<?php echo $model->hasError("lastname") ? "is-invalid" : "" ?>">
-            <div class="invalid-feedback"><?php echo $model->getFirstError("lastname") ?></div>
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Your email address</p>
-                <p class="form__sub-label">Your email address</p>
-            </div>
-            <input
-                    value="<?php echo $user->email ?>"
-                    type="email"
-                    name="email"
-                    disabled
-                    class="<?php echo $model->hasError("email") ? "is-invalid" : "" ?>">
-            <div class="invalid-feedback"><?php echo $model->getFirstError("email") ?></div>
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Username</p>
-                <p class="form__sub-label">Your username</p>
-            </div>
-            <input value="@<?php echo $user->username ?>" type="text" name="username" disabled
-                   class="<?php echo $model->hasError("username") ? "is-invalid" : "" ?>">
-            <div class="invalid-feedback"><?php echo $model->getFirstError("username") ?></div>
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Job title</p>
-                <p class="form__sub-label">Job title</p>
-            </div>
-            <input
-                    value="<?php echo $model->job_title ?>"
-                    type="text"
-                    name="job_title"
-                    class="<?php echo $model->hasError("job_title") ? "is-invalid" : "" ?>">
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Profile image</p>
-                <p class="form__sub-label">Profile image</p>
-            </div>
-            <input type="hidden" name="MAX_FILE_SIZE" value="300000000" />
-            <input type="file" name="photo">
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Date of birth</p>
-                <p class="form__sub-label">Date of birth</p>
-            </div>
-            <input value="<?php echo $model->birthday ?>" type="date" name="birthday"/>
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Your phone number</p>
-                <p class="form__sub-label">Your phone number</p>
-            </div>
-            <input value="<?php echo $model->phone ?>" type="text" name="phone"
-                   class="<?php echo $model->hasError("phone") ? "is-invalid" : "" ?>"/>
-            <div class="invalid-feedback"><?php echo $model->getFirstError("phone") ?></div>
-        </div>
-        <div class="form__group">
-            <div class="form__label-container">
-                <p class="form__label">Current address</p>
-                <p class="form__sub-label">Current address</p>
-            </div>
-            <input
-                    value="<?php echo $model->address ?>"
-                    type="text"
-                    name="address"
-            />
-        </div>
+
+        <?php echo $input_field->renderForEdit("Your first name", "Your first name", "text", "firstname", $model) ?>
+        <?php echo $input_field->renderForEdit("Your last name", "Your last name", "text", "lastname", $model) ?>
+        <?php echo $input_field->renderForEdit("Your email address", "Your email address", "email", "email", $user, true) ?>
+        <?php echo $input_field->renderForEdit("Username", "Your username", "text", "username", $user, true) ?>
+        <?php echo $input_field->renderForEdit("Job title", "Job title", "text", "job_title", $model) ?>
+        <?php echo $input_field->renderForEdit("Profile image", "Profile image", "file", "photo", $model) ?>
+        <?php echo $input_field->renderForEdit("Date of birth", "Date of birth", "date", "birthday", $model) ?>
+        <?php echo $input_field->renderForEdit("Your phone number", "Your phone number", "text", "phone", $model) ?>
+        <?php echo $input_field->renderForEdit("Current address", "Current address", "text", "address", $model) ?>
+
     </div>
 
     <div class="form__button">

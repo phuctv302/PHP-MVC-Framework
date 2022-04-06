@@ -56,13 +56,14 @@ class Router{
 
             /** @var $controller \core\Controller
              */
-            $controller = new $this->callback[0]();
+            $controller = new $this->callback[0](); // instantiate for current Controller
             Application::$app->controller = $controller;
             $controller->action = $this->callback[1];
             $this->callback[0] = $controller;
 
             // execute middleware
-            /** @var $middleware \core\middlewares\BaseMiddleware */
+            /** @var $middleware \middlewares\AuthMiddleware */
+            /** @var $middleware \middlewares\CsrfMiddleware */
             if (!empty($this->middlewares)){
                 foreach ($this->middlewares as $middleware){
                     $middleware->execute();

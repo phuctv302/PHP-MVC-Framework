@@ -90,6 +90,10 @@ abstract class DbModel extends Model{
                 . time()
                 . $uploadedExt;
 
+            if (!ImageUploadService::isImage('photo')){
+                Application::$app->session->setFlash('error', 'Please choose an image!');
+                return false;
+            }
             ImageUploadService::upload('photo', $uploadedDir . $uploadedFile);
             $updateData['photo'] = $uploadedFile ?: Application::$app->user->photo;
         }
@@ -112,7 +116,7 @@ abstract class DbModel extends Model{
 
         $attribute = array_keys($where);
 
-        $sql = $sql = implode("AND", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
+        $sql = implode("AND", array_map(function($attr){ return "$attr = :$attr"; }, $attribute));
 
         $statement = self::prepare("
             DELETE FROM $table_name
