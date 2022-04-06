@@ -12,31 +12,41 @@ use services\Email;
 use services\MyCaptcha;
 use utils\TokenGenerator;
 
-
-/** @var $request \core\Request
- * @var $response \core\Response
- */
+/**
+ * authentication operations
+ * get request and send response to client
+ * */
 class AuthController extends Controller {
 
+    /**
+     * increase count variable for displaying captcha (>=3)
+     * @param array $body is body from request
+     **/
     private function increaseCounter($body){
         if (isset($body['submit'])){
             if (!$this->getCookie()->get('count')){
+                // init
                 $this->getCookie()->setForCaptcha('count', 1);
             } else {
+                // increase
                 $count = $_COOKIE['count'] + 1;
                 $this->getCookie()->setForCaptcha('count', $count);
             }
         }
     }
 
-    // LOGIN FUNCTION
+    /**
+     * Log user in, captcha, @redirect to profile
+     * @param $request \core\Request
+     * @param $response \core\Response
+     * */
     public function login($request, $response){
         $login_form = new LoginForm();
         $body = $request->getBody();
 
         $login_form->loadData($body);
 
-        // ERROR
+        // ERROR validating
         if (!$login_form->validate()){
             $this->getSession()->setFlash(
                 'error', 'Oops! Invalid input data.');
@@ -49,6 +59,7 @@ class AuthController extends Controller {
             ]);
         }
 
+        // check error logging in, no error => login and save user to Application
         if (!User::login($login_form)){
             $this->getSession()->setFlash(
                 'error', 'Error logging user in!');
@@ -95,6 +106,12 @@ class AuthController extends Controller {
         $response->redirect('/profile');
     }
 
+    /**
+     * Sign up new user
+     * @redirect to login
+     * @param $request \core\Request
+     * @param $response \core\Response
+     * */
     public function register($request, $response){
         $user = new User();
 
@@ -151,7 +168,13 @@ class AuthController extends Controller {
         $response->redirect('/login');
     }
 
-    // FORGOT PASSWORD FUNCTION
+    // TODO: check forgotPassword function
+    /**
+     * This method is for forgotPassword function
+     * create token and send email with that token
+     * @return true if send successfully,
+     * otherwise @return false
+     * */
     public function sendToken($forgot_form){
         // find user with input email
         $user = User::findOne(['email' => $forgot_form->email]);
@@ -180,27 +203,53 @@ class AuthController extends Controller {
         return $email->send($message, 'Your password reset token');
     }
 
+    // Get url for directing to reset password form
     private function getUrl(){
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'http') === 0 ? 'http' : 'https';
         $host = $_SERVER['SERVER_NAME'];
         return $protocol . '://' . $host;
     }
 
+    /**
+     * Actual send email with reset token to user
+     * @redirect to login
+     * @param $request \core\Request
+     * @param $response \core\Response
+     * */
     public function forgotPassword($request, $response){
         $forgot_form = new ForgotForm();
 
         $forgot_form->loadData($request->getBody());
         // send token to user email
-        if ($forgot_form->validate() && $this->sendToken($forgot_form)){
-            $this->getSession()->setFlash('success', 'Token has sent to your email');
-            $response->redirect('/login');
+
+        // ERROR validating form
+        if (!$forgot_form->validate()){
+            $this->getSession()->setFlash('error', 'Oops! Invalid input data.');
+
+            $this->setLayout('auth');
+            return $this->render('forgot', [
+                'model' => $forgot_form
+            ]);
         }
-        $this->setLayout('auth');
-        return $this->render('forgot', [
-            'model' => $forgot_form
-        ]);
+
+        // ERROR sending email
+        if (!$this->sendToken($forgot_form)){
+            $this->getSession()->setFlash('error', 'Error sending email! Please try again later.');
+
+            $this->setLayout('auth');
+            return $this->render('forgot', [
+                'model' => $forgot_form
+            ]);
+        }
+
+        // ON SUCCESS
+        $this->getSession()->setFlash('success', 'Token has sent to your email');
+        $response->redirect('/login');
     }
 
+    /**
+     * Update user password and set reset_token = @NULL
+     * */
     public function resetPassword($request, $response){
         $reset_form = new ResetForm();
 
@@ -221,7 +270,7 @@ class AuthController extends Controller {
             ]);
         }
 
-        // ON ERROR
+        // ON ERROR validating form
         if (!$reset_form->validate()){
             $this->getSession()->setFlash(
                 'error', 'Oops! Invalid input data!');
@@ -231,6 +280,7 @@ class AuthController extends Controller {
             ]);
         }
 
+        // ERROR updating password; no error => update
         if (!User::updateOne(['id' => $user->id],
             ['password' => password_hash($reset_form->password, PASSWORD_DEFAULT),
                 'reset_token' => NULL])){

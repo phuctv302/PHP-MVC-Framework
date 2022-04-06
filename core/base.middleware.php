@@ -2,8 +2,15 @@
 
 namespace core;
 
+/**
+ * abstract class for all middlewares outside @package core
+ * */
 abstract class BaseMiddleware {
     abstract public function execute();
+
+    /*
+     * methods for not calling Application outside core
+     * */
 
     public function getCookie(){
         return Application::$app->cookie;

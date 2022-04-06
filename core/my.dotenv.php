@@ -2,6 +2,7 @@
 
 namespace core;
 
+// Load environment variables
 class MyDotenv {
     protected $path;
 
@@ -30,6 +31,7 @@ class MyDotenv {
             $name = trim($name);
             $value = trim($value);
 
+            // Check and set environment variables
             if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)){
                 putenv(sprintf("%s=%s", $name, $value));
                 $_ENV[$name] = $value;

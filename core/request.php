@@ -2,6 +2,7 @@
 
 namespace core;
 
+// Get the current path form browser, current method and get body
 class Request {
     public function getPath(){
         // $_SERVER['REQUEST_URI'] returns path include query string: /path?id=1
@@ -16,18 +17,17 @@ class Request {
         return substr($path, 0, $position); // remove query string
     }
 
+    /**
+     * @return string current method (lowercase)
+     * */
     public function method(){
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function isGet(){
-        return $this->method() === 'get';
-    }
-
-    public function isPost(){
-        return $this->method() === 'post';
-    }
-
+    /**
+     * Get data from get/post, make data more secure
+     * @return array sanitized data
+     * */
     public function getBody(){
         $body = [];
         if ($this->method() === 'get'){

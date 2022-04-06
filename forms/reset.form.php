@@ -8,6 +8,7 @@ use validators\MaxValidator;
 use validators\MinValidator;
 use validators\RequireValidator;
 
+// Reset password
 class ResetForm extends Model {
     public $password;
     public $confirm_password;

@@ -2,8 +2,15 @@
 
 namespace core;
 
+/*
+ * Set the layout, render view and check unique attribute
+ * */
 class Controller {
     public $layout = 'main';
+
+    /**
+     * @var string $action is actually a method from one Controller which @extends $this
+     * */
     public $action = '';
 
     public function setLayout($layout){
@@ -14,7 +21,14 @@ class Controller {
         return Application::$app->view->render($view, $params);
     }
 
-
+    /**
+     * Check unique attribute
+     * @param string $value the value of the @param $unique_attr
+     * @param string $class_name name of class (table) including namespace
+     * @param string $unique_attr
+     * @return true of existed
+     * otherwise @return false
+     * */
     protected function isExisted($value, $class_name, $unique_attr){
         $table_name = $class_name::tableName();
         $statement = Application::$app->db->prepare(
@@ -30,6 +44,9 @@ class Controller {
         return false;
     }
 
+    /**
+     * methods for not calling Application class outside @package core
+     * */
     public function getCookie(){
         return Application::$app->cookie;
     }

@@ -1,4 +1,6 @@
 <?php
+
+// This function with automatically pass the param class_name into MyAutoLoader function
 spl_autoload_register('myAutoLoader');
 
 function myAutoLoader($class_name){

@@ -2,6 +2,7 @@
 
 namespace inputs;
 
+// Reuse input form many times
 class InputField {
 
     public static function render($label, $type, $attribute, $placeholder, $model){

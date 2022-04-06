@@ -4,10 +4,14 @@ namespace core;
 
 use utils\TokenGenerator;
 
+// Set session for data, notification
 class Session {
     protected const FLASH_KEY = 'flash_messages';
     public const CSRF_TOKEN_KEY = 'csrf_token';
 
+    /*
+     * Set notification and csrf token when new session starts
+     * */
     public function __construct(){
         session_start();
 
@@ -27,7 +31,9 @@ class Session {
         }
     }
 
-
+    /**
+     * Set flash message
+     * */
     public function setFlash($key, $message){
         $_SESSION[self::FLASH_KEY][$key] = [
             'remove' => false,
@@ -35,23 +41,30 @@ class Session {
         ];
     }
 
+    /*
+     * Get flash message to display
+     * */
     public function getFlash($key){
 
         return $_SESSION[self::FLASH_KEY][$key]['value'] ?? false;
     }
 
+    // Set session for data
     public function set($key, $value){
         $_SESSION[$key] = $value;
     }
 
+    // Get session by key
     public function get($key){
         return $_SESSION[$key] ?? false;
     }
 
+    // Remove session by key
     public function remove($key){
         unset($_SESSION[$key]);
     }
 
+    // After session ends => remove the flash message marked to be removed
     public function __destruct(){
         $flash_messages = $_SESSION[self::FLASH_KEY] ?? [];
 

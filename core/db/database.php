@@ -5,9 +5,18 @@ namespace core\db;
 use core\Application;
 use PDO;
 
+/*
+ * connect to database (MySql PDO)
+ * apply migrations
+ * */
 class Database {
     public $pdo;
 
+    /**
+     * connect to database
+     * @throws \Exception if connect fail
+     * @param array $config from $_ENV, store some configurations for connecting to db
+     * */
     public function __construct($config){
         $dsn = $config['dsn'] ?? '';
         $user = $config['user'] ?? '';
@@ -16,6 +25,10 @@ class Database {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    /*
+     * Migration is for reference
+     * Don't be bother with this at first =)))
+     * */
     public function applyMigration(){
         $this->createMigrationTable();
         $appliedMigrations = $this->getAppliedMigration();

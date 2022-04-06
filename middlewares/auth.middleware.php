@@ -8,6 +8,7 @@ use models\LoginSession;
 use models\User;
 use utils\DateConverter;
 
+// Check user is logged in or not
 class AuthMiddleware extends BaseMiddleware {
 
     /**

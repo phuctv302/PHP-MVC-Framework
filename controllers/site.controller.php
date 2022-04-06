@@ -8,8 +8,19 @@ use forms\LoginForm;
 use forms\ResetForm;
 use models\User;
 
+/**
+ * For get method
+ * Render view (form) only
+ * */
 class SiteController extends Controller {
 
+    /**
+     * When user access "/"
+     * @redirect to login if user has not logged in yet
+     * otherwise @redirect to profile
+     * @param $request \core\Request
+     * @param $response \core\Response
+     * */
     public function home($request, $response){
         $currentUser = $this->getUser() ?? false;
 
@@ -20,14 +31,22 @@ class SiteController extends Controller {
         }
     }
 
+    /**
+     * When user access "/profile"
+     * */
     public function profile(){
         $this->setLayout('main');
+
+        // form can not be empty => we have to pass user instead
         return $this->render('profile', [
             'user' => $this->getUser(),
             'model' => $this->getUser()
         ]);
     }
 
+    /**
+     * When user access "/login"
+     * */
     public function loginForm(){
         $login_form = new LoginForm();
 
@@ -37,6 +56,9 @@ class SiteController extends Controller {
         ]);
     }
 
+    /**
+     * When user access "/register"
+     * */
     public function registerForm(){
         $user = new User();
 
@@ -46,6 +68,9 @@ class SiteController extends Controller {
         ]);
     }
 
+    /**
+     * When user access "/forgot"
+     * */
     public function forgotPasswordForm(){
         $forgot_form = new ForgotForm();
 
@@ -55,6 +80,9 @@ class SiteController extends Controller {
         ]);
     }
 
+    /**
+     * When user access "/reset"
+     * */
     public function resetPasswordForm(){
         $reset_form = new ResetForm();
 

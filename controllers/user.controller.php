@@ -8,7 +8,17 @@ use forms\ImageForm;
 use models\User;
 use services\ImageUploadService;
 
+/**
+ * operations related to user: update info, upload photo,...
+ * */
 class UserController extends Controller {
+
+    /**
+     * Validate and update user's information
+     * fields can not be updated: email and username
+     * @param $request \core\Request
+     * @param $response \core\Response
+     * */
     public function updateUser($request, $response){
         $edit_form = new EditForm();
         $edit_form->loadData($request->getBody());
@@ -42,6 +52,11 @@ class UserController extends Controller {
         $response->redirect('/profile');
     }
 
+    /**
+     * Only for updating user's photo
+     * @var $request \core\Request
+     * @var $response \core\Response
+     * */
     public function updatePhoto($request, $response){
         $image_form = new ImageForm();
         $user = new User();
@@ -61,6 +76,4 @@ class UserController extends Controller {
             'user' => $this->getUser(),
         ]);
     }
-
-
 }

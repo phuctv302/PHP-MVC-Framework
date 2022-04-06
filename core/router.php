@@ -4,16 +4,24 @@ namespace core;
 
 use core\exceptions\NotFoundException;
 
+// Execute the callback and middleware
 class Router {
+
+    /** @var Request */
     public $request;
+
+    /** @var Response */
     public $response;
+
+    /** @var array contains controller and the action we want to execute */
     protected $callback;
 
-    /** @var $middlewares \core\BaseMiddleware */
+    /** @var array \core\BaseMiddleware */
     public $middlewares = [];
 
     /**
      * @param Request $request
+     * @param Response $response
      */
     public function __construct($request, $response){
         $this->request = $request;
@@ -44,6 +52,11 @@ class Router {
         }
     }
 
+    /**
+     * execute the callback
+     * @throws NotFoundException if accessing non-existed url
+     * @return string the result view or @redirect to a path
+     * */
     public function resolve(){
 
         if ($this->callback == false){
@@ -58,10 +71,10 @@ class Router {
              */
             $controller = new $this->callback[0](); // instantiate for current Controller
             Application::$app->controller = $controller;
-            $controller->action = $this->callback[1];
+            $controller->action = $this->callback[1]; // not needed
             $this->callback[0] = $controller;
 
-            // execute middleware
+            // execute middlewares
             /** @var $middleware \middlewares\AuthMiddleware */
             /** @var $middleware \middlewares\CsrfMiddleware */
             if (!empty($this->middlewares)){

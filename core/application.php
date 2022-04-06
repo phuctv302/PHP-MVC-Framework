@@ -3,8 +3,13 @@
 namespace core;
 
 use core\db\Database;
+use core\exceptions\ForbiddenException;
+use core\exceptions\NotFoundException;
 use Exception;
 
+/*
+ * run app
+ * */
 class Application {
     public static $ROOT_DIR;
 
@@ -20,9 +25,19 @@ class Application {
     public $user;
     public $view;
 
+    /**
+     * instantiate classes on core
+     * @param string $rootPath is the root of this project
+     * @param array $config configurations for connecting to database
+     *
+     * @throws Exception when connecting to database
+     */
     public function __construct($rootPath, $config){
         self::$ROOT_DIR = $rootPath;
+
+        // single ton => call all attribute of Application everywhere in this project
         self::$app = $this;
+
         $this->request = new Request();
         $this->response = new Response();
         $this->session = new Session();
@@ -34,6 +49,10 @@ class Application {
 
     }
 
+    /**
+     * call @function resolve() from router
+     * @throws \Exception in exceptions package
+     * */
     public function run(){
         try {
             echo $this->router->resolve();

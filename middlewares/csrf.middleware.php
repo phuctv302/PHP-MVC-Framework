@@ -5,6 +5,7 @@ namespace middlewares;
 use core\BaseMiddleware;
 use core\Session;
 
+// Check csrf attack
 class CsrfMiddleware extends BaseMiddleware {
 
     public function execute(){
