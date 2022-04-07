@@ -10,7 +10,7 @@ class DateConverter {
         return date('Y-m-d H:i:s', $timestamp_value);
     }
 
-    // Convert date to timestamp
+    // Convert date => timestamp
     public static function toTimestamp($date_value){
         return strtotime($date_value);
     }

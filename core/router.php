@@ -55,7 +55,8 @@ class Router {
     /**
      * execute the callback
      * @return string the result view or @redirect to a path
-     * *@throws NotFoundException if accessing non-existed url
+     * @throws NotFoundException if accessing non-existed url
+     * will be @catched in @class Application
      */
     public function resolve(){
 

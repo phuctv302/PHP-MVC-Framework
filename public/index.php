@@ -21,7 +21,18 @@ $config = [
     ]
 ];
 
-$app = new Application(dirname(__DIR__), $config);
+/**
+ * @catch error connecting to database
+ * */
+try {
+    $app = new Application(dirname(__DIR__), $config);
+} catch (Exception $e) {
+    Application::$app->response->setStatusCode($e->getCode());
+    echo Application::$app->view->render('_error', [
+        'exception' => $e
+    ]);
+    exit;
+}
 
 
 /*

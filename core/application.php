@@ -3,8 +3,6 @@
 namespace core;
 
 use core\db\Database;
-use core\exceptions\ForbiddenException;
-use core\exceptions\NotFoundException;
 use Exception;
 
 /*
