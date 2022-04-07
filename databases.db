@@ -9,7 +9,7 @@ CREATE TABLE users (
         job_title VARCHAR(255) NOT NULL,
         address VARCHAR(255),
         birthday DATE NOT NULL,
-        phone INT,
+        phone VARCHAR(255),
         photo VARCHAR(255) DEFAULT 'default.jpg',
         reset_token VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

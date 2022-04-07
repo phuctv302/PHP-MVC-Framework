@@ -47,7 +47,7 @@ $input_field = new InputField()
             <?php
             // Captcha
             if (Application::$app->cookie->get('count') && Application::$app->cookie->get('count') >= 3){
-                echo "<div class='g-recaptcha' data-sitekey=" . MyCaptcha::$SITE_KEY . "></div>";
+                echo "<div class='g-recaptcha' data-sitekey=" . $_ENV['PUBLIC_KEY'] . "></div>";
             }
             ?>
 

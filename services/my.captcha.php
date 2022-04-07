@@ -4,9 +4,6 @@ namespace services;
 
 // Verify captcha
 class MyCaptcha {
-    // API key configuration
-    public static $SITE_KEY = '6Lc3UyUfAAAAABb5JaeeRE7av5mdN4_aSPIZcilB';
-
     // verify response
     /**
      * @return true if captcha is checked or not displayed yet
