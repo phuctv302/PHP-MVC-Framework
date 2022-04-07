@@ -16,8 +16,8 @@ class UserController extends Controller {
     /**
      * Validate and update user's information
      * fields can not be updated: email and username
-     * @param $request \core\Request
-     * @param $response \core\Response
+     * @param \core\Request $request
+     * @param \core\Response $response
      * */
     public function updateUser($request, $response){
         $edit_form = new EditForm();
@@ -54,8 +54,8 @@ class UserController extends Controller {
 
     /**
      * Only for updating user's photo
-     * @var $request \core\Request
-     * @var $response \core\Response
+     * @param \core\Request $request
+     * @param \core\Response $response
      * */
     public function updatePhoto($request, $response){
         $image_form = new ImageForm();

@@ -28,5 +28,5 @@ $this->title = 'Reset your password';
             <button type="submit" class="btn btn--green btn--auth">Reset password</button>
         </form>
     </div>
-    <div class="body__background"></div>
 </div>
+<div class="body__background"></div>

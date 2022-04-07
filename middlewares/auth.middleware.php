@@ -12,8 +12,9 @@ use utils\DateConverter;
 class AuthMiddleware extends BaseMiddleware {
 
     /**
-     * @throws ForbiddenException
-     */
+     * @redirect to login if not authenticated
+     * authenticated => save user to app and @redirect to profile
+     * */
     public function execute(){
 
         $login_token = $this->getCookie()->get('user') ?: $this->getSession()->get('user');
@@ -24,9 +25,6 @@ class AuthMiddleware extends BaseMiddleware {
         }
 
         // find the login session by login_token
-//        $login_session = LoginSession::findOne(
-//            ['login_token' => $login_token, 'expired_at' => DateConverter::toDate(time())]
-//        );
         $login_session = LoginSession::findOne(['login_token' => $login_token]);
 
         // Check if login_session is expired or not

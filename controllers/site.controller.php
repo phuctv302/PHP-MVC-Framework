@@ -18,8 +18,8 @@ class SiteController extends Controller {
      * When user access "/"
      * @redirect to login if user has not logged in yet
      * otherwise @redirect to profile
-     * @param $request \core\Request
-     * @param $response \core\Response
+     * @param  \core\Request $request
+     * @param \core\Response $response
      * */
     public function home($request, $response){
         $currentUser = $this->getUser() ?? false;

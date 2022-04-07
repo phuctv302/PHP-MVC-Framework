@@ -37,8 +37,8 @@ class AuthController extends Controller {
 
     /**
      * Log user in, captcha, @redirect to profile
-     * @param $request \core\Request
-     * @param $response \core\Response
+     * @param \core\Request $request
+     * @param \core\Response $response
      * */
     public function login($request, $response){
         $login_form = new LoginForm();
@@ -109,8 +109,8 @@ class AuthController extends Controller {
     /**
      * Sign up new user
      * @redirect to login
-     * @param $request \core\Request
-     * @param $response \core\Response
+     * @param \core\Request $request
+     * @param \core\Response $response
      * */
     public function register($request, $response){
         $user = new User();
@@ -168,11 +168,10 @@ class AuthController extends Controller {
         $response->redirect('/login');
     }
 
-    // TODO: check forgotPassword function
     /**
      * This method is for forgotPassword function
      * create token and send email with that token
-     * @return true if send successfully,
+     * @return true and send email if send successfully,
      * otherwise @return false
      * */
     public function sendToken($forgot_form){
@@ -213,8 +212,8 @@ class AuthController extends Controller {
     /**
      * Actual send email with reset token to user
      * @redirect to login
-     * @param $request \core\Request
-     * @param $response \core\Response
+     * @param  \core\Request $request
+     * @param \core\Response $response
      * */
     public function forgotPassword($request, $response){
         $forgot_form = new ForgotForm();
@@ -248,7 +247,7 @@ class AuthController extends Controller {
     }
 
     /**
-     * Update user password and set reset_token = @NULL
+     * Update user password and set @var $reset_token = @NULL
      * */
     public function resetPassword($request, $response){
         $reset_form = new ResetForm();
