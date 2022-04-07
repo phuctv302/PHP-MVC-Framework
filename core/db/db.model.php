@@ -56,8 +56,6 @@ abstract class DbModel extends Model {
         $table_name = static::tableName(); // users
         $attributes = array_keys($where); // ['email']
         $sql = implode(" AND ", array_map(function ($attr){
-            if ($attr == 'expired_at')
-                return "$attr > :$attr";
             return "$attr = :$attr";
         }, $attributes)); // 'email = :email'
 

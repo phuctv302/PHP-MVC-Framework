@@ -4,6 +4,7 @@ namespace validators;
 
 use core\Validator;
 
+// Check if value containing only vietnamese characters
 class StringValidator implements Validator {
 
     public function validate($value){

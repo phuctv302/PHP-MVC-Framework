@@ -17,13 +17,13 @@ class CsrfMiddleware extends BaseMiddleware {
             $this->getSession()->setFlash(
                 'error', 'CSRF Attacking! We\'re not gonna submit your form.');
 
+            // redirect to current path
             $currentPath = $this->getRequest()->getPath();
             if ($currentPath === '/profile-image' || $currentPath === '/logout'){
                 $currentPath = '/profile';
             }
 
             $this->getResponse()->redirect($currentPath);
-            exit;
         }
     }
 }

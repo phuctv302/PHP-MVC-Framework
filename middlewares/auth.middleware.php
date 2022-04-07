@@ -22,9 +22,18 @@ class AuthMiddleware extends BaseMiddleware {
             $this->getSession()->setFlash('error', 'Please login to continue!');
             $this->getResponse()->redirect('/login');
         }
-        $login_session = LoginSession::findOne(
-            ['login_token' => $login_token, 'expired_at' => DateConverter::toDate(time())]
-        );
+
+        // find the login session by login_token
+//        $login_session = LoginSession::findOne(
+//            ['login_token' => $login_token, 'expired_at' => DateConverter::toDate(time())]
+//        );
+        $login_session = LoginSession::findOne(['login_token' => $login_token]);
+
+        // Check if login_session is expired or not
+        if (DateConverter::toDate(time()) > $login_session->expired_at){
+            $this->getSession()->setFlash('error', 'Please login to continue!');
+            $this->getResponse()->redirect('/login');
+        }
 
         $user = User::findOne(['id' => $login_session->user_id]);
         if (!$user){
@@ -32,7 +41,7 @@ class AuthMiddleware extends BaseMiddleware {
             $this->getResponse()->redirect('/login');
         }
 
-        // ON SUCCESS
+        // ON SUCCESS => save user to app
         $this->setUser($user);
     }
 }

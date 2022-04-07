@@ -12,6 +12,8 @@ use validators\MinValidator;
 use validators\RequireValidator;
 use validators\StringValidator;
 
+// Corresponding to users table in database
+
 class User extends DbModel {
 
     public $firstname = '';
@@ -73,7 +75,13 @@ class User extends DbModel {
         return $this->lastname . ' ' . $this->firstname;
     }
 
+    /**
+     * Get data from edit_form and call updateOne in DbModel to update user
+     * @param array $edit_form data input from edit form
+     * */
     public function updateUser($edit_form){
+
+        // Check if user choose image or not
         if (ImageUploadService::checkFileExist('photo')){
             $filterData = self::filterFields((array)$edit_form,
                 ['firstname', 'lastname', 'job_title', 'photo', 'address', 'birthday', 'phone']);
@@ -84,6 +92,10 @@ class User extends DbModel {
         return self::updateOne([self::primaryKey() => $this->getUser()->id], $filterData);
     }
 
+    /**
+     * Update only user's photo
+     * @param array $newPhoto the file image inputted from form
+     * */
     public function uploadUserPhoto($newPhoto){
         $filter_data = self::filterFields((array)$newPhoto, ['photo']);
         return self::updateOne([self::primaryKey() => $this->getUser()->id], $filter_data);

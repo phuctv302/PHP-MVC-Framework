@@ -54,9 +54,9 @@ class Router {
 
     /**
      * execute the callback
-     * @throws NotFoundException if accessing non-existed url
      * @return string the result view or @redirect to a path
-     * */
+     * *@throws NotFoundException if accessing non-existed url
+     */
     public function resolve(){
 
         if ($this->callback == false){
@@ -71,7 +71,7 @@ class Router {
              */
             $controller = new $this->callback[0](); // instantiate for current Controller
             Application::$app->controller = $controller;
-            $controller->action = $this->callback[1]; // not needed
+            // $controller->action = $this->callback[1]; // not needed
             $this->callback[0] = $controller;
 
             // execute middlewares

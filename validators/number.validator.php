@@ -4,6 +4,7 @@ namespace validators;
 
 use core\Validator;
 
+// Check if a value containing only digits
 class NumberValidator implements Validator {
 
     public function validate($value){

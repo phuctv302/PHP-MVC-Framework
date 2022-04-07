@@ -8,6 +8,7 @@ use utils\TokenGenerator;
 use validators\RequireValidator;
 
 // Save user to session or cookie in a more secure way
+// Corresponding to login_session table in database
 class LoginSession extends DbModel {
 
     public $login_token = '';

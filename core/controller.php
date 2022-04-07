@@ -11,7 +11,7 @@ class Controller {
     /**
      * @var string $action is actually a method from one Controller which @extends $this
      * */
-    public $action = '';
+//    public $action = '';
 
     public function setLayout($layout){
         $this->layout = $layout;

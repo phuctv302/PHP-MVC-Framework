@@ -4,6 +4,7 @@ namespace validators;
 
 use core\Validator;
 
+// Validate a field is match with another field
 class MatchValidator implements Validator {
 
     public $model;

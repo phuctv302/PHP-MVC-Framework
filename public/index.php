@@ -28,6 +28,7 @@ $app = new Application(dirname(__DIR__), $config);
  * SiteController::class return "SiteController"
  * */
 
+// Register path, callback [Controller, action] and middlewares
 $app->router->get('/login', [SiteController::class, 'loginForm']);
 $app->router->post('/login', [AuthController::class, 'login']);
 
@@ -45,7 +46,8 @@ $app->router->get('/profile', [SiteController::class, 'profile'], [new AuthMiddl
 $app->router->post('/profile', [UserController::class, 'updateUser'], [new AuthMiddleware(), new CsrfMiddleware()]);
 $app->router->post('/profile-image', [UserController::class, 'updatePhoto'], [new AuthMiddleware(), new CsrfMiddleware()]);
 
-$app->router->get('/', [SiteController::class, 'home']);
+// Redirect to login if user has not logged in yet, otherwise redirect account page
+$app->router->get('/', [SiteController::class, 'home'], [new AuthMiddleware()]);
 
 // execute the callback and middlewares
 $app->run();
